@@ -76,6 +76,7 @@ const trustItems = [
 export default function Page() {
   return (
     <div className="min-h-screen bg-[#f7f9fb] font-(--font-inter) text-[#191c1e]">
+      <Header />
       <main className="w-full flex-1">
         <section className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-20 px-6 py-20 lg:grid-cols-2">
           <div className="flex flex-col gap-12">
