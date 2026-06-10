@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Product Management - Amroz Traders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#484647",
+                      "surface-container-low": "#f1f4f3",
+                      "border-subtle": "#D1D5D4",
+                      "primary-container": "#333132",
+                      "on-primary-fixed": "#1d1b1c",
+                      "error": "#ba1a1a",
+                      "outline-variant": "#ccc4c9",
+                      "surface-container": "#ebeeed",
+                      "surface-muted": "#EEF1F0",
+                      "on-primary-container": "#9d999a",
+                      "surface-variant": "#e0e3e2",
+                      "surface-tint": "#605e5f",
+                      "surface-container-high": "#e6e9e8",
+                      "tertiary": "#1d1d1d",
+                      "secondary-fixed": "#ffdad6",
+                      "on-surface": "#181c1c",
+                      "inverse-surface": "#2d3131",
+                      "primary-fixed": "#e6e1e2",
+                      "secondary-fixed-dim": "#ffb4ab",
+                      "on-secondary-container": "#600004",
+                      "tertiary-container": "#323232",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "caution-orange-red": "#C93831",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "on-secondary-fixed-variant": "#910a0f",
+                      "primary-fixed-dim": "#cac5c6",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-container": "#9a9a9a",
+                      "tertiary-fixed": "#e2e2e2",
+                      "primary": "#1e1c1d",
+                      "on-surface-variant": "#4a4549",
+                      "on-background": "#181c1c",
+                      "slate-industrial": "#333132",
+                      "secondary-container": "#fd5d52",
+                      "surface-bright": "#f7faf9",
+                      "on-secondary-fixed": "#410002",
+                      "surface": "#f7faf9",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "surface-dim": "#d7dbda",
+                      "background": "#f7faf9",
+                      "inverse-on-surface": "#eef1f0",
+                      "outline": "#7b7579",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#e0e3e2",
+                      "on-error-container": "#93000a",
+                      "on-tertiary": "#ffffff",
+                      "secondary": "#b32824",
+                      "inverse-primary": "#cac5c6",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-desktop": "40px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "base": "8px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "label-sm": [
+                              "Geist"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "display-lg": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Custom Checkbox Style for Industrial Theme */
+        [type="checkbox"] {
+            border-radius: 0;
+            border-color: #D1D5D4;
+            color: #333132;
+        }
+        [type="checkbox"]:focus {
+            --tw-ring-color: #333132;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md antialiased flex">
+<!-- SideNavBar -->
+<nav class="bg-primary dark:bg-surface-container-lowest text-on-primary dark:text-on-surface font-label-md text-label-md fixed left-0 top-0 h-screen w-64 border-r border-border-subtle dark:border-outline-variant hidden md:flex flex-col h-full py-margin-desktop z-20">
+<div class="px-gutter mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary dark:text-on-surface">Amroz Traders</h1>
+<p class="text-on-primary-container text-label-sm mt-1">Amroz Traders</p>
+</div>
+<ul class="flex-1 overflow-y-auto w-full space-y-1 px-4">
+<li>
+<a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded hover:bg-primary-container dark:hover:bg-surface-variant transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" data-weight="regular">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="bg-secondary-container dark:bg-secondary-fixed text-on-secondary-container dark:text-on-secondary-fixed font-bold border-l-4 border-secondary flex items-center gap-base px-gutter py-base rounded hover:bg-primary-container dark:hover:bg-surface-variant transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>Products</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded hover:bg-primary-container dark:hover:bg-surface-variant transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="category" data-weight="regular">category</span>
+<span>Categories</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded hover:bg-primary-container dark:hover:bg-surface-variant transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="request_quote" data-weight="regular">request_quote</span>
+<span>Quotes</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded hover:bg-primary-container dark:hover:bg-surface-variant transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="perm_media" data-weight="regular">perm_media</span>
+<span>Media Library</span>
+</a>
+</li>
+<li class="mt-auto">
+<a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded hover:bg-primary-container dark:hover:bg-surface-variant transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings" data-weight="regular">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+<div class="px-gutter mt-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary font-bold">
+<span class="material-symbols-outlined">shield_person</span>
+</div>
+<div class="text-on-primary">
+<div class="font-label-md text-label-md">Admin User</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-h-screen md:ml-64 relative">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim text-primary dark:text-on-surface font-body-md text-body-md fixed top-0 right-0 md:left-64 left-0 h-16 border-b border-border-subtle dark:border-outline-variant flex justify-between items-center px-gutter z-10">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-headline-md text-headline-md text-on-surface hidden sm:block">Amroz Traders</div>
+</div>
+<div class="flex-1 max-w-md mx-4 hidden md:block">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border border-border-subtle focus:border-primary-container focus:ring-0 rounded py-2 pl-10 pr-4 text-body-md text-primary placeholder:text-on-surface-variant" placeholder="Search Amroz Traders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-surface-variant">
+<button class="cursor-pointer active:opacity-80 hover:text-primary dark:hover:text-primary-fixed-dim transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<button class="cursor-pointer active:opacity-80 hover:text-primary dark:hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-x-hidden overflow-y-auto bg-surface mt-16 p-margin-mobile md:p-margin-desktop w-full mx-auto max-w-container-max">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Product Management</h2>
+<p class="text-on-surface-variant text-body-md">Manage inventory, adjust pricing, and update specifications.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="px-4 py-2 border border-border-subtle bg-surface-container-lowest text-primary font-label-md text-label-md hover:border-primary-container transition-colors flex items-center gap-2 rounded-sm">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>Bulk Actions</span>
+<span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</button>
+<button class="px-6 py-2 bg-caution-orange-red text-on-error font-label-md text-label-md uppercase tracking-wider hover:bg-secondary transition-colors flex items-center gap-2 rounded-sm shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>Add Product</span>
+</button>
+</div>
+</div>
+<!-- Toolbar / Filters -->
+<div class="bg-surface-container-lowest border border-border-subtle p-4 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center rounded-sm">
+<div class="w-full md:w-1/3 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface border border-border-subtle focus:border-primary-container focus:ring-0 rounded-sm py-2 pl-10 pr-4 text-body-md text-primary" placeholder="Search products..." type="text"/>
+</div>
+<div class="flex w-full md:w-auto gap-4">
+<div class="relative w-full md:w-48">
+<select class="w-full appearance-none bg-surface border border-border-subtle focus:border-primary-container focus:ring-0 rounded-sm py-2 pl-3 pr-10 text-body-md text-primary cursor-pointer">
+<option value="">All Categories</option>
+<option value="building">Building Materials</option>
+<option value="electrical">Electrical</option>
+<option value="plumbing">Plumbing</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">arrow_drop_down</span>
+</div>
+<button class="px-4 py-2 border border-border-subtle bg-surface text-primary font-label-md text-label-md hover:bg-surface-variant transition-colors rounded-sm flex-shrink-0">
+<span class="material-symbols-outlined text-sm align-middle">tune</span> Filters
+                    </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest border border-border-subtle rounded-sm overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="bg-primary-container text-on-primary border-b border-border-subtle">
+<th class="py-3 px-4 w-12 text-center">
+<input aria-label="Select all products" class="w-4 h-4 rounded-none border-border-subtle focus:ring-0 text-primary-container cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-4 font-label-md text-label-md font-semibold tracking-wider uppercase text-xs">Product Name</th>
+<th class="py-3 px-4 font-label-md text-label-md font-semibold tracking-wider uppercase text-xs">Category</th>
+<th class="py-3 px-4 font-label-md text-label-md font-semibold tracking-wider uppercase text-xs">Price</th>
+<th class="py-3 px-4 font-label-md text-label-md font-semibold tracking-wider uppercase text-xs">Status</th>
+<th class="py-3 px-4 font-label-md text-label-md font-semibold tracking-wider uppercase text-xs">Last Updated</th>
+<th class="py-3 px-4 w-16"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-muted transition-colors group">
+<td class="py-4 px-4 text-center">
+<input aria-label="Select CPA Cement 42.5N" class="w-4 h-4 rounded-none border-border-subtle focus:ring-0 text-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-variant border border-border-subtle flex-shrink-0 overflow-hidden relative">
+<img alt="Cement bags" class="w-full h-full object-cover" data-alt="Close up of stacked heavy-duty industrial cement bags in a warehouse setting. High-contrast lighting highlights the rough texture of the paper sacks. The environment is a clean, modern distribution center. The color palette features neutral grays and whites, reflecting a technical and efficient industrial operation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjUxwH7ETFxCC5xhOZfvQIjtoL2wFDNvpFVUg9ltAlCyvosu8R-x5Slkx8bflSkA6St4euWQqhF3YY-Ta1GsaYArljFUSa7nMQdNJ2F6nzLW4wcsdbfub36eucmnffr7r0WgxaQZZPwPKsocDadf1IdL2J6QZ2yzpbQn6-QajqKOLeaWVzlR69B5uznJnjNhewSCJPaHhW8NOuWSE3wjeFayB-9fvDFhB9iUfMPrWTucAe4nidfkdv2c38OiktP0VUqoLpnmReDw"/>
+</div>
+<div>
+<div class="font-label-md text-label-md text-primary font-bold">CPA Cement 42.5N</div>
+<div class="text-label-sm text-on-surface-variant mt-0.5">SKU: CMT-425-50KG</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-body-md text-on-surface-variant">Building Materials</td>
+<td class="py-4 px-4">
+<span class="font-label-md text-label-md text-primary font-semibold">KES 850</span>
+<span class="text-label-sm text-on-surface-variant block">/ bag</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-sm bg-surface-variant text-primary font-label-sm text-label-sm border border-border-subtle">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-4 text-body-md text-on-surface-variant">Oct 24, 2023</td>
+<td class="py-4 px-4 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity p-1">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface hover:bg-surface-muted transition-colors group">
+<td class="py-4 px-4 text-center">
+<input aria-label="Select Steel Rebar #4" class="w-4 h-4 rounded-none border-border-subtle focus:ring-0 text-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-variant border border-border-subtle flex-shrink-0 overflow-hidden relative">
+<img alt="Steel Rebar" class="w-full h-full object-cover" data-alt="Macro photography of rusty steel rebar rods bundled together. The lighting is sharp, emphasizing the ridges and cylindrical forms of the metal. The setting implies an active construction yard with a utilitarian aesthetic. Colors are dominated by raw iron grays, rust oranges, and stark shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm2fXyQ50Ql3gTSBrVU3rHnSWyl7uoh0K-1rGdLQiHrpyYiPXnXFC1Ff2_oRgn9onrigOGeyIXPHOkss3y8nRRv5w_F2EuYcq9Oh_2xGopvFjNRibsKbynfxwhed-aCXLOnJRn2cZqOndNZAAXKwdW2S0lMdr-VxDXuPKHUrH8S7JtmfvredY-z46BbhllD7pCYmiZ9JzT2WvrSNk157eqJUq99U41U4B0kiy3XSdQCGNxXBpCzcJ8l4CZ6f04I8pTnwEyLewVOA"/>
+</div>
+<div>
+<div class="font-label-md text-label-md text-primary font-bold">Steel Rebar #4 (1/2")</div>
+<div class="text-label-sm text-on-surface-variant mt-0.5">SKU: STL-RBR-04</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-body-md text-on-surface-variant">Building Materials</td>
+<td class="py-4 px-4">
+<span class="font-label-md text-label-md text-on-surface-variant border-b border-dashed border-border-subtle cursor-help" title="Price depends on market rates">Request Quote</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-sm bg-surface-variant text-primary font-label-sm text-label-sm border border-border-subtle">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-4 text-body-md text-on-surface-variant">Oct 22, 2023</td>
+<td class="py-4 px-4 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity p-1">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-muted transition-colors group opacity-75">
+<td class="py-4 px-4 text-center">
+<input aria-label="Select PVC Conduit Pipe" class="w-4 h-4 rounded-none border-border-subtle focus:ring-0 text-primary-container cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-variant border border-border-subtle flex-shrink-0 overflow-hidden relative">
+<div class="w-full h-full flex items-center justify-center text-on-surface-variant bg-surface-container-low">
+<span class="material-symbols-outlined">image_not_supported</span>
+</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-primary font-bold">PVC Conduit Pipe 20mm</div>
+<div class="text-label-sm text-on-surface-variant mt-0.5">SKU: PVC-CND-20M</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-body-md text-on-surface-variant">Electrical</td>
+<td class="py-4 px-4">
+<span class="font-label-md text-label-md text-primary font-semibold">KES 320</span>
+<span class="text-label-sm text-on-surface-variant block">/ 3m length</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-sm bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm border border-border-subtle">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                                    Hidden
+                                </span>
+</td>
+<td class="py-4 px-4 text-body-md text-on-surface-variant">Sep 15, 2023</td>
+<td class="py-4 px-4 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity p-1">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="border-t border-border-subtle p-4 flex items-center justify-between bg-surface">
+<div class="text-label-sm text-on-surface-variant">
+                        Showing 1 to 3 of 124 entries
+                    </div>
+<div class="flex items-center gap-2">
+<button class="p-1 border border-border-subtle rounded-sm text-on-surface-variant hover:text-primary hover:bg-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-primary-container bg-primary-container text-on-primary rounded-sm font-label-sm text-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-surface hover:bg-surface-variant text-primary rounded-sm font-label-sm text-label-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-surface hover:bg-surface-variant text-primary rounded-sm font-label-sm text-label-sm">3</button>
+<span class="text-on-surface-variant px-1">...</span>
+<button class="p-1 border border-border-subtle rounded-sm text-on-surface-variant hover:text-primary hover:bg-surface-variant">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

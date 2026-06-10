@@ -1,0 +1,289 @@
+Here is the final refined plan.
+
+# Final architecture
+
+Build the site as a **lean catalog + quote system**, not a full ecommerce store.
+
+Replace all branding placeholders with "Amroz Traders" and all contact numbers with "0713355507" across UI, database seed, and settings defaults.
+
+The priority is:
+
+1. Show products clearly
+2. Let users search fast
+3. Let users request a quote fast
+4. Let staff manage products and quotes easily
+
+Anything beyond that is later.
+
+---
+
+## 1) Final sitemap
+
+```text
+/
+├── Home
+├── Shop
+│   ├── building-materials
+│   ├── roofing
+│   ├── plumbing
+│   ├── electrical
+│   ├── paints-finishes
+│   ├── tools
+│   ├── safety-gear
+│   └── fasteners-fixings
+│
+├── Product
+│   └── [slug]
+│
+├── Request Quote
+│   ├── Upload Materials List
+│   └── Manual Item Entry
+│
+├── Contact
+├── Search
+└── Admin
+    ├── Dashboard
+    ├── Products
+    ├── Categories
+    ├── Quotes
+    ├── Media
+    └── Settings
+```
+
+---
+
+## 2) Next.js route structure
+
+```text
+app/
+├── page.tsx
+├── layout.tsx
+├── globals.css
+│
+├── shop/
+│   ├── page.tsx
+│   └── [category]/
+│       └── page.tsx
+│
+├── product/
+│   └── [slug]/
+│       └── page.tsx
+│
+├── quote/
+│   ├── page.tsx
+│   ├── upload/
+│   │   └── page.tsx
+│   └── manual/
+│       └── page.tsx
+│
+├── contact/
+│   └── page.tsx
+│
+├── search/
+│   └── page.tsx
+│
+└── admin/
+    ├── dashboard/
+    ├── products/
+    ├── categories/
+    ├── quotes/
+    ├── media/
+    └── settings/
+```
+
+---
+
+## 3) Homepage blueprint
+
+### Header
+
+* Logo: Amroz Traders
+* Search bar
+* Shop menu
+* Request Quote button
+* WhatsApp button: 0713355507
+* Call button: tel:0713355507
+
+### Hero section
+
+* Clear promise
+* Search bar
+* Shop Products button
+* Request Quote button
+
+### Category grid
+
+* Building Materials
+* Roofing
+* Plumbing
+* Electrical
+* Paints
+* Tools
+* Safety Gear
+* Fasteners
+
+### Featured products
+
+* Best selling items
+* Product cards
+* Price or “Request Price”
+* Add to quote
+
+### Quote section
+
+* Upload materials list
+* Manual item entry
+* Fast response promise
+
+### Why buy from us
+
+* Fast delivery
+* Bulk supply
+* Contractor support
+* Local service
+
+### Branch/contact strip
+
+* Location
+* Hours
+* Call
+* WhatsApp
+
+### Footer
+
+* Categories
+* Contact: 0713355507
+* Policies
+* Admin link
+
+---
+
+## 4) Admin scope
+
+Keep admin small.
+
+```text
+Admin
+├── Dashboard
+├── Products
+├── Categories
+├── Quotes
+├── Media
+└── Settings
+```
+
+Do not add orders, promotions, brands, or inventory modules yet unless the business actually needs them.
+
+---
+
+## 5) Database tables in Supabase
+
+Start with these:
+
+```text
+users
+profiles
+categories
+products
+product_images
+quotes
+quote_items
+contacts
+settings
+```
+
+Settings seed defaults:
+
+```text
+business_name: "Amroz Traders"
+phone: "0713355507"
+whatsapp_number: "0713355507"
+```
+
+Optional later:
+
+* brands
+* inventory
+* reviews
+* guides
+* branches
+
+---
+
+## 6) Cloudinary usage
+
+Use Cloudinary only for:
+
+* product images
+* quote file uploads
+* image resizing
+* thumbnails
+* compression
+
+Store only the Cloudinary URL, public ID, and metadata in Supabase.
+
+---
+
+## 7) Quote system flow
+
+### Upload Materials List
+
+For PDF, image, Excel, or document uploads.
+
+### Manual Item Entry
+
+For customers who already know what they need.
+
+This is the correct MVP because it covers most real hardware buying behavior without forcing full ecommerce complexity.
+
+---
+
+## 8) What to skip for now
+
+Skip these until there is actual demand:
+
+* Brands page
+* Promotions page
+* New arrivals page
+* Best sellers page
+* Full checkout
+* Orders module
+* Contractor accounts
+* Reviews
+* Blog
+* Branch locator
+
+Those are not useless, but they are not MVP priorities.
+
+---
+
+## 9) Final MVP build order
+
+1. Home page
+2. Category pages
+3. Product page
+4. Search
+5. Quote request
+6. Contact page
+7. Admin products
+8. Admin quotes
+9. Cloudinary upload
+10. Supabase auth and data
+
+Admin settings defaults:
+
+```text
+Business Name: Amroz Traders
+Phone: 0713355507
+WhatsApp: 0713355507
+```
+
+---
+
+## 10) Final principle
+
+This site should behave like a **hardware catalog that sells through search, quote requests, and WhatsApp**, not like a generic company website.
+
+That is the cleanest and highest-return version.
+
+If needed, the next step is to turn this into a **real folder-by-folder Next.js scaffold with component names and Supabase schema**.

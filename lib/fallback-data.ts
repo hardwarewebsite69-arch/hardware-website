@@ -1,0 +1,108 @@
+import type { Category, Product } from "@/lib/types";
+
+export const fallbackCategories: Category[] = [
+  {
+    id: "building-materials",
+    name: "Building Materials",
+    slug: "building-materials",
+    description: "Cement, steel, roofing, aggregates, and masonry essentials.",
+    sort_order: 1,
+    is_active: true,
+  },
+  {
+    id: "tools-equipment",
+    name: "Tools & Equipment",
+    slug: "tools-equipment",
+    description: "Power tools, hand tools, safety gear, and site equipment.",
+    sort_order: 2,
+    is_active: true,
+  },
+  {
+    id: "plumbing-electrical",
+    name: "Plumbing & Electrical",
+    slug: "plumbing-electrical",
+    description: "Pipes, fittings, cables, switches, pumps, and fixtures.",
+    sort_order: 3,
+    is_active: true,
+  },
+  {
+    id: "industrial-hardware",
+    name: "Industrial Hardware",
+    slug: "industrial-hardware",
+    description: "Fasteners, bearings, gearboxes, welding supplies, and spares.",
+    sort_order: 4,
+    is_active: true,
+  },
+];
+
+export const fallbackProducts: Product[] = [
+  {
+    id: "h-700-high-torque-gearbox",
+    category_id: "industrial-hardware",
+    name: "H-700 High Torque Gearbox",
+    slug: "h-700-high-torque-gearbox",
+    sku: "AT-GBX-H700",
+    description: "Heavy-duty gearbox for fabrication lines, conveyors, and high-load machinery.",
+    price: 128500,
+    request_price: false,
+    is_active: true,
+  },
+  {
+    id: "rapidset-portland-cement",
+    category_id: "building-materials",
+    name: "RapidSet Portland Cement",
+    slug: "rapidset-portland-cement",
+    sku: "AT-CEM-50KG",
+    description: "Consistent 50kg cement bags for structural, masonry, and finishing work.",
+    price: 850,
+    request_price: false,
+    is_active: true,
+  },
+  {
+    id: "tmt-rebar-12mm",
+    category_id: "building-materials",
+    name: "TMT Reinforcement Bar 12mm",
+    slug: "tmt-rebar-12mm",
+    sku: "AT-RBR-12",
+    description: "High-yield reinforcement steel supplied by bundle or project tonnage.",
+    price: null,
+    request_price: true,
+    is_active: true,
+  },
+  {
+    id: "contractor-drill-kit",
+    category_id: "tools-equipment",
+    name: "Contractor Drill Kit",
+    slug: "contractor-drill-kit",
+    sku: "AT-TLS-DRL",
+    description: "Site-ready hammer drill kit with bits, case, and spare battery.",
+    price: 18900,
+    request_price: false,
+    is_active: true,
+  },
+  {
+    id: "ppr-pipe-system",
+    category_id: "plumbing-electrical",
+    name: "PPR Pipe System",
+    slug: "ppr-pipe-system",
+    sku: "AT-PPR-SET",
+    description: "Assorted PPR pipes and fittings for commercial plumbing installations.",
+    price: null,
+    request_price: true,
+    is_active: true,
+  },
+  {
+    id: "galvanized-fastener-pack",
+    category_id: "industrial-hardware",
+    name: "Galvanized Fastener Pack",
+    slug: "galvanized-fastener-pack",
+    sku: "AT-FST-GALV",
+    description: "Bulk nuts, bolts, washers, and anchors for workshop and construction use.",
+    price: 4200,
+    request_price: false,
+    is_active: true,
+  },
+];
+
+export const productImageFor = (slug: string) =>
+  `https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80&sat=-30&crop=entropy&${slug}`;
