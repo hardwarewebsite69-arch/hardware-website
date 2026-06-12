@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Amroz Traders - Premium Hardware &amp; Tools</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#a73a00",
+                        "primary-fixed": "#ffdbce",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#7f2b00",
+                        "primary-fixed-dim": "#ffb599",
+                        "tertiary-container": "#00873c",
+                        "secondary": "#575e70",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed": "#002109",
+                        "outline": "#8e7166",
+                        "on-primary-fixed": "#370e00",
+                        "inverse-primary": "#ffb599",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#66ff8e",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#006b2e",
+                        "on-surface-variant": "#5a4138",
+                        "on-secondary-container": "#5c6274",
+                        "tertiary-fixed-dim": "#3de273",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed": "#141b2b",
+                        "on-secondary-fixed-variant": "#404758",
+                        "primary-container": "#cc4900",
+                        "on-tertiary-container": "#f7fff3",
+                        "surface-variant": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#c0c6db",
+                        "on-secondary": "#ffffff",
+                        "primary": "#ea580c", // Adjusted to Safety Orange from style guide
+                        "surface-container-high": "#e6e8ea",
+                        "surface-bright": "#f7f9fb",
+                        "outline-variant": "#e2bfb2",
+                        "surface": "#f7f9fb",
+                        "secondary-container": "#d9dff5",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-surface": "#111827", // Adjusted to deep slate from style guide
+                        "on-background": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary-fixed-variant": "#005322",
+                        "on-primary-container": "#fffbff",
+                        "secondary-fixed": "#dce2f7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "xl": "80px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "lg": "48px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-2xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-2xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    },
+                    "boxShadow": {
+                        'level-1': '0px 4px 20px rgba(17, 24, 39, 0.05)',
+                        'level-2': '0px 10px 30px rgba(17, 24, 39, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; color: #191c1e; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Modern Industrial Utilities */
+        .industrial-border { border: 1px solid #e2e8f0; }
+        .input-border { border: 1px solid #e2e8f0; transition: border-color 0.2s ease; }
+        .input-border:focus-within { border: 2px solid #111827; outline: none; }
+        
+        /* Animations */
+        .hover-lift { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0px 10px 30px rgba(17, 24, 39, 0.1); }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-20">
+<!-- Brand -->
+<div class="flex items-center gap-md">
+<a class="text-title-md font-headline-xl tracking-tighter text-on-surface dark:text-inverse-on-surface" href="#">Amroz Traders</a>
+</div>
+<!-- Search Bar (Left-ish) -->
+<div class="hidden md:flex flex-1 max-w-md mx-gutter">
+<div class="relative w-full input-border bg-surface-container-lowest rounded flex items-center h-10 px-sm">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-body-md text-on-surface placeholder:text-on-surface-variant/50" placeholder="Search products, SKUs, categories..." type="text"/>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center gap-md h-full">
+<a class="h-full flex items-center text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary" href="#">Tools</a>
+<a class="h-full flex items-center text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Fasteners</a>
+<a class="h-full flex items-center text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Safety</a>
+<a class="h-full flex items-center text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Machinery</a>
+<a class="h-full flex items-center text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Electrical</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-sm">
+<button class="hidden md:flex items-center gap-xs text-body-md font-label-md text-inverse-surface hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">chat</span>
+                    WhatsApp Support
+                </button>
+<button class="bg-primary text-on-primary font-label-md px-md py-sm rounded hover:bg-[#c2410c] transition-colors flex items-center gap-xs shadow-sm">
+                    Request Quote
+                </button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full">
+<!-- Hero Section -->
+<section class="w-full max-w-container-max mx-auto px-gutter py-xl grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+<div class="flex flex-col gap-lg">
+<div class="space-y-sm">
+<span class="inline-flex items-center px-sm py-xs bg-surface-container-low text-on-surface font-label-sm uppercase tracking-wider rounded border industrial-border">Premium Hardware Supply</span>
+<h1 class="text-headline-2xl font-headline-2xl text-on-surface leading-tight">Engineered for <br/><span class="text-primary">Precision &amp; Durability</span></h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-lg">Equip your next major project with industrial-grade tools and materials. Sourced for reliability, priced for scale.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-sm">
+<button class="bg-primary text-on-primary font-label-md px-lg py-sm rounded hover:bg-[#c2410c] transition-colors flex justify-center items-center h-12 shadow-sm">
+                        Shop Products
+                    </button>
+<button class="bg-transparent text-inverse-surface border-2 border-inverse-surface font-label-md px-lg py-sm rounded hover:bg-surface-container-low transition-colors flex justify-center items-center h-12">
+                        Request Bulk Quote
+                    </button>
+</div>
+</div>
+<div class="relative h-[500px] w-full rounded-xl overflow-hidden bg-surface-container-low border industrial-border shadow-level-1">
+<img alt="Collage of premium industrial tools and materials including cement, piping, and hardware components" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkZg4elrdRamRFzXX5UP31O_Z7mVhq5vE_2dZP2AKLvhU2eBEMEVVxj3LR14yvCEgye3esxFjpetqr8L62yO91_QX8-jVsjpHnzQvPCMQhcugs1y1Lt7kOzeoTU6EA_pat5ZHVkNM0ZLSbEY5YkKbOvPn7hHtQ9YjKMK8Is5vGVgUJJ9r4HtfvKv9KbOALIdrPOCwWPZ3GC2LnOPMiYHgetguY7k5AlpkN_Jwg1XwJ3Z2ZEs2ZULO64hfPjXWWKGcxfxmxjsPa_w"/>
+</div>
+</section>
+<!-- Trust Indicators -->
+<section class="w-full border-y industrial-border bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-gutter py-md grid grid-cols-2 md:grid-cols-4 gap-md divide-x divide-outline-variant">
+<div class="flex items-center justify-center gap-sm px-sm">
+<span class="material-symbols-outlined text-primary text-2xl">local_shipping</span>
+<span class="font-label-md text-on-surface">Fast Delivery</span>
+</div>
+<div class="flex items-center justify-center gap-sm px-sm">
+<span class="material-symbols-outlined text-primary text-2xl">payments</span>
+<span class="font-label-md text-on-surface">Bulk Pricing</span>
+</div>
+<div class="flex items-center justify-center gap-sm px-sm">
+<span class="material-symbols-outlined text-primary text-2xl">support_agent</span>
+<span class="font-label-md text-on-surface">Contractor Support</span>
+</div>
+<div class="flex items-center justify-center gap-sm px-sm">
+<span class="material-symbols-outlined text-primary text-2xl">inventory_2</span>
+<span class="font-label-md text-on-surface">10,000+ Products</span>
+</div>
+</div>
+</section>
+<!-- Category Grid -->
+<section class="w-full max-w-container-max mx-auto px-gutter py-xl">
+<div class="flex justify-between items-end mb-lg border-b industrial-border pb-sm">
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Explore Categories</h2>
+<a class="text-primary font-label-md flex items-center hover:underline" href="#">View All <span class="material-symbols-outlined ml-xs text-sm">arrow_forward</span></a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Category Card 1 -->
+<a class="group block relative bg-surface-container-lowest border industrial-border rounded-lg overflow-hidden hover-lift h-64" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a heavy duty metal lathe machine in a workshop with sparks flying, highlighting industrial precision and machinery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaxg8JxZ_3j2iD7ftJZZNsNJk0n2ubtqRrjnVcVeNNvY7uHtyI54V72tbh_BLItwEGWbVWHaHN0BEQTzpgTWareQ_Pv6xkuEwnQq2YlXTSPR42F2yMRnWEvLKD5w8QcHa3YtvTOEilOEQ5-AG-pA3g7igJnDeuWUvItcc49BqcB7rGT5uYYePDo9sDP7aIPnyPCON-GIEoT8U8Q4YGW6R6XWEIzsACkwOwstBgrhQw9Ez9tnA0Ze3dZqeDiFD8rso014Lo2aZiZA"/>
+<div class="absolute bottom-0 left-0 p-md z-20 w-full flex justify-between items-end">
+<div>
+<h3 class="text-title-md font-title-md text-on-primary mb-xs">Power Tools</h3>
+<p class="text-label-sm font-label-sm text-primary-fixed">250+ Products</p>
+</div>
+<span class="material-symbols-outlined text-on-primary bg-primary/80 rounded-full p-xs backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</a>
+<!-- Category Card 2 -->
+<a class="group block relative bg-surface-container-lowest border industrial-border rounded-lg overflow-hidden hover-lift h-64" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Detailed macro shot of assorted steel bolts, nuts, and washers arranged neatly on a grey workbench surface, emphasizing structural integrity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUQWdpqVA7ZF4cKmqoEPg82pWua5TLBnY-vf8N2QZxwQiQW_-1r2eoFUNB6hjsRkO7gz2jN16eyIBPZ-F9m8x1WWg49DKPERiBBRUuZ8Glipv47TioNwQggYTLFSgBpUGbpgQgTYaGFvAa_9v2ZK5Yddjg69bHw7AbWM7Cm9jUzAbjnhDfTfcjT0wJl0h9o_xOFTMhx4A92HpFCAV09rG-zD3Mzg1GEeWSjfMhi3su5jHZWVo1UljGZVlXQfxGQ5Lm7KVTX1mS_A"/>
+<div class="absolute bottom-0 left-0 p-md z-20 w-full flex justify-between items-end">
+<div>
+<h3 class="text-title-md font-title-md text-on-primary mb-xs">Fasteners</h3>
+<p class="text-label-sm font-label-sm text-primary-fixed">1,200+ Products</p>
+</div>
+<span class="material-symbols-outlined text-on-primary bg-primary/80 rounded-full p-xs backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</a>
+<!-- Category Card 3 -->
+<a class="group block relative bg-surface-container-lowest border industrial-border rounded-lg overflow-hidden hover-lift h-64" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High contrast image of bright orange industrial safety helmets and high visibility vests hanging on a rack in a warehouse setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGtXU1LMksbNeP8QP2HHLGmRNJEACs6lSmTjhuJizY4oOK8VZd97IrDwQvPnygUvLSww812TA62Ar7xdYsy9WCRykPmYcmjSsRbDAb5SBhnN63bXmkbkIYoYQfgOveVOygtjc6fCqA-dIQoSg71mPp7Edt_PKAjJv7wdmgUjuu6_cMp3yC_Ey_Emx8bmbOGTjOYKTfq7lOJdLq0riM9Ai43wt1zgE2MDjL0f5XetdzZaVq_p9nmmX_ILxzP9uyTODiu96FM7sSmQ"/>
+<div class="absolute bottom-0 left-0 p-md z-20 w-full flex justify-between items-end">
+<div>
+<h3 class="text-title-md font-title-md text-on-primary mb-xs">Safety Gear</h3>
+<p class="text-label-sm font-label-sm text-primary-fixed">150+ Products</p>
+</div>
+<span class="material-symbols-outlined text-on-primary bg-primary/80 rounded-full p-xs backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</a>
+</div>
+</section>
+<!-- Best Sellers -->
+<section class="w-full max-w-container-max mx-auto px-gutter py-xl bg-surface-container-lowest rounded-xl border industrial-border shadow-level-1 my-xl">
+<div class="flex justify-between items-end mb-lg border-b industrial-border pb-sm">
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Featured Equipment</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+<!-- Product 1 -->
+<div class="group bg-surface border industrial-border rounded hover-lift flex flex-col">
+<div class="relative aspect-square bg-surface-container-low p-sm flex items-center justify-center border-b industrial-border">
+<span class="absolute top-sm left-sm bg-inverse-surface text-on-primary font-label-sm px-2 py-1 rounded text-[10px] uppercase tracking-wide">Popular</span>
+<img class="w-3/4 h-3/4 object-contain mix-blend-multiply" data-alt="A professional grade yellow and black cordless power drill resting on a wooden surface beside metal shavings." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbdFw0Bl89PLWKEMF3sok2Te_ekMB21GGWv9_4WJ07J6lSWy6W3zTC1a2H_Wp88UlfoGxg4RqK0Yu0P0hJeYN1nq2grOoO7-dQr91ops7nRYLYYzNzCHurCBOK-ARiojEcmuP0rg0m1gS6C7Xt8DIELhqP9EFgfPuI50Tzzr9bYMCwoXleq5ysNvkNRRmEjZGtwc-x0P8_TP3Ktou8EiItNDca9B1_aWmvUMeOo1OdjSUDNsuC5lN-pVCfzWIOI7ccceF4FnBo7g"/>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Power Tools</span>
+<h4 class="text-body-md font-body-md text-on-surface font-semibold mb-xs line-clamp-2">Pro-Grade Hammer Drill 20V</h4>
+<p class="text-label-sm text-on-surface-variant mb-md">Brushless Motor, 2 Batteries</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-title-md font-title-md text-on-surface">$249.00</span>
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors" title="WhatsApp Inquiry">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="group bg-surface border industrial-border rounded hover-lift flex flex-col">
+<div class="relative aspect-square bg-surface-container-low p-sm flex items-center justify-center border-b industrial-border">
+<span class="absolute top-sm left-sm bg-primary text-on-primary font-label-sm px-2 py-1 rounded text-[10px] uppercase tracking-wide">New</span>
+<img class="w-3/4 h-3/4 object-contain mix-blend-multiply" data-alt="A heavy duty steel bench vise securely clamped to a sturdy industrial workbench in a well-lit workshop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp-e3_QYu2u_7GceyjmhGeCavroo12x0pG6wB8oRovXVEf86sYR2DC0xJQ3eoxeT7KliAWNXNVHn3Ea609m8Dp2aIINmgf8IMQPIa2eujZF061FwsMbQJ4hJgkrZGx9hQisXRqKvGwuRgW3xMYdY5HiNeeQ9_vilwy4WX7V-YTcQJ-TLQuJiW_1QRbRJrxyHyBvvRTsyW8rQ9l3n2nZaY72Ku_6_ndzgIT4o-dgVTVhJpaUIqV8tp8CawRWcAZUz39K11_uv3ipA"/>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Machinery</span>
+<h4 class="text-body-md font-body-md text-on-surface font-semibold mb-xs line-clamp-2">Heavy Duty Bench Vise 6"</h4>
+<p class="text-label-sm text-on-surface-variant mb-md">Forged Steel Construction</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-title-md font-title-md text-on-surface">$185.00</span>
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors" title="WhatsApp Inquiry">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="group bg-surface border industrial-border rounded hover-lift flex flex-col">
+<div class="relative aspect-square bg-surface-container-low p-sm flex items-center justify-center border-b industrial-border">
+<img class="w-3/4 h-3/4 object-contain mix-blend-multiply" data-alt="A coiled bundle of thick, black industrial electrical wire with copper core exposed at the end, resting on a concrete floor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3DBOn5aUHE7nBzuGaWDnzHklz5fQi_SRKfNKIS5kQ3Xqi-wA9Ul39PjBGXQeCSMOGe9HGZ5E_9wbmrRkXqoI8OBJ4SPjQnK-ehvJtBQJmUMJZbkC4UiAv0_VDaQRJG9rKCK_dmR6yFUCbimGHW_d2mEqnnU44j5K7qEX6DQdext1paoYTTvDvD9sjc5WUEVZHofEWsBUlL4H8iU5PF14RBSWsaeY_6rNkp7RWq4HEENz1cAdL1UeegKgUZgksaNHMKMzObrs8AA"/>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Electrical</span>
+<h4 class="text-body-md font-body-md text-on-surface font-semibold mb-xs line-clamp-2">Industrial Copper Cabling</h4>
+<p class="text-label-sm text-on-surface-variant mb-md">100m Roll, 10 AWG</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-title-md font-title-md text-on-surface">$320.00</span>
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors" title="WhatsApp Inquiry">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="group bg-surface border industrial-border rounded hover-lift flex flex-col">
+<div class="relative aspect-square bg-surface-container-low p-sm flex items-center justify-center border-b industrial-border">
+<span class="absolute top-sm left-sm bg-inverse-surface text-on-primary font-label-sm px-2 py-1 rounded text-[10px] uppercase tracking-wide">Popular</span>
+<img class="w-3/4 h-3/4 object-contain mix-blend-multiply" data-alt="A set of precision measuring tools including calipers and micrometers laid out in a custom foam insert inside a metal case." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBikIb9EYfJZyI7k8ZDHB1jtEasaGrhLJN_c-dTOM2dvar69c0MLtoINlIf5LTJ9nvBtwgZqAymIG3SDK_TyFa37wG3YoTiHJUzOdqJu7ggtlBLySWG21-wZs_0LM3iJWh77Vuwv6pEQ_xdWMWTqX3PHYUUIh7xxbNPpWRhPur5_suGx48IPSbo-QhCfQxYbU5lAD5pEJTsQOsCFBE8WGysv8PV9WCdmdwupta48ltNUrtdxUmB5wntrKZP2_d6EOgia3YlKbB23A"/>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Tools</span>
+<h4 class="text-body-md font-body-md text-on-surface font-semibold mb-xs line-clamp-2">Precision Measurement Kit</h4>
+<p class="text-label-sm text-on-surface-variant mb-md">Calipers, Micrometers (Metric)</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-title-md font-title-md text-on-surface">$450.00</span>
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors" title="WhatsApp Inquiry">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quote Section (Bento Grid Style) -->
+<section class="w-full max-w-container-max mx-auto px-gutter py-xl">
+<div class="bg-inverse-surface rounded-xl overflow-hidden shadow-level-2 grid grid-cols-1 lg:grid-cols-2">
+<div class="p-xl text-on-primary flex flex-col justify-center">
+<h2 class="text-headline-lg font-headline-lg mb-sm">Need Bulk Pricing?</h2>
+<p class="text-body-lg text-secondary-fixed-dim mb-lg">Upload your materials list or BOQ and receive a comprehensive, competitively priced quotation within 24 hours.</p>
+<div class="border-2 border-dashed border-outline-variant/30 rounded-lg p-lg flex flex-col items-center justify-center text-center hover:bg-on-secondary-fixed-variant/10 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-primary mb-sm group-hover:scale-110 transition-transform">cloud_upload</span>
+<span class="font-label-md text-on-primary">Drag &amp; Drop Files Here</span>
+<span class="text-label-sm text-secondary-fixed-dim mt-xs">Supports PDF, Excel, CSV (Max 10MB)</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-xl">
+<h3 class="text-title-md font-title-md text-on-surface mb-md">Or Enter Items Manually</h3>
+<form class="space-y-md">
+<div class="space-y-sm">
+<label class="font-label-md text-on-surface uppercase text-xs tracking-wider">Product Search</label>
+<div class="flex gap-sm">
+<input class="flex-1 input-border rounded p-sm bg-surface text-body-md" placeholder="e.g. 10mm Rebar, M10 Bolts..." type="text"/>
+<input class="w-24 input-border rounded p-sm bg-surface text-body-md" placeholder="Qty" type="number"/>
+<button class="bg-surface-container-high hover:bg-surface-dim text-on-surface rounded px-md transition-colors font-label-md" type="button">Add</button>
+</div>
+</div>
+<!-- Mini List -->
+<div class="border industrial-border rounded-lg p-sm bg-surface min-h-[120px] flex flex-col justify-center items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-3xl mb-xs opacity-50">list_alt</span>
+<span class="text-label-sm">List is empty</span>
+</div>
+<div class="pt-sm">
+<button class="w-full bg-inverse-surface text-on-primary font-label-md py-sm rounded hover:bg-inverse-surface/90 transition-colors h-12" type="submit">Submit Request</button>
+</div>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-inverse-surface dark:bg-surface-container-lowest border-t border-outline dark:border-outline-variant full-width bottom-0 mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-gutter py-xl max-w-container-max mx-auto">
+<!-- Brand Column -->
+<div class="flex flex-col gap-md">
+<a class="text-headline-lg font-headline-lg text-primary-fixed" href="#">Amroz Traders</a>
+<p class="text-body-md font-body-md text-surface-variant dark:text-on-surface-variant max-w-xs">Precision engineered hardware and materials for industrial scale projects.</p>
+<div class="mt-auto">
+<p class="text-label-sm font-label-sm text-surface-variant dark:text-on-surface-variant">© 2024 Amroz Traders Hardware. Precision Engineered.</p>
+</div>
+</div>
+<!-- Links Columns -->
+<div>
+<h4 class="text-title-md font-headline-lg text-primary-fixed-dim dark:text-primary mb-md">Company</h4>
+<ul class="space-y-sm flex flex-col">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">About Us</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Careers</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Terms of Service</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-title-md font-headline-lg text-primary-fixed-dim dark:text-primary mb-md">Categories</h4>
+<ul class="space-y-sm flex flex-col">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Tools</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Fasteners</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Safety Gear</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Machinery</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-title-md font-headline-lg text-primary-fixed-dim dark:text-primary mb-md">Contact</h4>
+<ul class="space-y-sm flex flex-col">
+<li class="flex items-start gap-xs text-surface-variant dark:text-on-surface-variant text-body-md font-body-md">
+<span class="material-symbols-outlined text-sm mt-1">location_on</span>
+<span>123 Industrial Way, Nairobi, Kenya</span>
+</li>
+<li class="flex items-center gap-xs text-surface-variant dark:text-on-surface-variant text-body-md font-body-md">
+<span class="material-symbols-outlined text-sm">phone</span>
+<span>+254 700 000 000</span>
+</li>
+<li class="flex items-center gap-xs text-surface-variant dark:text-on-surface-variant text-body-md font-body-md">
+<span class="material-symbols-outlined text-sm">chat</span>
+<span>WhatsApp Support</span>
+</li>
+<li class="flex items-center gap-xs text-surface-variant dark:text-on-surface-variant text-body-md font-body-md mt-sm">
+<button class="bg-primary/20 text-primary-fixed px-sm py-xs rounded text-label-sm border border-primary/30 hover:bg-primary/30 transition-colors">Contact Sales</button>
+</li>
+</ul>
+</div>
+</div>
+</footer>
+</body></html>

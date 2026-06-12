@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quotes Management | Amroz Traders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container": "#ebeeed",
+                "on-secondary": "#ffffff",
+                "tertiary-container": "#323232",
+                "inverse-on-surface": "#eef1f0",
+                "on-tertiary-fixed": "#1b1b1b",
+                "tertiary-fixed-dim": "#c6c6c6",
+                "on-error-container": "#93000a",
+                "secondary-container": "#fd5d52",
+                "on-surface": "#181c1c",
+                "inverse-surface": "#2d3131",
+                "on-secondary-container": "#600004",
+                "surface-variant": "#e0e3e2",
+                "error": "#ba1a1a",
+                "tertiary-fixed": "#e2e2e2",
+                "surface-container-highest": "#e0e3e2",
+                "tertiary": "#1d1d1d",
+                "outline-variant": "#ccc4c9",
+                "secondary-fixed": "#ffdad6",
+                "surface-container-lowest": "#ffffff",
+                "primary-container": "#333132",
+                "surface-dim": "#d7dbda",
+                "on-error": "#ffffff",
+                "secondary-fixed-dim": "#ffb4ab",
+                "on-primary-container": "#9d999a",
+                "outline": "#7b7579",
+                "primary": "#1e1c1d",
+                "on-tertiary-fixed-variant": "#474747",
+                "on-tertiary": "#ffffff",
+                "caution-orange-red": "#C93831",
+                "border-subtle": "#D1D5D4",
+                "surface-bright": "#f7faf9",
+                "secondary": "#b32824",
+                "on-secondary-fixed": "#410002",
+                "on-primary-fixed": "#1d1b1c",
+                "error-container": "#ffdad6",
+                "on-background": "#181c1c",
+                "surface": "#f8fafc",
+                "primary-fixed-dim": "#cac5c6",
+                "surface-muted": "#f8fafc",
+                "on-secondary-fixed-variant": "#910a0f",
+                "slate-industrial": "#333132",
+                "surface-tint": "#605e5f",
+                "on-surface-variant": "#4a4549",
+                "primary-fixed": "#e6e1e2",
+                "background": "#f7faf9",
+                "surface-container-low": "#f1f4f3",
+                "on-primary": "#ffffff",
+                "on-tertiary-container": "#9a9a9a",
+                "surface-container-high": "#e6e9e8",
+                "inverse-primary": "#cac5c6",
+                "on-primary-fixed-variant": "#484647"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter": "24px",
+                "base": "8px",
+                "container-max": "1280px",
+                "margin-mobile": "16px",
+                "margin-desktop": "40px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Inter", "sans-serif"
+                ],
+                "label-md": [
+                        "Inter", "sans-serif"
+                ],
+                "headline-md": [
+                        "Inter", "sans-serif"
+                ],
+                "headline-lg-mobile": [
+                        "Inter", "sans-serif"
+                ],
+                "headline-lg": [
+                        "Inter", "sans-serif"
+                ],
+                "label-sm": [
+                        "Inter", "sans-serif"
+                ],
+                "display-lg": [
+                        "Inter", "sans-serif"
+                ],
+                "body-lg": [
+                        "Inter", "sans-serif"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "14px",
+                        {
+                                "lineHeight": "1.5",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "1.3",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "500"
+                        }
+                ],
+                "display-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="bg-primary text-on-primary fixed left-0 top-0 h-screen w-[250px] border-r border-border-subtle flex flex-col py-margin-desktop z-20 hidden md:flex shrink-0">
+<div class="px-gutter mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Amroz Traders</h1>
+<p class="font-label-sm text-label-sm text-on-primary-container mt-1">Amroz Traders</p>
+</div>
+<ul class="flex flex-col gap-1 w-full">
+<li>
+<a class="text-on-primary-container flex items-center gap-base px-gutter py-base hover:bg-primary-container transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary-container flex items-center gap-base px-gutter py-base hover:bg-primary-container transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary-container flex items-center gap-base px-gutter py-base hover:bg-primary-container transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+<span class="font-label-md text-label-md">Categories</span>
+</a>
+</li>
+<li>
+<a class="bg-secondary-container text-on-secondary-container font-bold border-l-4 border-secondary flex items-center gap-base px-gutter py-base scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="request_quote">request_quote</span>
+<span class="font-label-md text-label-md">Quotes</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary-container flex items-center gap-base px-gutter py-base hover:bg-primary-container transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="perm_media">perm_media</span>
+<span class="font-label-md text-label-md">Media Library</span>
+</a>
+</li>
+<li>
+<a class="text-on-primary-container flex items-center gap-base px-gutter py-base hover:bg-primary-container transition-colors scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-gutter flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Admin Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged male administrator in a clean, modern industrial office setting. The lighting is crisp and cool, casting soft shadows that highlight the technical, functional aesthetic of the workspace. He wears a dark slate collared shirt, conveying reliability and expertise. The background is a subtle, out-of-focus array of clean white and light gray tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpLyyEw2OuOZauMCHNb5TU2G8A7zoJW7FeeIBkKnKtD_gDqZOh6NvnSS2galViDLQerDFUhD_qqhaKvk6W9OIVAYpxFue9UQSs9hHYgy5MuOvQ7vuYwwiRb_ux0j9Oc42KhVaGbAc58HKjDQpuJD_QgCpAH2hf5mbTkDHb6Ecfq8rrg2KIPH-OkYvWNC4NV6odXuUDtEOLPAxWEDB8d1BONPG9BD7QUctFcrwPkJ3nO2hhlroo_EqSrmB98hVNjTm_uOXGIawZEA"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-primary">Admin User</p>
+<p class="font-label-sm text-label-sm text-on-primary-container">System Admin</p>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[250px] relative min-w-0 bg-surface">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest text-primary fixed top-0 right-0 left-0 md:left-[250px] h-16 border-b border-border-subtle flex justify-between items-center px-gutter z-10 hidden md:flex">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Amroz Traders</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 p-2 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 p-2 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 overflow-y-auto mt-0 md:mt-16 p-margin-mobile md:p-margin-desktop bg-surface w-full">
+<div class="max-w-[container-max] mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary">Quotes Management</h1>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-DEFAULT hover:bg-slate-industrial transition-colors flex items-center gap-2 w-fit">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                        Create New Quote
+                    </button>
+</div>
+<!-- Tabs -->
+<div class="border-b border-border-subtle mb-6">
+<ul class="flex overflow-x-auto hide-scrollbar gap-8">
+<li>
+<button class="font-label-md text-label-md text-primary font-bold border-b-2 border-primary pb-3 px-1 whitespace-nowrap">All Quotes (124)</button>
+</li>
+<li>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors pb-3 px-1 whitespace-nowrap border-b-2 border-transparent hover:border-border-subtle">Pending (12)</button>
+</li>
+<li>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors pb-3 px-1 whitespace-nowrap border-b-2 border-transparent hover:border-border-subtle">Sent (45)</button>
+</li>
+<li>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors pb-3 px-1 whitespace-nowrap border-b-2 border-transparent hover:border-border-subtle">Expired (8)</button>
+</li>
+</ul>
+</div>
+<!-- Data Table Card -->
+<div class="bg-surface-container-lowest border border-border-subtle rounded-DEFAULT shadow-sm">
+<!-- Search Bar -->
+<div class="p-4 border-b border-border-subtle flex justify-between items-center bg-surface-container-lowest rounded-t-DEFAULT">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface border border-border-subtle rounded-DEFAULT text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-on-surface-variant" placeholder="Search quotes..." type="text"/>
+</div>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary font-label-md text-label-md border border-border-subtle rounded-DEFAULT px-4 py-2 bg-surface hover:bg-surface-variant transition-colors ml-4 shrink-0">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+            Filter
+        </button>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider border-b border-border-subtle">
+<th class="py-3 px-6 font-semibold whitespace-nowrap">ID</th>
+<th class="py-3 px-6 font-semibold">Customer</th>
+<th class="py-3 px-6 font-semibold whitespace-nowrap">Date Requested</th>
+<th class="py-3 px-6 font-semibold text-right">Items</th>
+<th class="py-3 px-6 font-semibold text-right whitespace-nowrap">Total Value (KES)</th>
+<th class="py-3 px-6 font-semibold text-center">Status</th>
+<th class="py-3 px-6 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-on-surface divide-y divide-border-subtle">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-6 font-semibold text-primary whitespace-nowrap">#QT-1204</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-medium text-primary">BuildIt Ltd</span>
+<span class="text-xs text-on-surface-variant">Commercial Contractor</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant whitespace-nowrap">Oct 24, 2023</td>
+<td class="py-4 px-6 text-right">14</td>
+<td class="py-4 px-6 text-right font-medium">845,000</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FEF08A] text-[#854D0E]">
+                            Pending
+                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-6 font-semibold text-primary whitespace-nowrap">#QT-1203</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-medium text-primary">John Doe</span>
+<span class="text-xs text-on-surface-variant">Independent Contractor</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant whitespace-nowrap">Oct 23, 2023</td>
+<td class="py-4 px-6 text-right">3</td>
+<td class="py-4 px-6 text-right font-medium">12,500</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#BFDBFE] text-[#1E3A8A]">
+                            Sent
+                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-6 font-semibold text-primary whitespace-nowrap">#QT-1202</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-medium text-primary">Apex Manufacturing</span>
+<span class="text-xs text-on-surface-variant">Industrial Facility</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant whitespace-nowrap">Oct 21, 2023</td>
+<td class="py-4 px-6 text-right">42</td>
+<td class="py-4 px-6 text-right font-medium">2,150,000</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#BBF7D0] text-[#166534]">
+                            Accepted
+                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-6 font-semibold text-primary whitespace-nowrap">#QT-1201</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-medium text-primary">Tech Solutions Inc</span>
+<span class="text-xs text-on-surface-variant">IT Infrastructure</span>
+</div>
+</td>
+<td class="py-4 px-6 text-on-surface-variant whitespace-nowrap">Oct 15, 2023</td>
+<td class="py-4 px-6 text-right">8</td>
+<td class="py-4 px-6 text-right font-medium">145,200</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FECACA] text-[#991B1B]">
+                            Expired
+                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-border-subtle p-4 flex items-center justify-between bg-surface-container-lowest rounded-b-DEFAULT">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Showing 1-10 of 124 quotes</span>
+<div class="flex items-center gap-2">
+<button class="p-1 border border-border-subtle rounded text-on-surface-variant hover:text-primary hover:bg-surface-variant disabled:opacity-50 transition-colors" disabled="">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="p-1 border border-border-subtle rounded text-on-surface-variant hover:text-primary hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<style>
+        /* Utility to hide scrollbar but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

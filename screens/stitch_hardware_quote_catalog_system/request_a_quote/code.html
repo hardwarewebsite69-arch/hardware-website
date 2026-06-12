@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Amroz Traders - Quote Request</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e4e7e9",
+                        "inverse-on-surface": "#f1f3f5",
+                        "primary": "#0f172a",
+                        "on-secondary-fixed-variant": "#451a03",
+                        "border-subtle": "#e2e8f0",
+                        "surface-tint": "#0f172a",
+                        "tertiary-container": "#f8fafc",
+                        "outline-variant": "#cbd5e1",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#fffedd",
+                        "on-background": "#0f172a",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#94a3b8",
+                        "error-container": "#fee2e2",
+                        "on-primary-container": "#ffffff",
+                        "inverse-surface": "#1e293b",
+                        "on-error": "#ffffff",
+                        "outline": "#64748b",
+                        "on-primary-fixed-variant": "#1e293b",
+                        "secondary": "#ea580c",
+                        "surface-bright": "#f7f9fb",
+                        "background": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "surface-muted": "#f1f5f9",
+                        "secondary-container": "#c2410c",
+                        "error": "#ef4444",
+                        "on-error-container": "#7f1d1d",
+                        "on-surface": "#0f172a",
+                        "surface-container": "#ecedf0",
+                        "tertiary-fixed": "#f1f5f9",
+                        "on-tertiary-container": "#0f172a",
+                        "caution-orange-red": "#ea580c",
+                        "secondary-fixed": "#ffedd5",
+                        "on-tertiary": "#0f172a",
+                        "tertiary-fixed-dim": "#e2e8f0",
+                        "tertiary": "#f1f5f9",
+                        "primary-fixed-dim": "#cbd5e1",
+                        "on-primary-fixed": "#0f172a",
+                        "surface-container-highest": "#dee1e3",
+                        "secondary-fixed-dim": "#fdba74",
+                        "primary-container": "#1e293b",
+                        "primary-fixed": "#e2e8f0",
+                        "on-secondary-fixed": "#431407",
+                        "on-surface-variant": "#475569",
+                        "surface": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#f1f5f9",
+                        "on-tertiary-fixed-variant": "#334155",
+                        "slate-industrial": "#0f172a",
+                        "on-tertiary-fixed": "#0f172a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "16px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": [
+                            "Inter",
+                            "sans-serif"
+                        ],
+                        "label-sm": [
+                            "Inter",
+                            "sans-serif"
+                        ],
+                        "headline-md": [
+                            "Inter",
+                            "sans-serif"
+                        ],
+                        "body-lg": [
+                            "Inter",
+                            "sans-serif"
+                        ],
+                        "headline-lg-mobile": [
+                            "Inter",
+                            "sans-serif"
+                        ],
+                        "headline-lg": [
+                            "Inter",
+                            "sans-serif"
+                        ],
+                        "display-lg": [
+                            "Inter",
+                            "sans-serif"
+                        ],
+                        "body-md": [
+                            "Inter",
+                            "sans-serif"
+                        ]
+                    },
+                    "fontSize": {
+                        "label-md": [
+                            "14px",
+                            {
+                                "lineHeight": "1.4",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "label-sm": [
+                            "12px",
+                            {
+                                "lineHeight": "1.4",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "headline-md": [
+                            "24px",
+                            {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "body-lg": [
+                            "18px",
+                            {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "headline-lg-mobile": [
+                            "28px",
+                            {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "headline-lg": [
+                            "32px",
+                            {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "display-lg": [
+                            "48px",
+                            {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.03em",
+                                "fontWeight": "800"
+                            }
+                        ],
+                        "body-md": [
+                            "16px",
+                            {
+                                "lineHeight": "1.5",
+                                "fontWeight": "400"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest sticky top-0 z-50 flex flex-col w-full border-b border-border-subtle">
+<div class="flex items-center justify-between px-margin-mobile md:px-margin-desktop py-4 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-gutter">
+<a class="flex items-center gap-2" href="#">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-primary">Amroz Traders</span>
+</a>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-on-surface hover:text-secondary font-label-md text-label-md transition-colors" href="#">Products</a>
+<a class="text-on-surface hover:text-secondary font-label-md text-label-md transition-colors" href="#">Industries</a>
+<a class="text-on-surface hover:text-secondary font-label-md text-label-md transition-colors" href="#">Resources</a>
+<a class="text-on-surface hover:text-secondary font-label-md text-label-md transition-colors" href="#">About Us</a>
+</nav>
+<div class="flex items-center gap-base">
+<a class="hidden md:inline-flex items-center gap-2 text-on-surface hover:text-secondary font-label-md text-label-md transition-colors" href="tel:0713355507">
+<span class="material-symbols-outlined text-[20px]">call</span>
+                0713355507
+            </a>
+<button class="hidden md:inline-flex px-6 py-3 bg-secondary text-on-primary font-label-md text-label-md rounded hover:bg-secondary-container transition-colors">
+                Request Quote
+            </button>
+<button class="lg:hidden p-2 text-primary hover:bg-surface-container-low rounded transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+<!-- Header Section -->
+<div class="mb-12 text-center max-w-2xl mx-auto">
+<h1 class="font-display-lg text-display-lg text-slate-industrial mb-4">Request a Custom Quote</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Submit your material list for bulk pricing. Our team of experts will review and provide a comprehensive quote within 2 hours.</p>
+</div>
+<!-- Quote Progress Tracker -->
+<div class="max-w-xl mx-auto mb-12 flex items-center justify-center relative">
+<div class="absolute left-0 right-0 top-1/2 h-0.5 bg-border-subtle -z-10 transform -translate-y-1/2"></div>
+<div class="flex justify-between w-full relative z-10 px-8">
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary border-4 border-surface-container-lowest text-on-primary flex items-center justify-center font-label-md text-label-md shadow-sm">1</div>
+<span class="font-label-md text-label-md text-primary">List Method</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest border-4 border-border-subtle text-on-surface-variant flex items-center justify-center font-label-md text-label-md">2</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Details</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest border-4 border-border-subtle text-on-surface-variant flex items-center justify-center font-label-md text-label-md">3</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Review</span>
+</div>
+</div>
+</div>
+<!-- Main Form Container -->
+<div class="bg-surface-container-lowest border border-border-subtle rounded-xl shadow-sm mx-auto max-w-4xl overflow-hidden">
+<!-- View Selector Tabs -->
+<div class="flex border-b border-border-subtle bg-surface-muted">
+<button class="flex-1 py-4 text-center font-label-md text-label-md text-secondary border-b-2 border-secondary bg-surface-container-lowest transition-colors flex items-center justify-center gap-2" id="tab-upload" onclick="switchTab('upload')">
+<span class="material-symbols-outlined align-middle">upload_file</span>
+                    Upload List
+                </button>
+<button class="flex-1 py-4 text-center font-label-md text-label-md text-on-surface-variant border-b-2 border-transparent hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2" id="tab-manual" onclick="switchTab('manual')">
+<span class="material-symbols-outlined align-middle">edit_document</span>
+                    Manual Entry
+                </button>
+</div>
+<div class="p-6 md:p-12">
+<!-- Upload View -->
+<div class="space-y-8 block" id="view-upload">
+<!-- Contact Info Fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-primary block">Company Name</label>
+<input class="w-full bg-surface border border-border-subtle rounded-DEFAULT px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Enter company name" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-primary block">Contact Number</label>
+<input class="w-full bg-surface border border-border-subtle rounded-DEFAULT px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="0713355507" type="tel"/>
+</div>
+</div>
+<!-- Drag & Drop Zone -->
+<div class="border-2 border-dashed border-border-subtle rounded-xl bg-surface-muted p-12 flex flex-col items-center justify-center text-center hover:border-secondary hover:bg-surface-container-low transition-all cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center mb-4 group-hover:text-secondary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[32px]">cloud_upload</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Drag &amp; Drop your list here</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 max-w-md">Upload PDF, Excel, Word, or clear photos of handwritten lists. Max file size 50MB.</p>
+<button class="px-6 py-3 bg-surface-container-lowest border border-border-subtle text-primary font-label-md text-label-md rounded hover:border-primary transition-colors shadow-sm">
+                            Browse Files
+                        </button>
+</div>
+</div>
+<!-- Manual Entry View -->
+<div class="space-y-8 hidden" id="view-manual">
+<!-- Contact Info Fields (Repeated for context in this view) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-primary block">Company Name</label>
+<input class="w-full bg-surface border border-border-subtle rounded-DEFAULT px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Enter company name" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-primary block">Contact Number</label>
+<input class="w-full bg-surface border border-border-subtle rounded-DEFAULT px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="0713355507" type="tel"/>
+</div>
+</div>
+<div class="border border-border-subtle rounded-lg overflow-hidden">
+<div class="grid grid-cols-12 bg-surface-muted text-on-surface-variant font-label-sm text-label-sm p-4 border-b border-border-subtle">
+<div class="col-span-6">Item Name / SKU</div>
+<div class="col-span-2 text-center">Quantity</div>
+<div class="col-span-3">Notes</div>
+<div class="col-span-1"></div>
+</div>
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-border-subtle bg-surface-container-lowest items-start">
+<div class="col-span-6">
+<input class="w-full bg-surface border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="e.g. Heavy Duty Steel Beam H-Type" type="text"/>
+</div>
+<div class="col-span-2">
+<input class="w-full bg-surface border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all text-center" type="number" value="10"/>
+</div>
+<div class="col-span-3">
+<input class="w-full bg-surface border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Optional specs" type="text"/>
+</div>
+<div class="col-span-1 flex items-center justify-center pt-2">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-border-subtle bg-surface items-start">
+<div class="col-span-6">
+<input class="w-full bg-surface-container-lowest border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="e.g. Industrial Grade Fasteners Box" type="text"/>
+</div>
+<div class="col-span-2">
+<input class="w-full bg-surface-container-lowest border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all text-center" type="number" value="50"/>
+</div>
+<div class="col-span-3">
+<input class="w-full bg-surface-container-lowest border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Grade 8 minimum" type="text"/>
+</div>
+<div class="col-span-1 flex items-center justify-center pt-2">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 3 (Empty) -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-border-subtle bg-surface-container-lowest items-start">
+<div class="col-span-6">
+<input class="w-full bg-surface border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Item Name or SKU" type="text"/>
+</div>
+<div class="col-span-2">
+<input class="w-full bg-surface border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all text-center" placeholder="Qty" type="number"/>
+</div>
+<div class="col-span-3">
+<input class="w-full bg-surface border border-border-subtle rounded px-3 py-2 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Notes" type="text"/>
+</div>
+<div class="col-span-1 flex items-center justify-center pt-2">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex justify-start">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-surface-container-lowest border border-border-subtle text-primary font-label-md text-label-md rounded hover:border-primary transition-colors shadow-sm">
+<span class="material-symbols-outlined">add</span>
+                            Add Row
+                        </button>
+</div>
+</div>
+<!-- Shared Submit Section -->
+<div class="mt-12 pt-8 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-3 bg-surface-muted px-4 py-3 rounded-lg border border-border-subtle">
+<span class="material-symbols-outlined text-secondary">schedule</span>
+<span class="font-label-md text-label-md text-primary">We respond within 2 hours</span>
+</div>
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-secondary text-on-primary font-label-md text-label-md rounded-lg uppercase font-bold hover:bg-secondary-container transition-colors shadow-sm">
+                        Submit Quote Request
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-primary text-on-primary border-t border-border-subtle mt-12 w-full">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-16">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+<div class="flex flex-col gap-4">
+<a class="flex items-center gap-2" href="#">
+<div class="w-8 h-8 bg-surface-container-lowest rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-on-primary">Amroz Traders</span>
+</a>
+<p class="font-body-md text-body-md text-on-primary-container mt-2 max-w-xs">
+                    Supplying heavy-duty industrial components to manufacturers and contractors worldwide.
+                </p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-4 text-on-primary">Products</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Fasteners &amp; Hardware</a></li>
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Power Transmission</a></li>
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Pneumatics &amp; Hydraulics</a></li>
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Safety Equipment</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-4 text-on-primary">Company</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">About Us</a></li>
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Careers</a></li>
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Sustainability</a></li>
+<li><a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-4 text-on-primary">Get in Touch</h4>
+<ul class="flex flex-col gap-3">
+<li class="flex items-start gap-3 text-on-primary-container font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px] mt-0.5">location_on</span>
+<span>123 Industrial Parkway,<br/>Manufacturing District,<br/>MD 12345</span>
+</li>
+<li class="flex items-center gap-3 text-on-primary-container font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px]">call</span>
+<span>0713355507</span>
+</li>
+<li class="flex items-center gap-3 text-on-primary-container font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+<span>sales@amroztraders.com</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-on-primary-container/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="font-body-md text-body-md text-on-primary-container">
+                © 2024 Amroz Traders. All rights reserved.
+            </p>
+<div class="flex items-center gap-6">
+<a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Privacy Policy</a>
+<a class="text-on-primary-container hover:text-secondary transition-colors font-body-md text-body-md" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        function switchTab(tabId) {
+            const uploadTab = document.getElementById('tab-upload');
+            const manualTab = document.getElementById('tab-manual');
+            const uploadView = document.getElementById('view-upload');
+            const manualView = document.getElementById('view-manual');
+
+            if (tabId === 'upload') {
+                uploadTab.classList.replace('text-on-surface-variant', 'text-secondary');
+                uploadTab.classList.replace('border-transparent', 'border-secondary');
+                uploadTab.classList.replace('hover:bg-surface-container-low', 'bg-surface-container-lowest');
+                
+                manualTab.classList.replace('text-secondary', 'text-on-surface-variant');
+                manualTab.classList.replace('border-secondary', 'border-transparent');
+                manualTab.classList.add('hover:bg-surface-container-low');
+                manualTab.classList.remove('bg-surface-container-lowest');
+
+                uploadView.classList.replace('hidden', 'block');
+                manualView.classList.replace('block', 'hidden');
+            } else {
+                manualTab.classList.replace('text-on-surface-variant', 'text-secondary');
+                manualTab.classList.replace('border-transparent', 'border-secondary');
+                manualTab.classList.replace('hover:bg-surface-container-low', 'bg-surface-container-lowest');
+                
+                uploadTab.classList.replace('text-secondary', 'text-on-surface-variant');
+                uploadTab.classList.replace('border-secondary', 'border-transparent');
+                uploadTab.classList.add('hover:bg-surface-container-low');
+                uploadTab.classList.remove('bg-surface-container-lowest');
+
+                manualView.classList.replace('hidden', 'block');
+                uploadView.classList.replace('block', 'hidden');
+            }
+        }
+    </script>
+</body></html>

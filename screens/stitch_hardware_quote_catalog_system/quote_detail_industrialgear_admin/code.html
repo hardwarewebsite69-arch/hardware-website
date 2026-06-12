@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quote Detail - Amroz Traders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#484647",
+                        "surface-container-low": "#f1f4f3",
+                        "border-subtle": "#D1D5D4",
+                        "primary-container": "#333132",
+                        "on-primary-fixed": "#1d1b1c",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#ccc4c9",
+                        "surface-container": "#ebeeed",
+                        "surface-muted": "#EEF1F0",
+                        "on-primary-container": "#9d999a",
+                        "surface-variant": "#e0e3e2",
+                        "surface-tint": "#605e5f",
+                        "surface-container-high": "#e6e9e8",
+                        "tertiary": "#1d1d1d",
+                        "secondary-fixed": "#ffdad6",
+                        "on-surface": "#181c1c",
+                        "inverse-surface": "#2d3131",
+                        "primary-fixed": "#e6e1e2",
+                        "secondary-fixed-dim": "#ffb4ab",
+                        "on-secondary-container": "#600004",
+                        "tertiary-container": "#323232",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "caution-orange-red": "#C93831",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-secondary-fixed-variant": "#910a0f",
+                        "primary-fixed-dim": "#cac5c6",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#9a9a9a",
+                        "tertiary-fixed": "#e2e2e2",
+                        "primary": "#1e1c1d",
+                        "on-surface-variant": "#4a4549",
+                        "on-background": "#181c1c",
+                        "slate-industrial": "#333132",
+                        "secondary-container": "#fd5d52",
+                        "surface-bright": "#f7faf9",
+                        "on-secondary-fixed": "#410002",
+                        "surface": "#f7faf9",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "surface-dim": "#d7dbda",
+                        "background": "#f7faf9",
+                        "inverse-on-surface": "#eef1f0",
+                        "outline": "#7b7579",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e0e3e2",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#b32824",
+                        "inverse-primary": "#cac5c6",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "base": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface-muted');
+            color: theme('colors.on-surface');
+        }
+        /* Custom scrollbar for text areas */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-container-low');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.border-subtle');
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-primary dark:bg-surface-container-lowest border-r border-border-subtle dark:border-outline-variant flex-col py-margin-desktop z-20">
+<div class="px-gutter mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary dark:text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+                Amroz Traders
+            </h1>
+<p class="font-label-sm text-label-sm text-on-primary-container mt-1">Amroz Traders</p>
+</div>
+<ul class="flex flex-col gap-2 px-4 flex-1">
+<li><a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded-md hover:bg-primary-container dark:hover:bg-surface-variant transition-colors" href="#"><span class="material-symbols-outlined">dashboard</span> <span class="font-label-md text-label-md">Dashboard</span></a></li>
+<li><a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded-md hover:bg-primary-container dark:hover:bg-surface-variant transition-colors" href="#"><span class="material-symbols-outlined">inventory_2</span> <span class="font-label-md text-label-md">Products</span></a></li>
+<li><a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded-md hover:bg-primary-container dark:hover:bg-surface-variant transition-colors" href="#"><span class="material-symbols-outlined">category</span> <span class="font-label-md text-label-md">Categories</span></a></li>
+<li><a class="bg-secondary-container dark:bg-secondary-fixed text-on-secondary-container dark:text-on-secondary-fixed font-bold border-l-4 border-secondary flex items-center gap-base px-gutter py-base rounded-r-md" href="#"><span class="material-symbols-outlined">request_quote</span> <span class="font-label-md text-label-md">Quotes</span></a></li>
+<li><a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded-md hover:bg-primary-container dark:hover:bg-surface-variant transition-colors" href="#"><span class="material-symbols-outlined">perm_media</span> <span class="font-label-md text-label-md">Media Library</span></a></li>
+<li><a class="text-on-primary-container dark:text-on-surface-variant flex items-center gap-base px-gutter py-base rounded-md hover:bg-primary-container dark:hover:bg-surface-variant transition-colors mt-auto" href="#"><span class="material-symbols-outlined">settings</span> <span class="font-label-md text-label-md">Settings</span></a></li>
+</ul>
+</nav>
+<!-- TopAppBar -->
+<header class="hidden md:flex fixed top-0 right-0 left-64 h-16 bg-surface dark:bg-surface-dim border-b border-border-subtle dark:border-outline-variant justify-between items-center px-gutter w-[calc(100%-16rem)] z-10">
+<div class="flex items-center">
+<span class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant mr-4">Amroz Traders</span>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-1 border border-border-subtle rounded-md bg-surface-container-lowest text-sm focus:border-slate-industrial focus:ring-1 focus:ring-slate-industrial outline-none w-64" placeholder="Search catalog..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer active:opacity-80"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer active:opacity-80"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full md:pl-64 md:pt-16 max-w-container-max mx-auto p-margin-mobile md:p-margin-desktop bg-surface-muted">
+<!-- Header Section -->
+<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<a class="flex items-center text-on-surface-variant hover:text-primary transition-colors mb-2 font-label-sm text-label-sm uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-sm mr-1">arrow_back</span>
+                    Back to Quotes
+                </a>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary flex items-center gap-3">
+                    Quote #Q-8492
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-fixed text-on-secondary-container border border-secondary-fixed-dim">
+                        Pending
+                    </span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Received: Oct 12, 2023 - 09:41 AM</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-border-subtle bg-surface-container-lowest text-slate-industrial font-label-md text-label-md uppercase rounded hover:border-slate-industrial hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">print</span>
+                    Print
+                </button>
+<button class="px-4 py-2 bg-slate-industrial text-white font-label-md text-label-md uppercase rounded hover:bg-primary transition-colors shadow-sm">
+                    Mark as Viewed
+                </button>
+</div>
+</div>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- LEFT COLUMN: Customer Details & Request -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Customer Info Card -->
+<section class="bg-surface-container-lowest border border-border-subtle rounded-DEFAULT p-6 shadow-sm">
+<h3 class="font-headline-md text-headline-md text-primary mb-4 pb-2 border-b border-border-subtle">Customer Details</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Company / Contact</p>
+<p class="font-body-lg text-body-lg text-primary font-medium">BuildRight Construction</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Marcus Johnson, Lead Foreman</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Contact Methods</p>
+<div class="flex flex-col gap-2">
+<a class="font-body-md text-body-md text-slate-industrial hover:text-caution-orange-red transition-colors flex items-center gap-2" href="mailto:mjohnson@buildright.com">
+<span class="material-symbols-outlined text-sm">mail</span>
+                                    mjohnson@buildright.com
+                                </a>
+<div class="flex items-center gap-4">
+<span class="font-body-md text-body-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">call</span>
+                                        0713355507
+                                    </span>
+<button class="text-green-600 hover:text-green-700 flex items-center gap-1 text-sm font-medium transition-colors" title="Message on WhatsApp">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
+                                        WhatsApp
+                                    </button>
+</div>
+</div>
+</div>
+<div class="md:col-span-2 mt-2">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Shipping Address (Proposed)</p>
+<p class="font-body-md text-body-md text-primary">Site 4B, Industrial Park South, 10294 Riverside Dr, Metro City, ST 90210</p>
+</div>
+</div>
+</section>
+<!-- Requested Items List -->
+<section class="bg-surface-container-lowest border border-border-subtle rounded-DEFAULT shadow-sm overflow-hidden">
+<div class="p-6 border-b border-border-subtle bg-surface-bright flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary">Requested Items</h3>
+<span class="font-label-md text-label-md text-on-surface-variant">3 Items</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-industrial text-white border-b border-border-subtle">
+<th class="p-4 font-label-md text-label-md font-semibold w-12">#</th>
+<th class="p-4 font-label-md text-label-md font-semibold">Product Name / SKU</th>
+<th class="p-4 font-label-md text-label-md font-semibold w-24 text-center">Qty</th>
+<th class="p-4 font-label-md text-label-md font-semibold">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-border-subtle bg-surface-container-lowest hover:bg-surface-muted transition-colors">
+<td class="p-4 font-body-md text-body-md text-on-surface-variant">1</td>
+<td class="p-4">
+<p class="font-body-md text-body-md text-primary font-medium">Heavy Duty Steel Beams (I-Beam)</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">SKU: ST-IB-9021</p>
+</td>
+<td class="p-4 font-body-md text-body-md text-primary text-center font-semibold">120</td>
+<td class="p-4 font-body-md text-body-md text-on-surface-variant text-sm">Need cut to 12ft lengths.</td>
+</tr>
+<tr class="border-b border-border-subtle bg-surface-bright hover:bg-surface-muted transition-colors">
+<td class="p-4 font-body-md text-body-md text-on-surface-variant">2</td>
+<td class="p-4">
+<p class="font-body-md text-body-md text-primary font-medium">Industrial Anchor Bolts</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">SKU: HD-AB-304</p>
+</td>
+<td class="p-4 font-body-md text-body-md text-primary text-center font-semibold">5000</td>
+<td class="p-4 font-body-md text-body-md text-on-surface-variant text-sm">Galvanized finish required.</td>
+</tr>
+<tr class="border-b border-border-subtle bg-surface-container-lowest hover:bg-surface-muted transition-colors">
+<td class="p-4 font-body-md text-body-md text-on-surface-variant">3</td>
+<td class="p-4">
+<p class="font-body-md text-body-md text-primary font-medium">Concrete Sealant Pro-Grade</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">SKU: CH-CS-5G</p>
+</td>
+<td class="p-4 font-body-md text-body-md text-primary text-center font-semibold">15</td>
+<td class="p-4 font-body-md text-body-md text-on-surface-variant text-sm">5-Gallon buckets.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Uploaded File Preview -->
+<section class="bg-surface-container-lowest border border-border-subtle rounded-DEFAULT p-6 shadow-sm flex items-center gap-4 hover:border-slate-industrial transition-colors cursor-pointer group">
+<div class="w-16 h-16 bg-error-container text-secondary flex items-center justify-center rounded-DEFAULT group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-primary font-bold">Material_List_Oct.pdf</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Uploaded 2 hours ago • 2.4 MB</p>
+</div>
+<button class="text-slate-industrial hover:text-caution-orange-red transition-colors p-2" title="Download File">
+<span class="material-symbols-outlined">download</span>
+</button>
+</section>
+</div>
+<!-- RIGHT COLUMN: Management & Response -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Management Panel -->
+<section class="bg-surface-container-lowest border border-border-subtle rounded-DEFAULT shadow-sm sticky top-24">
+<div class="p-6 border-b border-border-subtle bg-surface-bright">
+<h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">manage_accounts</span>
+                            Quote Management
+                        </h3>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Status Update -->
+<div>
+<label class="block font-label-md text-label-md text-primary mb-2" for="status">Current Status</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface border border-border-subtle text-primary font-body-md text-body-md rounded p-3 pr-10 focus:outline-none focus:border-slate-industrial focus:ring-1 focus:ring-slate-industrial transition-colors" id="status">
+<option selected="" value="pending">Pending Review</option>
+<option value="processing">Processing Estimations</option>
+<option value="responded">Responded / Awaiting Client</option>
+<option value="approved">Approved (Converted to Order)</option>
+<option value="rejected">Rejected / Cancelled</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Internal Notes -->
+<div>
+<label class="block font-label-md text-label-md text-primary mb-2" for="internal_notes">Internal Notes (Not visible to client)</label>
+<textarea class="w-full bg-surface-container-low border border-border-subtle text-primary font-body-md text-body-md rounded p-3 focus:outline-none focus:border-slate-industrial focus:ring-1 focus:ring-slate-industrial transition-colors resize-y" id="internal_notes" placeholder="E.g., Check inventory for I-Beams before responding..." rows="3"></textarea>
+</div>
+<!-- Response Message Field -->
+<div class="border-t border-border-subtle pt-6">
+<label class="block font-label-md text-label-md text-primary mb-2" for="response_msg">Draft Response to Client</label>
+<div class="border border-border-subtle rounded overflow-hidden focus-within:border-slate-industrial focus-within:ring-1 focus-within:ring-slate-industrial transition-colors">
+<!-- Fake Rich Text Toolbar -->
+<div class="bg-surface-muted border-b border-border-subtle p-2 flex gap-2 items-center">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-sm">format_bold</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary rounded hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-sm">format_italic</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary rounded hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-sm">format_list_bulleted</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary rounded hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-sm">attach_file</span></button>
+</div>
+<textarea class="w-full bg-surface-container-lowest border-none text-primary font-body-md text-body-md p-3 focus:outline-none focus:ring-0 resize-y" id="response_msg" placeholder="Type your formal quote response here..." rows="6"></textarea>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3 pt-4">
+<button class="w-full py-3 bg-caution-orange-red text-white font-label-md text-label-md uppercase font-bold rounded hover:bg-secondary transition-colors shadow-sm flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">send</span>
+                                Send Response via Email
+                            </button>
+<button class="w-full py-3 bg-transparent border border-slate-industrial text-slate-industrial font-label-md text-label-md uppercase font-bold rounded hover:bg-surface-variant transition-colors flex justify-center items-center gap-2">
+<svg class="w-4 h-4 fill-current text-green-600" viewbox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
+                                Send via WhatsApp
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

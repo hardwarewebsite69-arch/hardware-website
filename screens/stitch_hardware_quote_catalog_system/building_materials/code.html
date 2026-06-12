@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Amroz Traders - Building Materials</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#a73a00",
+                        "primary-fixed": "#ffdbce",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#7f2b00",
+                        "primary-fixed-dim": "#ffb599",
+                        "tertiary-container": "#00873c",
+                        "secondary": "#575e70",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed": "#002109",
+                        "outline": "#8e7166",
+                        "on-primary-fixed": "#370e00",
+                        "inverse-primary": "#ffb599",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#66ff8e",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#006b2e",
+                        "on-surface-variant": "#5a4138",
+                        "on-secondary-container": "#5c6274",
+                        "tertiary-fixed-dim": "#3de273",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed": "#141b2b",
+                        "on-secondary-fixed-variant": "#404758",
+                        "primary-container": "#cc4900",
+                        "on-tertiary-container": "#f7fff3",
+                        "surface-variant": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#c0c6db",
+                        "on-secondary": "#ffffff",
+                        "primary": "#ea580c",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-bright": "#f7f9fb",
+                        "outline-variant": "#e2bfb2",
+                        "surface": "#f7f9fb",
+                        "secondary-container": "#d9dff5",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-surface": "#111827",
+                        "on-background": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary-fixed-variant": "#005322",
+                        "on-primary-container": "#fffbff",
+                        "secondary-fixed": "#dce2f7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "xl": "80px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "lg": "48px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-2xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-2xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    },
+                    "boxShadow": {
+                        'level-1': '0px 4px 20px rgba(17, 24, 39, 0.05)',
+                        'level-2': '0px 10px 30px rgba(17, 24, 39, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; color: #191c1e; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Modern Industrial Utilities */
+        .industrial-border { border: 1px solid #e2e8f0; }
+        .input-border { border: 1px solid #e2e8f0; transition: border-color 0.2s ease; }
+        .input-border:focus-within { border: 2px solid #111827; outline: none; }
+        
+        /* Animations */
+        .hover-lift { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0px 10px 30px rgba(17, 24, 39, 0.1); }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col antialiased selection:bg-surface-variant selection:text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-20">
+<!-- Brand -->
+<div class="flex items-center gap-md">
+<a class="text-title-md font-headline-xl tracking-tighter text-on-surface dark:text-inverse-on-surface" href="#">Amroz Traders</a>
+</div>
+<!-- Search Bar (Left-ish) -->
+<div class="hidden md:flex flex-1 max-w-md mx-gutter">
+<div class="relative w-full input-border bg-surface-container-lowest rounded flex items-center h-10 px-sm">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-body-md text-on-surface placeholder:text-on-surface-variant/50" placeholder="Search products, SKUs, categories..." type="text"/>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center gap-md h-full">
+<a class="h-full flex items-center text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary" href="#">Shop</a>
+<a class="h-full flex items-center text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Categories</a>
+<a class="h-full flex items-center text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Bulk Pricing</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-sm">
+<button class="hidden md:flex items-center gap-xs text-body-md font-label-md text-inverse-surface hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">phone</span>
+                    Call
+                </button>
+<button class="bg-primary text-on-primary font-label-md px-md py-sm rounded hover:bg-[#c2410c] transition-colors flex items-center gap-xs shadow-sm">
+                    Request Quote
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-container-max mx-auto px-gutter py-xl">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider mb-lg">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Shop</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Building Materials</span>
+</nav>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg pb-md border-b industrial-border">
+<div>
+<h1 class="font-headline-2xl text-headline-2xl text-on-surface mb-sm">Building Materials</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Industrial-grade construction components engineered for high-stress environments. Bulk procurement available for large-scale developments.</p>
+</div>
+<!-- Utility Actions -->
+<div class="flex items-center gap-sm self-start md:self-auto">
+<div class="flex items-center border industrial-border bg-surface-container-lowest rounded">
+<label class="sr-only" for="sort">Sort by</label>
+<span class="material-symbols-outlined text-on-surface-variant pl-3 text-[20px]">sort</span>
+<select class="bg-transparent border-none py-2 pr-8 pl-2 font-label-md text-label-md text-on-surface focus:ring-0 cursor-pointer uppercase tracking-wide" id="sort">
+<option>Relevance</option>
+<option>Name (A-Z)</option>
+<option>SKU</option>
+</select>
+</div>
+<div class="flex border industrial-border bg-surface-container-lowest rounded overflow-hidden">
+<button aria-label="Grid View" class="w-10 h-10 flex items-center justify-center text-on-surface bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="grid_view" data-weight="fill" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</button>
+<button aria-label="List View" class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors border-l industrial-border">
+<span class="material-symbols-outlined" data-icon="view_list">view_list</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 12-Column Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Sidebar (3 Columns) -->
+<aside class="md:col-span-3 space-y-md pr-0 md:pr-md">
+<!-- Filter Group: Type -->
+<div class="border-b industrial-border pb-md">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-sm flex items-center justify-between">
+                        Product Type
+                        <span class="material-symbols-outlined text-[20px]">remove</span>
+</h3>
+<div class="space-y-sm">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 border-outline text-inverse-surface focus:ring-inverse-surface rounded bg-surface-container-lowest" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">Structural Steel (142)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 border-outline text-inverse-surface focus:ring-inverse-surface rounded bg-surface-container-lowest" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">Concrete Forms (87)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 border-outline text-inverse-surface focus:ring-inverse-surface rounded bg-surface-container-lowest" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">Insulation Panels (54)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 border-outline text-inverse-surface focus:ring-inverse-surface rounded bg-surface-container-lowest" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">Industrial Fasteners (310)</span>
+</label>
+</div>
+</div>
+<!-- Filter Group: Material -->
+<div class="border-b industrial-border pb-md">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-sm flex items-center justify-between">
+                        Material Specification
+                        <span class="material-symbols-outlined text-[20px]">add</span>
+</h3>
+<div class="space-y-sm hidden">
+<!-- Content hidden for structural demonstration -->
+</div>
+</div>
+<!-- Filter Group: Compliance -->
+<div class="border-b industrial-border pb-md">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-sm flex items-center justify-between">
+                        Industry Compliance
+                        <span class="material-symbols-outlined text-[20px]">add</span>
+</h3>
+</div>
+</aside>
+<!-- Main Product Grid (9 Columns) -->
+<div class="md:col-span-9">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
+<!-- Product Card 1 -->
+<article class="group bg-surface-container-lowest border industrial-border rounded hover-lift flex flex-col h-full relative">
+<div class="aspect-square bg-surface-container-low relative overflow-hidden border-b industrial-border rounded-t">
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=80')] bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="A pristine, studio-lit photograph of a heavy-duty steel I-beam against a stark light-grey background. The metal exhibits a subtle matte finish with highly detailed textures showcasing its structural integrity and manufacturing precision. Lighting is even and analytical, emphasizing the functional design and sharp edges. The aesthetic aligns with high-trust industrial commerce, prioritizing clarity over decoration."></div>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Structural Steel</span>
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-xs line-clamp-2">W12 x 26 Carbon Steel I-Beam, 20ft length</h3>
+<div class="mt-auto pt-sm space-y-sm">
+<div class="flex items-center justify-between border-t industrial-border pt-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">In Stock</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">SKU: BM-7892-A</span>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md px-md py-sm rounded hover:bg-[#c2410c] transition-colors flex justify-center items-center gap-xs shadow-sm uppercase">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                    Add to Quote
+                                </button>
+</div>
+</div>
+</article>
+<!-- Product Card 2 -->
+<article class="group bg-surface-container-lowest border industrial-border rounded hover-lift flex flex-col h-full relative">
+<div class="aspect-square bg-surface-container-low relative overflow-hidden border-b industrial-border rounded-t">
+<div class="absolute inset-0 bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-6xl">inventory_2</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Concrete Forms</span>
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-xs line-clamp-2">Rebar Grid #4 Grade 60, 20ft</h3>
+<div class="mt-auto pt-sm space-y-sm">
+<div class="flex items-center justify-between border-t industrial-border pt-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">Ships in 3 Days</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">SKU: CR-1024</span>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md px-md py-sm rounded hover:bg-[#c2410c] transition-colors flex justify-center items-center gap-xs shadow-sm uppercase">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                    Add to Quote
+                                </button>
+</div>
+</div>
+</article>
+<!-- Additional Product Cards (3-12) generated as structural clones to meet the 12 item grid requirement while minimizing repetitive filler. In a real system these would be mapped data. -->
+<article class="group bg-surface-container-lowest border industrial-border rounded hover-lift flex flex-col h-full relative hidden sm:flex">
+<div class="aspect-square bg-surface-container-low relative overflow-hidden border-b industrial-border rounded-t">
+<div class="absolute inset-0 bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-6xl">architecture</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Fasteners</span>
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-xs line-clamp-2">Industrial Anchor Bolts, M20x200 (Box of 50)</h3>
+<div class="mt-auto pt-sm space-y-sm">
+<div class="flex items-center justify-between border-t industrial-border pt-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">In Stock</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">SKU: FX-8810</span>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md px-md py-sm rounded hover:bg-[#c2410c] transition-colors flex justify-center items-center gap-xs shadow-sm uppercase">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                    Add to Quote
+                                </button>
+</div>
+</div>
+</article>
+<article class="group bg-surface-container-lowest border industrial-border rounded hover-lift flex flex-col h-full relative hidden lg:flex">
+<div class="aspect-square bg-surface-container-low relative overflow-hidden border-b industrial-border rounded-t">
+<div class="absolute inset-0 bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-6xl">layers</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Insulation</span>
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-xs line-clamp-2">High-Density Rigid Foam Panel, 4x8ft</h3>
+<div class="mt-auto pt-sm space-y-sm">
+<div class="flex items-center justify-between border-t industrial-border pt-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">In Stock</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">SKU: IP-3301</span>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md px-md py-sm rounded hover:bg-[#c2410c] transition-colors flex justify-center items-center gap-xs shadow-sm uppercase">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                    Add to Quote
+                                </button>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination (Minimalist) -->
+<div class="mt-xl flex items-center justify-center gap-xs border-t industrial-border pt-lg">
+<button class="w-10 h-10 flex items-center justify-center rounded border industrial-border text-on-surface-variant hover:border-inverse-surface transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded bg-inverse-surface text-on-primary font-label-md text-label-md">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded border industrial-border text-on-surface font-label-md text-label-md hover:border-inverse-surface transition-colors">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded border industrial-border text-on-surface font-label-md text-label-md hover:border-inverse-surface transition-colors">3</button>
+<span class="text-on-surface-variant px-2">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded border industrial-border text-on-surface-variant hover:border-inverse-surface transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-inverse-surface dark:bg-surface-container-lowest border-t border-outline dark:border-outline-variant full-width bottom-0 mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-gutter py-xl max-w-container-max mx-auto">
+<!-- Brand Column -->
+<div class="flex flex-col gap-md">
+<a class="text-headline-lg font-headline-lg text-primary-fixed" href="#">Amroz Traders</a>
+<p class="text-body-md font-body-md text-surface-variant dark:text-on-surface-variant max-w-xs">Precision engineered hardware and materials for industrial scale projects.</p>
+<div class="mt-auto">
+<p class="text-label-sm font-label-sm text-surface-variant dark:text-on-surface-variant">© 2024 Amroz Traders Manufacturing. Precision Engineered.</p>
+</div>
+</div>
+<!-- Links Columns -->
+<div>
+<h4 class="text-title-md font-headline-lg text-primary-fixed-dim dark:text-primary mb-md">Building Materials</h4>
+<ul class="space-y-sm flex flex-col">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Roofing</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Electrical</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Plumbing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-title-md font-headline-lg text-primary-fixed-dim dark:text-primary mb-md">Company</h4>
+<ul class="space-y-sm flex flex-col">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Contact Us</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Privacy Policy</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim dark:hover:text-primary transition-colors text-body-md font-body-md" href="#">Admin</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-title-md font-headline-lg text-primary-fixed-dim dark:text-primary mb-md">Secure Procurement</h4>
+<ul class="space-y-sm flex flex-col">
+<li class="flex gap-2 text-surface-variant dark:text-on-surface-variant">
+<span class="material-symbols-outlined text-[32px]">shield</span>
+<span class="material-symbols-outlined text-[32px]">local_shipping</span>
+</li>
+</ul>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Amroz Traders - Product Detail</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700&amp;family=Hanken+Grotesk:wght@400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e9e8",
+                    "surface-container": "#ebeeed",
+                    "on-secondary-container": "#600004",
+                    "on-surface-variant": "#4a4549",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "error": "#ba1a1a",
+                    "slate-industrial": "#333132",
+                    "primary-fixed-dim": "#cac5c6",
+                    "on-primary-fixed-variant": "#484647",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#333132",
+                    "secondary-fixed": "#ffdad6",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#181c1c",
+                    "on-primary-fixed": "#1d1b1c",
+                    "inverse-on-surface": "#eef1f0",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "on-primary-container": "#9d999a",
+                    "inverse-surface": "#2d3131",
+                    "surface-bright": "#f7faf9",
+                    "surface": "#f7faf9",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "caution-orange-red": "#C93831",
+                    "on-background": "#181c1c",
+                    "surface-muted": "#EEF1F0",
+                    "border-subtle": "#D1D5D4",
+                    "inverse-primary": "#cac5c6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "outline": "#7b7579",
+                    "surface-container-low": "#f1f4f3",
+                    "surface-dim": "#d7dbda",
+                    "on-secondary-fixed-variant": "#910a0f",
+                    "tertiary-container": "#323232",
+                    "on-tertiary-container": "#9a9a9a",
+                    "surface-container-highest": "#e0e3e2",
+                    "surface-variant": "#e0e3e2",
+                    "primary": "#1e1c1d",
+                    "surface-tint": "#605e5f",
+                    "tertiary-fixed": "#e2e2e2",
+                    "tertiary": "#1d1d1d",
+                    "background": "#f7faf9",
+                    "outline-variant": "#ccc4c9",
+                    "on-secondary-fixed": "#410002",
+                    "primary-fixed": "#e6e1e2",
+                    "secondary-fixed-dim": "#ffb4ab",
+                    "secondary": "#b32824",
+                    "secondary-container": "#fd5d52"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Hanken Grotesk"],
+                    "label-md": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                    "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                    "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                    "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface w-full top-0 border-b border-border-subtle sticky z-50">
+<div class="flex items-center justify-between px-margin-desktop py-4 w-full max-w-container-max mx-auto">
+<!-- Brand & Search Left -->
+<div class="flex items-center gap-8 flex-1">
+<a class="font-headline-lg text-headline-lg font-bold text-slate-industrial" href="#">
+                    Amroz Traders
+                </a>
+<div class="hidden md:flex relative max-w-xs w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-border-subtle text-body-md font-body-md py-2 pl-10 pr-4 focus:border-slate-industrial focus:border-2 focus:ring-0 focus:outline-none transition-all placeholder:text-on-surface-variant" placeholder="Search SKU or Keyword..." type="text"/>
+</div>
+</div>
+<!-- Navigation Links Center -->
+<nav class="hidden lg:flex items-center gap-8 justify-center flex-1">
+<a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Categories</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Bulk Pricing</a>
+</nav>
+<!-- Actions Right -->
+<div class="flex items-center gap-4 justify-end flex-1">
+<button class="hidden md:flex items-center gap-2 font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px]">call</span>
+                    Call
+                </button>
+<button class="bg-slate-industrial text-on-primary font-label-md text-label-md px-6 py-2 uppercase hover:bg-surface-container-low hover:text-slate-industrial border border-slate-industrial transition-colors duration-200 active:opacity-80 active:scale-95">
+                    Request Quote
+                </button>
+<button aria-label="chat" class="flex items-center justify-center p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 rounded-full active:opacity-80 active:scale-95">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12 flex flex-col gap-12 md:gap-16">
+<!-- Breadcrumb -->
+<nav class="flex text-label-sm font-label-sm text-on-surface-variant mb-[-16px]">
+<ol class="flex items-center space-x-2">
+<li><a class="hover:text-primary transition-colors" href="#">Home</a></li>
+<li><span class="material-symbols-outlined text-[14px]">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Heavy Machinery Components</a></li>
+<li><span class="material-symbols-outlined text-[14px]">chevron_right</span></li>
+<li class="text-slate-industrial">H-700 High-Torque Gearbox</li>
+</ol>
+</nav>
+<!-- Product Core Section (Two Column Grid) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Image Gallery (Left, spans 7 cols on desktop) -->
+<div class="lg:col-span-7 flex flex-col gap-4">
+<div class="bg-surface-container-lowest border border-border-subtle aspect-[4/3] w-full relative overflow-hidden group">
+<img alt="H-700 Gearbox Main" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out" data-alt="A highly detailed close-up of a heavy-duty gearbox component sitting in a brightly lit, modern engineering facility. The metallic surfaces are pristine, reflecting crisp white studio lighting that highlights the precision engineering. The color palette is dominated by sleek greys, stark whites, and subtle hints of caution red on the housing seals. The image conveys extreme durability and technical precision in a clean, light-mode environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7FwzmORRxouQqA6hET2h47ZsBTI_4IfKrDGfW60Y4FGlKsvxkjyDZEbxGcyse32pNk4OXEjpk2xATuDIvgZBWGTQjv4JosC6CWU4xFQPmsydudT3sFWioll6em43zMEFkudH45OssaI1bXenynr20Dnb_KUBYemKtQ-WtyGWcWFZth0BylMPxgU2bESDf8kIFzZBBPjqkiFv6Xpv-Z2B5O64Bi1OkILGv5fz0Px6ra8GkCXsvwBh0Fom2BFo-cF68X_FWbFkRKg"/>
+<button class="absolute top-4 right-4 bg-surface-container-lowest p-2 border border-border-subtle hover:border-slate-industrial transition-colors text-on-surface-variant hover:text-slate-industrial">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+</div>
+<!-- Thumbnails -->
+<div class="grid grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest border-2 border-slate-industrial aspect-square w-full cursor-pointer">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" data-alt="Thumbnail view of a precision-machined industrial steel gear, isolated on a stark white background. High-key lighting emphasizes the sharp metallic edges and structural integrity of the part." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIKR4bS_hftluQ20dhbUVMIar6WeoXQ2J8Bwte5ClkoECw20n6ALkYJwJPtjoi8JdASH5R26FRibik2-oRg58KLj2mjI_CFpJkAhuiBM0P-c-UGkajpn3MSZwKy4ObNaoOmCUYjUPJzlIMnDHVjw4pG_ZBKdQOdgOthqWMMGS71kChh2O0ZFxzEwRLZhDFvaUhElXqSL153rKBjZvLglW-fhkK0t3Clb20Xx8nQDe2ttN7-zlwHQvx8IdsCocICnxhB84hSBBaBw"/>
+</div>
+<div class="bg-surface-container-lowest border border-border-subtle hover:border-slate-industrial transition-colors aspect-square w-full cursor-pointer opacity-70 hover:opacity-100">
+<img alt="Thumbnail 2" class="w-full h-full object-cover" data-alt="Thumbnail view of the internal mechanism of an gearbox, showcasing interlocking cogs. The lighting is bright and clinical, emphasizing the clean, lubricated metal surfaces against a light grey industrial background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT1UQN5-MWB0jNQvxJn6uMb8yKkviSd1hS4aBKJOd2411oA8yAq16pS1lJnBpwMkKLT2L7XukYIlRBP3RvVeQZmCJjZ2F03O9q9dPA2NwoylI8YmIoi-oxZiWyqMzrZ_Yniz5LdUhXkigofw2lL9oaLv0ZoWpHdRfhKL_aio5zdNgykM6rhvJpx5ztkoKbECU5Q6u2ZXgj-IsQa9t94RS0muJ6RvKU4L4GSs9VgC__SyQDXYgoEwPxybnn5FdYIS8p4JUQdeUvpw"/>
+</div>
+<div class="bg-surface-container-lowest border border-border-subtle hover:border-slate-industrial transition-colors aspect-square w-full cursor-pointer opacity-70 hover:opacity-100">
+<img alt="Thumbnail 3" class="w-full h-full object-cover" data-alt="Thumbnail showing a technical schematic blueprint overlaying an industrial hardware component. The scene uses a bright white and light grey palette with sharp, clean lines conveying engineering accuracy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbkqBPgUOZTrU18VzYrWJqe0QQjWPBAyrsANJTlTbo9z0GuldPKMm1GX1CB9BQVnJWVod3kqKzvZg2_dI_4ncZEM1cRI2OWjkgXxDiS7PJP-rbxyoj-IbE_3hPULY_uoIciARumLaeBHuE7kGBsWki9311DraCfYuL82oO2pgKIvh2FfIHVxY7C1akP-QmNQyNSB7e1QN0T_xKHNjkNb6mi-cbnaQAEriPkUMy5F3spfbdCak73r0uwOXiE-MfvevbC_S0J0MwtA"/>
+</div>
+<div class="bg-surface-container-lowest border border-border-subtle hover:border-slate-industrial transition-colors flex items-center justify-center aspect-square w-full cursor-pointer opacity-70 hover:opacity-100 bg-surface-container-low text-on-surface-variant flex-col gap-1">
+<span class="material-symbols-outlined">play_circle</span>
+<span class="font-label-sm text-label-sm">Video</span>
+</div>
+</div>
+</div>
+<!-- Product Info & Actions (Right, spans 5 cols on desktop) -->
+<div class="lg:col-span-5 flex flex-col">
+<div class="border-b border-border-subtle pb-6 mb-6 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Powertrain Systems</span>
+<span class="bg-surface-container-low text-slate-industrial border border-border-subtle px-2 py-1 font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> In Stock (Bulk)
+                        </span>
+</div>
+<h1 class="font-display-lg text-display-lg text-slate-industrial md:text-display-lg text-headline-lg-mobile">
+                        H-700 High-Torque gearbox
+                    </h1>
+<div class="font-label-md text-label-md text-on-surface-variant flex items-center gap-4">
+<span>SKU: IG-HTG-700-X</span>
+<span class="w-1 h-1 rounded-full bg-border-subtle block"></span>
+<span>Mfr: Atlas Precision</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+                        Engineered for continuous heavy-duty operations in harsh environments. The H-700 features precision-machined helical gears, triple-sealed bearings, and a cast-iron housing designed for maximum heat dissipation and load endurance.
+                    </p>
+</div>
+<!-- CTAs -->
+<div class="flex flex-col gap-4 mb-8">
+<!-- Pricing Placeholder replacing actual price -->
+<div class="bg-surface-container-low border border-border-subtle p-4 flex flex-col gap-2 mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Pricing Structure</span>
+<p class="font-body-md text-body-md text-slate-industrial">Dynamic pricing applied based on volume tiers. Minimum order quantity: 5 units.</p>
+</div>
+<button class="w-full bg-caution-orange-red text-on-primary font-label-md text-label-md uppercase tracking-widest py-4 hover:bg-on-secondary-container transition-colors flex items-center justify-center gap-2">
+                        Request Bulk Pricing
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full border-2 border-slate-industrial text-slate-industrial font-label-md text-label-md uppercase tracking-widest py-4 hover:bg-slate-industrial hover:text-on-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">playlist_add</span>
+                        Add to Quote
+                    </button>
+</div>
+<!-- Quick Specs List -->
+<ul class="flex flex-col gap-3 font-body-md text-body-md text-on-surface-variant">
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-slate-industrial">verified_user</span> ISO 9001 Certified Manufacturing</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-slate-industrial">local_shipping</span> Freight delivery available nationwide</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-slate-industrial">description</span> Full CAD models and documentation included</li>
+</ul>
+</div>
+</section>
+<!-- Technical Specifications Table -->
+<section class="mt-8 border border-border-subtle bg-surface-container-lowest">
+<div class="bg-slate-industrial px-6 py-4 border-b border-border-subtle flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-on-primary">Technical Specifications</h2>
+<button class="text-on-primary font-label-sm text-label-sm flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[16px]">download</span> PDF Spec Sheet
+                </button>
+</div>
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<tbody class="font-body-md text-body-md text-slate-industrial">
+<tr class="bg-surface-container-lowest border-b border-border-subtle">
+<th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant w-1/3">Max Torque Output</th>
+<td class="py-4 px-6">14,500 Nm</td>
+</tr>
+<tr class="bg-surface-container-low border-b border-border-subtle">
+<th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Gear Ratio</th>
+<td class="py-4 px-6">25.5:1 (Standard configuration)</td>
+</tr>
+<tr class="bg-surface-container-lowest border-b border-border-subtle">
+<th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Housing Material</th>
+<td class="py-4 px-6">Ductile Iron (ASTM A536)</td>
+</tr>
+<tr class="bg-surface-container-low border-b border-border-subtle">
+<th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Lubrication System</th>
+<td class="py-4 px-6">Splash lubricated with optional forced circulation pump</td>
+</tr>
+<tr class="bg-surface-container-lowest">
+<th class="py-4 px-6 font-label-md text-label-md text-on-surface-variant">Operating Temp Range</th>
+<td class="py-4 px-6">-20°C to +85°C (-4°F to 185°F)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Related Products (Cross-sell) -->
+<section class="mt-8 flex flex-col gap-6">
+<h3 class="font-headline-md text-headline-md text-slate-industrial pb-2 border-b-2 border-slate-industrial inline-block self-start">Frequently Bought Together</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-border-subtle group hover:border-slate-industrial transition-colors flex flex-col h-full cursor-pointer">
+<div class="aspect-square w-full border-b border-border-subtle overflow-hidden bg-surface-muted p-4">
+<img alt="Flange Coupling" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" data-alt="A clean, well-lit product shot of an industrial flange coupling. The steel component is positioned against a sterile white background, highlighting its machined bolt holes and rugged construction. The image embodies industrial reliability and precise engineering standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPSm0lLrY6VqPwmvL9fJUFpMPZwQLz7UBym5ATDaeTl0okRHfXVyAQGDHi6RH8WpdKdPfCfULRfEId21yU2b_VxpHUFtkYb0zG0lHcL2u97w5TLt-l5H4O5UlgV2MB3EN6h2n1mIDngf8UgCBX7ry2-SqJrpsZdsc70fCUUTTI-H41-Q7WgarDjv0oKKdhZq9OIiUzcLJbFRfl2aR590qIDXa0dMlRuyKa03NdWjKETD_Gnk1xWhKw-fBHaSvhBlPrHfDfwTHW0g"/>
+</div>
+<div class="p-4 flex flex-col flex-grow gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Couplings &amp; Joints</span>
+<h4 class="font-headline-md text-[18px] text-slate-industrial leading-tight flex-grow">FC-200 Heavy Duty Flange Coupling</h4>
+<div class="font-label-sm text-label-sm text-on-surface-variant pt-2 border-t border-border-subtle flex justify-between">
+<span>SKU: IG-CPL-200</span>
+<span class="text-secondary">In Stock</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-border-subtle group hover:border-slate-industrial transition-colors flex flex-col h-full cursor-pointer">
+<div class="aspect-square w-full border-b border-border-subtle overflow-hidden bg-surface-muted p-4">
+<img alt="Synthetic Lubricant" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" data-alt="A high-quality image of industrial synthetic lubricating oil in a transparent, rugged technical container. The background is a bright, clinical workspace. The oil's golden hue contrasts sharply with the stark white environment, communicating high performance and essential maintenance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfk3tevSngO3ZpWV_cobOoKjp8EBBhyt7nrLy2iQf6yNib9Wi8ZBmEbyprdFrXGVPaY2Kz9W6uL1wNq-J4sdOizNGom2cNYmPimmxlPbJV_UVT1e2Gvqjq47TwE37E9fi-lbVaDi6KjJkgbKWPRXLAg8FB6xIg8QkGodxAtnXEf44WE05nfpaOrYEDupbxxS_7XtoqWcKPHyWztlBcQXYjw8ZbyGL55bERhzYisQD-DuF5t85wv073p4rrtWRqHTSbgr-rp78wFA"/>
+</div>
+<div class="p-4 flex flex-col flex-grow gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Maintenance &amp; Fluids</span>
+<h4 class="font-headline-md text-[18px] text-slate-industrial leading-tight flex-grow">SynTherm ISO 220 Gear Oil (5 Gal)</h4>
+<div class="font-label-sm text-label-sm text-on-surface-variant pt-2 border-t border-border-subtle flex justify-between">
+<span>SKU: IG-LUB-220-5G</span>
+<span class="text-secondary">In Stock</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-border-subtle group hover:border-slate-industrial transition-colors flex flex-col h-full cursor-pointer">
+<div class="aspect-square w-full border-b border-border-subtle overflow-hidden bg-surface-muted p-4">
+<img alt="Mounting Hardware Kit" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" data-alt="A precise, detailed photograph of heavy-duty industrial mounting bolts and washers. They are arranged systematically on a bright, light-grey surface. The sharp focus emphasizes the threading and metallic finish, reinforcing the theme of high-trust hardware." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWAmsklaG4fNO2y7ELUDAuITvVUThgeJTntnQN5eYZSkpRpQCBOQdvERdv1CUPdQAZHV7vaj0cUoPLKPs3FwrB2WpoJzziRwjwkJvDFqcDC01KPe2ufDBE6SNuBw7tUUD76inrX9u2pTWGHl5Mdy55rDav8x7ds5_THKsjrSMBdub60XaIQbTowIrA2ZS7lY5IZYNZZB_pfg9KsmdP7-IopPZvtO-wr_ZEGkvF6DW1eMilwO4QORzkR6_J0jQikJGmyX5Z21exOQ"/>
+</div>
+<div class="p-4 flex flex-col flex-grow gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Fasteners &amp; Hardware</span>
+<h4 class="font-headline-md text-[18px] text-slate-industrial leading-tight flex-grow">Grade 8 Structural Mounting Kit (M24)</h4>
+<div class="font-label-sm text-label-sm text-on-surface-variant pt-2 border-t border-border-subtle flex justify-between">
+<span>SKU: IG-FAS-M24-K</span>
+<span class="text-secondary">In Stock</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest border border-border-subtle group hover:border-slate-industrial transition-colors flex flex-col h-full cursor-pointer hidden md:flex">
+<div class="aspect-square w-full border-b border-border-subtle overflow-hidden bg-surface-muted p-4 flex items-center justify-center">
+<span class="material-symbols-outlined text-[64px] text-border-subtle">inventory_2</span>
+</div>
+<div class="p-4 flex flex-col flex-grow gap-2 items-center justify-center text-center bg-surface-container-low">
+<h4 class="font-headline-md text-[18px] text-slate-industrial leading-tight">View All Powertrain Accessories</h4>
+<button class="mt-2 text-slate-industrial font-label-md text-label-md border-b border-slate-industrial flex items-center gap-1">
+                            Browse Catalog <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-slate-industrial w-full bottom-0 mt-auto">
+<div class="w-full px-margin-desktop py-12 grid grid-cols-2 md:grid-cols-4 gap-gutter max-w-container-max mx-auto text-on-primary">
+<!-- Brand Column -->
+<div class="col-span-2 md:col-span-1 flex flex-col gap-4">
+<span class="font-headline-md text-headline-md text-on-primary">Amroz Traders</span>
+<p class="font-body-md text-body-md text-on-primary-container">
+                    © 2024 Amroz Traders Manufacturing. High-Trust Amroz Traders.
+                </p>
+</div>
+<!-- Links Column 1 -->
+<div class="flex flex-col gap-3">
+<h4 class="font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider mb-2">Categories</h4>
+<a class="font-body-md text-body-md text-on-primary-container hover:text-on-primary hover:underline transition-all" href="#">Building Materials</a>
+<a class="font-body-md text-body-md text-on-primary-container hover:text-on-primary hover:underline transition-all" href="#">Roofing</a>
+<a class="font-body-md text-body-md text-on-primary-container hover:text-on-primary hover:underline transition-all" href="#">Electrical</a>
+<a class="font-body-md text-body-md text-on-primary-container hover:text-on-primary hover:underline transition-all" href="#">Plumbing</a>
+</div>
+<!-- Links Column 2 -->
+<div class="flex flex-col gap-3">
+<h4 class="font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider mb-2">Support</h4>
+<a class="font-body-md text-body-md text-on-primary-container hover:text-on-primary hover:underline transition-all" href="#">Contact Us</a>
+<a class="font-body-md text-body-md text-on-primary-container hover:text-on-primary hover:underline transition-all" href="#">Privacy Policy</a>
+</div>
+<!-- Links Column 3 -->
+<div class="flex flex-col gap-3">
+<h4 class="font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider mb-2">System</h4>
+<a class="font-body-md text-body-md text-on-primary-container hover:text-on-primary hover:underline transition-all" href="#">Admin</a>
+</div>
+</div>
+</footer>
+</body></html>
