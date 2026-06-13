@@ -21,7 +21,7 @@ export function Footer() {
             <ul className="flex flex-col gap-3">
               <li className="flex items-start gap-1 text-base leading-6 text-[#e0e3e5]">
                 <span className="material-symbols-outlined mt-1 text-sm">location_on</span>
-                <span>123 Industrial Way, Nairobi, Kenya</span>
+                <span>Tarasaa Trading Center, Kenya</span>
               </li>
               <li className="flex items-center gap-1 text-base leading-6 text-[#e0e3e5]">
                 <span className="material-symbols-outlined text-sm">phone</span>

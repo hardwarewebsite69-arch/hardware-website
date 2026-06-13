@@ -34,7 +34,7 @@ export async function getProducts(): Promise<Product[]> {
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active")
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
     .eq("is_active", true)
     .order("name");
 
@@ -52,7 +52,7 @@ export async function getProductsByCategorySlug(slug: string): Promise<Product[]
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active")
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
     .eq("category_id", category.id)
     .eq("is_active", true)
     .order("name");
@@ -64,7 +64,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active")
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
     .eq("slug", slug)
     .eq("is_active", true)
     .maybeSingle();
@@ -91,11 +91,21 @@ export async function searchProducts(query: string): Promise<Product[]> {
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active")
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
     .eq("is_active", true)
     .or(`name.ilike.%${query}%,sku.ilike.%${query}%,description.ilike.%${query}%`)
     .order("name")
     .limit(24);
+
+  return data ?? [];
+}
+
+export async function getAllProductImages(): Promise<ProductImage[]> {
+  const supabase = createClient(await cookies());
+  const { data } = await supabase
+    .from("product_images")
+    .select("id, product_id, url, public_id, metadata, sort_order")
+    .order("created_at", { ascending: false });
 
   return data ?? [];
 }
@@ -148,7 +158,7 @@ export async function upsertProduct(
   const { data, error } = await supabase
     .from("products")
     .upsert({
-      id: product.id, // If undefined, Supabase auto-generates a UUID (Create)
+      id: product.id,
       category_id: product.category_id,
       name: product.name,
       slug: product.slug,
@@ -157,6 +167,7 @@ export async function upsertProduct(
       price: product.price ?? 0,
       request_price: product.request_price ?? false,
       is_active: product.is_active ?? true,
+      featured_image_id: product.featured_image_id ?? null,
     })
     .select()
     .single();
@@ -166,7 +177,6 @@ export async function upsertProduct(
     throw new Error(error.message);
   }
 
-  // Purge cache paths affected by product mutations
   revalidatePath("/");
   revalidatePath(`/products/${product.slug}`);
   return data;

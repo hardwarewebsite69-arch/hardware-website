@@ -21,6 +21,7 @@ export type Product = {
   price: number | null;
   request_price: boolean;
   is_active: boolean;
+  featured_image_id: string | null;
 };
 
 export type ProductImage = {

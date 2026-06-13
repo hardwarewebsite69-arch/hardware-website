@@ -78,7 +78,7 @@ export default function Page() {
             {/* Next.js Optimized Background Image */}
             <div className="absolute inset-0 -z-20">
               <Image
-                src="/hero-bg.png" // Put your image file path or URL here
+                src="/hero-bg2.png" // Put your image file path or URL here
                 alt="Industrial background"
                 fill
                 priority // Tells Next.js to preload this critical Above-the-Fold image
