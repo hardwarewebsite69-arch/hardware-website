@@ -81,3 +81,24 @@ export async function uploadToCloudinary(
     },
   };
 }
+
+export async function deleteFromCloudinary(public_id: string): Promise<void> {
+  const { cloudName, apiKey, apiSecret } = getCloudinaryConfig();
+  const timestamp = Math.round(Date.now() / 1000);
+  const signature = sign({ public_id, timestamp }, apiSecret);
+
+  const body = new FormData();
+  body.append("public_id", public_id);
+  body.append("api_key", apiKey);
+  body.append("timestamp", String(timestamp));
+  body.append("signature", signature);
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+    body,
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    console.error("Cloudinary deletion failed:", await response.text());
+  }
+}

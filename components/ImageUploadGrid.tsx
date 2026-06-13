@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { uploadImageAction } from "@/lib/catalog";
 import type { CloudinaryUploadResult } from "@/lib/cloudinary";
 
 interface ImageUploadGridProps {
-  initialImages?: { url: string; public_id: string; metadata: any }[];
-  onImagesChange: (images: { url: string; public_id: string; metadata: any }[]) => void;
+  initialImages?: CloudinaryUploadResult[];
+  onImagesChange: (images: CloudinaryUploadResult[]) => void;
 }
 
 export function ImageUploadGrid({ initialImages = [], onImagesChange }: ImageUploadGridProps) {
-  const [images, setImages] = useState<CloudinaryUploadResult[]>(initialImages as any);
+  const [images, setImages] = useState<CloudinaryUploadResult[]>(initialImages);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,15 +52,16 @@ export function ImageUploadGrid({ initialImages = [], onImagesChange }: ImageUpl
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {images.map((image) => (
           <div key={image.public_id} className="relative group aspect-square rounded-lg overflow-hidden border border-slate-200 bg-slate-100 shadow-sm">
-            <img 
+            <Image 
               src={image.url} 
               alt="Preview" 
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
             <button
               type="button"
               onClick={() => removeImage(image.public_id)}
-              className="absolute top-2 right-2 w-6 h-6 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-500 hover:text-red-600 hover:border-red-100 shadow-sm transition-all opacity-0 group-hover:opacity-100"
+              className="absolute top-2 right-2 w-6 h-6 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-500 hover:text-red-600 hover:border-red-100 shadow-sm transition-all opacity-0 group-hover:opacity-100 z-10"
               title="Remove image"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
