@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"; // Added to clear cache on mutation
 import { createClient } from "@/lib/supabase/server";
 import { adminSettingsDefaults } from "@/lib/site-config";
 import type { Category, Product, ProductImage, Settings } from "@/lib/types";
+import { uploadToCloudinary } from "@/lib/cloudinary";
 
 // ==========================================
 // READ OPERATIONS (Existing Code)
@@ -18,6 +19,7 @@ export async function getSettings(): Promise<Settings> {
 
   return data ?? adminSettingsDefaults;
 }
+
 
 export async function getCategories(): Promise<Category[]> {
   const supabase = createClient(await cookies());
@@ -236,7 +238,7 @@ export async function deleteProduct(id: string, slug?: string): Promise<boolean>
 /**
  * Deletes a specific product image by its ID.
  */
-export async function deleteProductImage(id: string, productId: string): Promise<boolean> {
+export async function deleteProductImage(id: string, _productId: string): Promise<boolean> {
   const supabase = createClient(await cookies());
 
   const { error } = await supabase
@@ -252,4 +254,118 @@ export async function deleteProductImage(id: string, productId: string): Promise
   // Optional: If you have a product details cache that aggregates images, revalidate it
   // revalidatePath(`/products/some-slug`); 
   return true;
+}
+
+export async function saveProductAction(
+  productData: Partial<Product> & { category_id: string; name: string; slug: string },
+  uploadedImages: { url: string; public_id: string; metadata: any }[]
+): Promise<Product | null> {
+  const savedProduct = await upsertProduct(productData);
+
+  if (!savedProduct) {
+    throw new Error("Failed to save product.");
+  }
+
+  if (uploadedImages.length > 0) {
+    // Note: In a production app, you might want to clear existing images 
+    // or handle diffs if this is an update.
+    await linkImagesToProduct(savedProduct.id, uploadedImages);
+
+    // Set first image as featured if none exists
+    if (!savedProduct.featured_image_id) {
+      const images = await getProductImages(savedProduct.id);
+      if (images.length > 0) {
+        const supabase = createClient(await cookies());
+        await supabase
+          .from("products")
+          .update({ featured_image_id: images[0].id })
+          .eq("id", savedProduct.id);
+      }
+    }
+  }
+
+  revalidatePath("/admin/products");
+  revalidatePath(`/product/${savedProduct.slug}`);
+  
+  return savedProduct;
+}
+
+export async function uploadImageAction(file: File): Promise<CloudinaryUploadResult> {
+  const result = await uploadToCloudinary(file, "product-images");
+  return result;
+}
+
+export async function linkImagesToProduct(
+  productId: string,
+  images: { url: string; public_id: string; metadata: any }[]
+): Promise<void> {
+  const supabase = createClient(await cookies());
+
+  const imageRecords = images.map((img, index) => ({
+    product_id: productId,
+    url: img.url,
+    public_id: img.public_id,
+    metadata: img.metadata,
+    sort_order: index,
+  }));
+
+  const { error } = await supabase.from("product_images").insert(imageRecords);
+  if (error) {
+    console.error("Error linking product images:", error.message);
+    throw new Error(error.message);
+  }
+}
+
+export async function upsertProductWithImages(
+  product: Partial<Product> & { category_id: string; name: string; slug: string },
+  images?: File[],
+  preUploadedImages?: { url: string; public_id: string; metadata: any }[]
+): Promise<Product | null> {
+  const supabase = createClient(await cookies());
+  const savedProduct = await upsertProduct(product);
+
+  if (!savedProduct) {
+    throw new Error("Failed to save product before image upload.");
+  }
+
+  // 1. Handle pre-uploaded images (if any)
+  if (preUploadedImages && preUploadedImages.length > 0) {
+    await linkImagesToProduct(savedProduct.id, preUploadedImages);
+  }
+
+  // 2. Handle raw files (original behavior)
+  const imageFiles = (images ?? []).filter((file) => file instanceof File && file.size > 0);
+  if (imageFiles.length > 0) {
+    const uploadResults = await Promise.all(
+      imageFiles.map((file) => uploadToCloudinary(file, "product-images"))
+    );
+
+    const imageRecords = uploadResults.map((upload, index) => ({
+      product_id: savedProduct.id,
+      url: upload.url,
+      public_id: upload.public_id,
+      metadata: upload.metadata,
+      sort_order: (preUploadedImages?.length ?? 0) + index,
+    }));
+
+    const { data: insertedImages, error } = await supabase
+      .from("product_images")
+      .insert(imageRecords)
+      .select();
+
+    if (error) {
+      console.error("Error inserting product images:", error.message);
+      throw new Error(error.message);
+    }
+
+    // Set first image as featured if none exists
+    if (!savedProduct.featured_image_id && insertedImages && insertedImages.length > 0) {
+      await supabase
+        .from("products")
+        .update({ featured_image_id: insertedImages[0].id })
+        .eq("id", savedProduct.id);
+    }
+  }
+
+  return savedProduct;
 }

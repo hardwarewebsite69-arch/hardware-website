@@ -1,4 +1,4 @@
-import { getCategories, upsertProduct } from "@/lib/catalog";
+import { getCategories, upsertProductWithImages } from "@/lib/catalog";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -9,9 +9,10 @@ interface EditPageProps {
   params: Promise<{ id: string }>;
 }
 
-async function handleCreateProduct(formData: FormData) {
+async function handleUpsertProduct(formData: FormData) {
   "use server";
 
+  const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const category_id = formData.get("category_id") as string;
   const sku = formData.get("sku") as string || null;
@@ -19,26 +20,30 @@ async function handleCreateProduct(formData: FormData) {
   const priceStr = formData.get("price") as string;
   const request_price = formData.get("request_price") === "true";
   const is_active = formData.get("is_active") === "true";
-  const featured_image_id = formData.get("featured_image_id") as string || null;
-
   const slug = name
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-");
 
   const price = parseFloat(priceStr) || 0;
+  const imageFiles = formData.getAll("images").filter(
+    (entry): entry is File => entry instanceof File && entry.size > 0
+  );
 
-  await upsertProduct({
-    category_id,
-    name,
-    slug,
-    sku,
-    description,
-    price,
-    request_price,
-    is_active,
-    featured_image_id,
-  });
+  await upsertProductWithImages(
+    {
+      id,
+      category_id,
+      name,
+      slug,
+      sku,
+      description,
+      price,
+      request_price,
+      is_active,
+    },
+    imageFiles
+  );
 
   redirect("/admin/products");
 }
@@ -61,7 +66,7 @@ export default async function EditProductPage({ params }: EditPageProps) {
 
   return (
     <AdminShell active="/admin/products" title="Edit Product" subtitle="Update the product details below.">
-      <form action={handleCreateProduct} className="space-y-6 max-w-4xl">
+      <form action={handleUpsertProduct} encType="multipart/form-data" className="space-y-6 max-w-4xl">
 
         {/* Basic Information Section */}
         <div className="bg-white rounded-lg p-6 border border-slate-200 shadow-sm">
@@ -154,7 +159,7 @@ export default async function EditProductPage({ params }: EditPageProps) {
           </div>
 
           {/* Upload Area */}
-          <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer">
+          <label htmlFor="images" className="block border-2 border-dashed border-slate-300 rounded-lg p-12 text-center bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer">
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
                 <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,14 +167,23 @@ export default async function EditProductPage({ params }: EditPageProps) {
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-slate-900">Click to upload or drag and drop</p>
-                <p className="text-sm text-slate-500 mt-1">PNG, SVG, JPG, GIF (Max 5 MB)</p>
+                <p className="font-medium text-slate-900">Click to select images from your device</p>
+                <p className="text-sm text-slate-500 mt-1">PNG, SVG, JPG, GIF (Max 5 MB each)</p>
               </div>
             </div>
-          </div>
+          </label>
+          <input
+            type="file"
+            name="images"
+            id="images"
+            accept="image/*"
+            multiple
+            className="hidden"
+          />
         </div>
 
-        {/* Hidden fields for request_price and is_active */}
+        {/* Hidden fields for ID, request_price and is_active */}
+        <input type="hidden" name="id" value={product.id} />
         <input type="hidden" name="request_price" value="false" />
         <input type="hidden" name="is_active" value="true" />
 

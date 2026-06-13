@@ -46,6 +46,7 @@ export const fallbackProducts: Product[] = [
     price: 128500,
     request_price: false,
     is_active: true,
+    featured_image_id: null,
   },
   {
     id: "rapidset-portland-cement",
@@ -57,6 +58,7 @@ export const fallbackProducts: Product[] = [
     price: 850,
     request_price: false,
     is_active: true,
+    featured_image_id: null,
   },
   {
     id: "tmt-rebar-12mm",
@@ -68,6 +70,7 @@ export const fallbackProducts: Product[] = [
     price: null,
     request_price: true,
     is_active: true,
+    featured_image_id: null,
   },
   {
     id: "contractor-drill-kit",
@@ -79,6 +82,7 @@ export const fallbackProducts: Product[] = [
     price: 18900,
     request_price: false,
     is_active: true,
+    featured_image_id: null,
   },
   {
     id: "ppr-pipe-system",
@@ -90,6 +94,7 @@ export const fallbackProducts: Product[] = [
     price: null,
     request_price: true,
     is_active: true,
+    featured_image_id: null,
   },
   {
     id: "galvanized-fastener-pack",
@@ -101,6 +106,7 @@ export const fallbackProducts: Product[] = [
     price: 4200,
     request_price: false,
     is_active: true,
+    featured_image_id: null,
   },
 ];
 
