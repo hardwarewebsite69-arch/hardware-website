@@ -7,19 +7,19 @@ import { Footer } from "@/components/Footer";
 const categoryCards = [
   {
     count: "250+ Products",
-    href: "/shop/Electrical",
+    href: "/shop/electrical",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCaxg8JxZ_3j2iD7ftJZZNsNJk0n2ubtqRrjnVcVeNNvY7uHtyI54V72tbh_BLItwEGWbVWHaHN0BEQTzpgTWareQ_Pv6xkuEwnQq2YlXTSPR42F2yMRnWEvLKD5w8QcHa3YtvTOEilOEQ5-AG-pA3g7igJnDeuWUvItcc49BqcB7rGT5uYYePDo9sDP7aIPnyPCON-GIEoT8U8Q4YGW6R6XWEIzsACkwOwstBgrhQw9Ez9tnA0Ze3dZqeDiFD8rso014Lo2aZiZA",
     title: "Electrical",
   },
   {
     count: "1,200+ Products",
-    href: "/shop/Hardware",
+    href: "/shop/hardware",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUQWdpqVA7ZF4cKmqoEPg82pWua5TLBnY-vf8N2QZxwQiQW_-1r2eoFUNB6hjsRkO7gz2jN16eyIBPZ-F9m8x1WWg49DKPERiBBRUuZ8Glipv47TioNwQggYTLFSgBpUGbpgQgTYaGFvAa_9v2ZK5Yddjg69bHw7AbWM7Cm9jUzAbjnhDfTfcjT0wJl0h9o_xOFTMhx4A92HpFCAV09rG-zD3Mzg1GEeWSjfMhi3su5jHZWVo1UljGZVlXQfxGQ5Lm7KVTX1mS_A",
     title: "Hardware",
   },
   {
     count: "150+ Products",
-    href: "/shop/tools-equipment",
+    href: "/shop/safety",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCGtXU1LMksbNeP8QP2HHLGmRNJEACs6lSmTjhuJizY4oOK8VZd97IrDwQvPnygUvLSww812TA62Ar7xdYsy9WCRykPmYcmjSsRbDAb5SBhnN63bXmkbkIYoYQfgOveVOygtjc6fCqA-dIQoSg71mPp7Edt_PKAjJv7wdmgUjuu6_cMp3yC_Ey_Emx8bmbOGTjOYKTfq7lOJdLq0riM9Ai43wt1zgE2MDjL0f5XetdzZaVq_p9nmmX_ILxzP9uyTODiu96FM7sSmQ",
     title: "Safety Gear",
   },
