@@ -15,7 +15,7 @@ export function Footer() {
             </div>
           </div>
           <FooterColumn title="Company" links={["About Us", "Careers", "Terms of Service", "Privacy Policy"]} />
-          <FooterColumn title="Categories" links={["Tools", "Fasteners", "Safety Gear", "Machinery"]} />
+          <FooterColumn title="Categories" links={["Paints", "Electrical", "Building Materials", "Plumbing"]} />
           <div>
             <h4 className="mb-6 text-xl font-bold text-[#ffb599]">Contact</h4>
             <ul className="flex flex-col gap-3">

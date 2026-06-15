@@ -107,25 +107,24 @@ export default function Page() {
               <div className="flex flex-col gap-6 lg:gap-8">
                 
                 {/* Trust badge */}
-                <div className="inline-flex items-center gap-2 self-start rounded-full border border-[#e5e7eb] bg-white px-4 py-1.5 text-sm font-medium text-[#4b5563] shadow-sm">
+                {/* <div className="inline-flex items-center gap-2 self-start rounded-full border border-[#e5e7eb] bg-white px-4 py-1.5 text-sm font-medium text-[#4b5563] shadow-sm">
                   <span className="flex h-2 w-2 rounded-full bg-[#ea580c]" />
                   <span>Trusted by 500+ Contractors</span>
                   <span className="text-xs text-[#9ca3af]">• 98% Reorder Rate</span>
-                </div>
+                </div> */}
 
                 {/* Headline */}
                 <div className="space-y-4">
                   <h1 className="text-4xl font-extrabold leading-[1.2] tracking-tight text-[#111827] sm:text-5xl lg:text-6xl lg:leading-[1.15]">
-                    <span className="block">Engineered for</span>
+                    <span className="block">Industrial Supplies</span>
                     <span className="mt-2 block bg-gradient-to-r from-[#ea580c] via-[#d44f0a] to-[#b83b0e] bg-clip-text text-transparent">
-                      Precision & Durability
+                          Delivered   Fast Across   Kenya
                     </span>
                   </h1>
 
                   {/* Sub-headline */}
                   <p className="max-w-lg text-base leading-relaxed text-[#374151] sm:text-lg font-medium">
-                    Equip your next major project with industrial-grade tools and
-                    materials. Sourced for absolute reliability,priced for commercial scale.
+                    Trusted by contractors and businesses for certified tools, safety gear, and hardware at competitive prices.
                   </p>
                 </div>
 

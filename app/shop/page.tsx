@@ -10,23 +10,38 @@ export default async function Page() {
   const products = dbProducts.length ? dbProducts : fallbackProducts;
 
   return (
-    <>
+    <div className="min-h-screen bg-white font-sans text-[#111827]">
       <Header />
-      <main className="mx-auto max-w-[1280px] px-4 py-10 sm:px-6 lg:px-8">
-        <p className="text-sm font-bold uppercase tracking-[0.16em] text-orange-700">Catalog</p>
-        <h1 className="mt-2 text-4xl font-extrabold tracking-normal text-slate-950">Shop categories</h1>
-        <p className="mt-4 max-w-2xl text-slate-600">Choose a category to browse active products and request bulk pricing.</p>
-        <div className="mt-8 grid gap-5 md:grid-cols-2">
+      <main className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+        <div className="mb-16 border-b border-neutral-100 pb-10">
+          <p className="text-xs font-black uppercase tracking-widest text-[#ea580c]">Product Catalog</p>
+          <h1 className="mt-4 text-5xl font-black tracking-tight text-[#111827] sm:text-6xl">Shop Categories</h1>
+          <p className="mt-6 max-w-2xl text-lg font-medium text-[#4b5563]">
+            Explore our specialized inventory. Select a category to view high-quality industrial and building materials.
+          </p>
+        </div>
+        
+        <div className="grid gap-8 md:grid-cols-2">
           {categories.map((category) => {
             const count = products.filter((product) => product.category_id === category.id).length;
             return (
-              <Link className="hover-lift rounded border border-slate-200 bg-white p-6" href={`/shop/${category.slug}`} key={category.id}>
-                <div className="flex items-start justify-between gap-4">
+              <Link 
+                className="group flex flex-col justify-between rounded-xl border border-neutral-200 bg-white p-8 transition-all hover:border-neutral-300 hover:shadow-xl" 
+                href={`/shop/${category.slug}`} 
+                key={category.id}
+              >
+                <div className="flex items-start justify-between gap-6">
                   <div>
-                    <h2 className="text-2xl font-extrabold text-slate-950">{category.name}</h2>
-                    <p className="mt-3 text-sm leading-6 text-slate-600">{category.description}</p>
+                    <h2 className="text-3xl font-black text-[#111827] group-hover:text-[#ea580c] transition-colors">{category.name}</h2>
+                    <p className="mt-4 text-base font-medium leading-relaxed text-[#4b5563]">{category.description}</p>
                   </div>
-                  <span className="rounded bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{count} items</span>
+                  <span className="shrink-0 rounded-full bg-neutral-100 px-4 py-1.5 text-xs font-black text-[#111827]">
+                    {count} {count === 1 ? 'Item' : 'Items'}
+                  </span>
+                </div>
+                <div className="mt-10 flex items-center gap-2 text-sm font-black uppercase tracking-wider text-[#ea580c]">
+                  Browse Inventory
+                  <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
                 </div>
               </Link>
             );
@@ -34,6 +49,7 @@ export default async function Page() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
+
