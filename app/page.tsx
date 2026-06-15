@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FaWhatsapp } from "react-icons/fa";
 import { siteConfig } from "@/lib/site-config";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -295,6 +296,31 @@ export default function Page() {
           </div>
         </section>
       </main>
+
+      {/* Floating Contact Options */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-4 items-end">
+        {/* Call Now Button */}
+        <a 
+          href={siteConfig.telHref}
+          className="flex h-14 items-center gap-3 rounded-full bg-[#111827] px-6 text-white shadow-2xl transition-all hover:scale-105 active:scale-95 group"
+        >
+          <span className="material-symbols-outlined">call</span>
+          <span className="text-sm font-black hidden group-hover:block transition-all">Call Now</span>
+        </a>
+        
+        {/* WhatsApp Button */}
+        <a 
+          href={siteConfig.whatsappHref}
+          className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366] text-white shadow-2xl transition-all hover:scale-110 hover:rotate-6 active:scale-95"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaWhatsapp className="text-4xl text-green-500" />
+          <span className="absolute -top-1 -right-1 flex h-5 w-5 animate-ping rounded-full bg-[#25d366] opacity-75"></span>
+          <span className="absolute -top-1 -right-1 flex h-5 w-5 rounded-full bg-[#25d366] border-2 border-white"></span>
+        </a>
+      </div>
+
       <Footer />
     </div>
   );
