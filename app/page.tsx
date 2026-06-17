@@ -315,7 +315,7 @@ export default function Page() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaWhatsapp className="text-4xl text-green-500" />
+          <FaWhatsapp className="text-4xl " />
           <span className="absolute -top-1 -right-1 flex h-5 w-5 animate-ping rounded-full bg-[#25d366] opacity-75"></span>
           <span className="absolute -top-1 -right-1 flex h-5 w-5 rounded-full bg-[#25d366] border-2 border-white"></span>
         </a>
