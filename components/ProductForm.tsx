@@ -11,12 +11,13 @@ import type { CloudinaryUploadResult } from "@/lib/cloudinary";
 interface ProductFormProps {
   categories: Category[];
   initialData?: Product;
+  initialImages?: CloudinaryUploadResult[];
 }
 
-export function ProductForm({ categories, initialData }: ProductFormProps) {
+export function ProductForm({ categories, initialData, initialImages = [] }: ProductFormProps) {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState<CloudinaryUploadResult[]>([]);
+  const [uploadedImages, setUploadedImages] = useState<CloudinaryUploadResult[]>(initialImages);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -151,7 +152,7 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
           <span className="text-xs text-slate-500 font-medium px-2 py-1 bg-slate-100 rounded">Up to 5 Images</span>
         </div>
 
-        <ImageUploadGrid onImagesChange={setUploadedImages} />
+        <ImageUploadGrid initialImages={initialImages} onImagesChange={setUploadedImages} />
       </div>
 
       {/* Action Buttons */}

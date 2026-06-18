@@ -279,24 +279,60 @@ export async function saveProductAction(
   productData: Partial<Product> & { category_id: string; name: string; slug: string },
   uploadedImages: CloudinaryUploadResult[]
 ): Promise<Product | null> {
+  const supabase = createClient(await cookies());
+
+  // 1. If editing an existing product, delete its existing images first to avoid duplicates.
+  // We set featured_image_id to null first to avoid foreign key constraint violations during deletion.
+  if (productData.id) {
+    await supabase
+      .from("products")
+      .update({ featured_image_id: null })
+      .eq("id", productData.id);
+
+    await supabase
+      .from("product_images")
+      .delete()
+      .eq("product_id", productData.id);
+  }
+
+  // 2. Save/upsert the product details
   const savedProduct = await upsertProduct(productData);
 
   if (!savedProduct) {
     throw new Error("Failed to save product.");
   }
 
+  // 3. Link the current list of images to the product
   if (uploadedImages.length > 0) {
-    await linkImagesToProduct(savedProduct.id, uploadedImages);
+    const imageRecords = uploadedImages.map((img, index) => ({
+      product_id: savedProduct.id,
+      url: img.url,
+      public_id: img.public_id,
+      metadata: img.metadata,
+      sort_order: index,
+    }));
 
-    // Set first image as featured if none exists
-    if (!savedProduct.featured_image_id) {
-      const images = await getProductImages(savedProduct.id);
-      if (images.length > 0) {
-        const supabase = createClient(await cookies());
-        await supabase
-          .from("products")
-          .update({ featured_image_id: images[0].id })
-          .eq("id", savedProduct.id);
+    const { data: insertedImages, error } = await supabase
+      .from("product_images")
+      .insert(imageRecords)
+      .select();
+
+    if (error) {
+      console.error("Error linking product images:", error.message);
+      throw new Error(error.message);
+    }
+
+    // Set first image as featured
+    if (insertedImages && insertedImages.length > 0) {
+      const { error: updateError } = await supabase
+        .from("products")
+        .update({ featured_image_id: insertedImages[0].id })
+        .eq("id", savedProduct.id);
+
+      if (updateError) {
+        console.error("Error updating featured image:", updateError.message);
+      } else {
+        savedProduct.featured_image_id = insertedImages[0].id;
       }
     }
   }
