@@ -8,6 +8,8 @@ export const fallbackCategories: Category[] = [
     description: "Cement, steel, roofing, aggregates, and masonry essentials.",
     sort_order: 1,
     is_active: true,
+    image_url: null,
+    image_public_id: null,
   },
   {
     id: "tools-equipment",
@@ -16,6 +18,8 @@ export const fallbackCategories: Category[] = [
     description: "Power tools, hand tools, safety gear, and site equipment.",
     sort_order: 2,
     is_active: true,
+    image_url: null,
+    image_public_id: null,
   },
   {
     id: "plumbing-electrical",
@@ -24,6 +28,8 @@ export const fallbackCategories: Category[] = [
     description: "Pipes, fittings, cables, switches, pumps, and fixtures.",
     sort_order: 3,
     is_active: true,
+    image_url: null,
+    image_public_id: null,
   },
   {
     id: "industrial-hardware",
@@ -32,6 +38,8 @@ export const fallbackCategories: Category[] = [
     description: "Fasteners, bearings, gearboxes, welding supplies, and spares.",
     sort_order: 4,
     is_active: true,
+    image_url: null,
+    image_public_id: null,
   },
 ];
 

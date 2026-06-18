@@ -9,6 +9,8 @@ export type Category = {
   description: string | null;
   sort_order: number;
   is_active: boolean;
+  image_url: string | null;
+  image_public_id: string | null;
 };
 
 export type Product = {

@@ -24,8 +24,18 @@ export async function getCategories(): Promise<Category[]> {
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("categories")
-    .select("id, name, slug, description, sort_order, is_active")
+    .select("id, name, slug, description, sort_order, is_active, image_url, image_public_id")
     .eq("is_active", true)
+    .order("sort_order");
+
+  return data ?? [];
+}
+
+export async function getAllCategories(): Promise<Category[]> {
+  const supabase = createClient(await cookies());
+  const { data } = await supabase
+    .from("categories")
+    .select("id, name, slug, description, sort_order, is_active, image_url, image_public_id")
     .order("sort_order");
 
   return data ?? [];
@@ -129,6 +139,8 @@ export async function upsertCategory(
       description: category.description ?? null,
       sort_order: category.sort_order ?? 0,
       is_active: category.is_active ?? true,
+      image_url: category.image_url ?? null,
+      image_public_id: category.image_public_id ?? null,
     })
     .select()
     .single();
@@ -140,6 +152,24 @@ export async function upsertCategory(
 
   revalidatePath("/");
   return data;
+}
+
+export async function saveCategoryAction(
+  categoryData: Partial<Category> & { name: string; slug: string },
+  uploadedImage: CloudinaryUploadResult | null
+): Promise<Category | null> {
+  const dataToSave = { ...categoryData };
+
+  if (uploadedImage) {
+    dataToSave.image_url = uploadedImage.url;
+    dataToSave.image_public_id = uploadedImage.public_id;
+  }
+
+  const saved = await upsertCategory(dataToSave);
+  if (!saved) throw new Error("Failed to save category.");
+
+  revalidatePath("/admin/categories");
+  return saved;
 }
 
 export async function upsertProduct(

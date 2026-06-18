@@ -25,8 +25,9 @@ const hankenGrotesk = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.businessName,
-  description: `${siteConfig.businessName} hardware catalog, quote requests, WhatsApp support, and call ordering.`,
+  title: "Amroz Traders — Industrial Hardware Supplies in Kenya",
+  description:
+    "Kenya's trusted supplier of construction hardware, electrical supplies, power tools, PPE and building materials. Get instant BOQ quotes, bulk pricing, and nationwide delivery.",
 };
 
 export default function RootLayout({
