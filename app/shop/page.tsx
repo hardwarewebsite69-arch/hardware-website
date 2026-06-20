@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { fallbackCategories, fallbackProducts } from "@/lib/fallback-data";
+import { fallbackCategories, fallbackProducts, categoryImageFallback } from "@/lib/fallback-data";
 import { getCategories, getProducts } from "@/lib/catalog";
 
 export default async function Page() {
@@ -24,24 +25,38 @@ export default async function Page() {
         <div className="grid gap-8 md:grid-cols-2">
           {categories.map((category) => {
             const count = products.filter((product) => product.category_id === category.id).length;
+            const imageUrl = category.image_url || categoryImageFallback(category.slug);
             return (
               <Link 
-                className="group flex flex-col justify-between rounded-xl border border-neutral-200 bg-white p-8 transition-all hover:border-neutral-300 hover:shadow-xl" 
+                className="group flex flex-col md:flex-row overflow-hidden rounded-xl border border-neutral-200 bg-white transition-all hover:border-neutral-300 hover:shadow-xl" 
                 href={`/shop/${category.slug}`} 
                 key={category.id}
               >
-                <div className="flex items-start justify-between gap-6">
+                <div className="flex flex-1 flex-col justify-between p-8">
                   <div>
-                    <h2 className="text-3xl font-black text-[#111827] group-hover:text-[#ea580c] transition-colors">{category.name}</h2>
+                    <div className="flex items-start justify-between gap-6">
+                      <h2 className="text-3xl font-black text-[#111827] group-hover:text-[#ea580c] transition-colors">{category.name}</h2>
+                      <span className="shrink-0 rounded-full bg-neutral-100 px-4 py-1.5 text-xs font-black text-[#111827]">
+                        {count} {count === 1 ? 'Item' : 'Items'}
+                      </span>
+                    </div>
                     <p className="mt-4 text-base font-medium leading-relaxed text-[#4b5563]">{category.description}</p>
                   </div>
-                  <span className="shrink-0 rounded-full bg-neutral-100 px-4 py-1.5 text-xs font-black text-[#111827]">
-                    {count} {count === 1 ? 'Item' : 'Items'}
-                  </span>
+                  <div className="mt-10 flex items-center gap-2 text-sm font-black uppercase tracking-wider text-[#ea580c]">
+                    Browse Inventory
+                    <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+                  </div>
                 </div>
-                <div className="mt-10 flex items-center gap-2 text-sm font-black uppercase tracking-wider text-[#ea580c]">
-                  Browse Inventory
-                  <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+
+                {/* Visual Cover Column */}
+                <div className="relative h-48 w-full shrink-0 overflow-hidden bg-neutral-50 border-t border-neutral-100 md:h-auto md:w-48 md:border-t-0 md:border-l lg:w-56">
+                  <Image 
+                    src={imageUrl} 
+                    alt={category.name} 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 192px, 224px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105" 
+                  />
                 </div>
               </Link>
             );

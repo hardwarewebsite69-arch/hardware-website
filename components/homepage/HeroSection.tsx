@@ -14,7 +14,7 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-20">
       <div className="absolute inset-0 -z-20">
-        <Image src="/hero-bg2.png" alt="Industrial background" fill priority className="hidden object-cover object-center lg:block" />
+        <Image src="/hero-bg2-clean.png" alt="Industrial background" fill priority className="hidden object-cover object-center lg:block" />
         <Image src="/hero-mobile3.png" alt="Industrial background mobile" fill priority className="block object-cover object-center lg:hidden" />
       </div>
 

@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ProductCard } from "@/components/ProductCard";
-import { fallbackCategories, fallbackProducts } from "@/lib/fallback-data";
+import { fallbackCategories, fallbackProducts, categoryImageFallback } from "@/lib/fallback-data";
 import { getCategories, getProductsByCategorySlug } from "@/lib/catalog";
 
 type PageProps = {
@@ -37,8 +38,33 @@ export default async function Page({ params }: PageProps) {
           </div>
         </aside>
         <section className="lg:col-span-9">
-          <h1 className="text-4xl font-extrabold tracking-normal text-slate-950">{category.name}</h1>
-          <p className="mt-3 max-w-2xl text-slate-600">{category.description}</p>
+          {/* Category Hero Banner */}
+          <div className="relative mb-10 overflow-hidden rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+            {/* Background Image with Gradient Overlay */}
+            <div className="absolute inset-0 z-0">
+              <Image 
+                src={category.image_url || categoryImageFallback(category.slug)} 
+                alt={category.name} 
+                fill 
+                sizes="(max-width: 1024px) 100vw, 800px"
+                className="object-cover opacity-40 transition-transform duration-700 hover:scale-105"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-900/30" />
+            </div>
+
+            {/* Banner Content */}
+            <div className="relative z-10 px-6 py-12 md:py-16 md:px-10 max-w-2xl">
+              <span className="inline-block rounded bg-[#ea580c] px-3 py-1 text-xs font-black uppercase tracking-widest text-white mb-4">
+                Category Catalog
+              </span>
+              <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl">{category.name}</h1>
+              <p className="mt-4 text-base font-medium leading-relaxed text-slate-300">
+                {category.description}
+              </p>
+            </div>
+          </div>
+
           <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => <ProductCard product={product} key={product.id} />)}
           </div>

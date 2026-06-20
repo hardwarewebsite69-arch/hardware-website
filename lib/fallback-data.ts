@@ -8,7 +8,7 @@ export const fallbackCategories: Category[] = [
     description: "Cement, steel, roofing, aggregates, and masonry essentials.",
     sort_order: 1,
     is_active: true,
-    image_url: null,
+    image_url: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80",
     image_public_id: null,
   },
   {
@@ -18,7 +18,7 @@ export const fallbackCategories: Category[] = [
     description: "Power tools, hand tools, safety gear, and site equipment.",
     sort_order: 2,
     is_active: true,
-    image_url: null,
+    image_url: "https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?auto=format&fit=crop&w=600&q=80",
     image_public_id: null,
   },
   {
@@ -28,7 +28,7 @@ export const fallbackCategories: Category[] = [
     description: "Pipes, fittings, cables, switches, pumps, and fixtures.",
     sort_order: 3,
     is_active: true,
-    image_url: null,
+    image_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
     image_public_id: null,
   },
   {
@@ -38,7 +38,7 @@ export const fallbackCategories: Category[] = [
     description: "Fasteners, bearings, gearboxes, welding supplies, and spares.",
     sort_order: 4,
     is_active: true,
-    image_url: null,
+    image_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80",
     image_public_id: null,
   },
 ];
@@ -120,3 +120,13 @@ export const fallbackProducts: Product[] = [
 
 export const productImageFor = (slug: string) =>
   `https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80&sat=-30&crop=entropy&${slug}`;
+
+export function categoryImageFallback(slug: string): string {
+  const fallbacks: Record<string, string> = {
+    "building-materials": "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80",
+    "tools-equipment": "https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?auto=format&fit=crop&w=600&q=80",
+    "plumbing-electrical": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+    "industrial-hardware": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80",
+  };
+  return fallbacks[slug] || "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80";
+}
