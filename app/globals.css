@@ -1,4 +1,10 @@
 @import "tailwindcss";
+@import "uploadthing/tw/v4";
+
+@custom-variant ut-button (&:is([data-ut-element="button"]));
+@custom-variant ut-allowed-content (&:is([data-ut-element="allowed-content"]));
+@custom-variant ut-label (&:is([data-ut-element="label"]));
+@custom-variant ut-upload-icon (&:is([data-ut-element="upload-icon"]));
 
 :root {
   --background: #f7f9fb;
