@@ -273,33 +273,44 @@ export function HeroContent({ phase }: HeroContentProps) {
         </motion.div>
       </div>
 
-      {/* 8. Trust badges fade in & 9. Statistics count upward */}
-      <motion.div
-        custom={1.0}
-        variants={fadeUpVariant}
-        initial="hidden"
-        animate={triggerEntrance ? "visible" : "hidden"}
-        className="mt-16 grid grid-cols-2 gap-6 border-t border-neutral-200/80 pt-8 sm:grid-cols-4"
-      >
-        {trustMetrics.map((m, i) => (
-          <div key={m.label} className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600/5 text-orange-600">
-              <span className="material-symbols-outlined text-xl">{m.icon}</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-base font-extrabold text-neutral-900 leading-tight">
-                {/* Statistics count upward delay starts at 1.15s */}
-                <StatsCounter
-                  value={m.value}
-                  trigger={triggerEntrance}
-                  delay={1.15 + i * 0.1}
-                />
-              </span>
-              <span className="text-xs font-semibold text-neutral-400">{m.label}</span>
-            </div>
-          </div>
-        ))}
-      </motion.div>
+    {/* 8. Trust badges fade in & 9. Statistics count upward */}
+<motion.div
+  custom={1.0}
+  variants={fadeUpVariant}
+  initial="hidden"
+  animate={triggerEntrance ? "visible" : "hidden"}
+  className="mt-12 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-neutral-300/60 pt-8 sm:grid-cols-4 sm:gap-y-0 sm:divide-x sm:divide-neutral-300/40"
+>
+  {trustMetrics.map((m, i) => (
+    <div 
+      key={m.label} 
+      className="flex items-start gap-3.5 sm:first:pl-0 sm:pl-6"
+    >
+      {/* Icon Container: Increased background opacity to pop against the busy image background */}
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-600/12 text-orange-600 shadow-sm backdrop-blur-[2px]">
+        <span className="material-symbols-outlined text-xl select-none" aria-hidden="true">
+          {m.icon}
+        </span>
+      </div>
+      
+      {/* Text Container */}
+      <div className="flex flex-col pt-0.5">
+        <span className="text-lg font-bold tracking-tight text-neutral-900 leading-none tabular-nums">
+          {/* Statistics count upward delay starts at 1.15s */}
+          <StatsCounter
+            value={m.value}
+            trigger={triggerEntrance}
+            delay={1.15 + i * 0.1}
+          />
+        </span>
+        {/* Darkened from neutral-400 to neutral-600 for WCAG AA contrast compliance over the image */}
+        <span className="mt-1 text-xs font-medium text-neutral-600 tracking-wide">
+          {m.label}
+        </span>
+      </div>
+    </div>
+  ))}
+</motion.div>
     </div>
   );
 }
