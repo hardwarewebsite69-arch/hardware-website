@@ -55,6 +55,12 @@ export default async function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
+        <link
+          rel="preload"
+          href="/hero-frames/output_frame_0001.jpg"
+          as="image"
+          type="image/jpeg"
+        />
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
