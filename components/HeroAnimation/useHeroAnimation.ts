@@ -12,9 +12,10 @@ if (typeof window !== "undefined") {
 
 interface UseHeroAnimationProps {
   containerRef: React.RefObject<HTMLElement | null>;
+  totalFrames?: number;
 }
 
-export function useHeroAnimation({ containerRef }: UseHeroAnimationProps) {
+export function useHeroAnimation({ containerRef, totalFrames = 37 }: UseHeroAnimationProps) {
   const [phase, setPhase] = useState<AnimationPhase>("loading");
   const [currentFrame, setCurrentFrame] = useState<number>(1);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -33,8 +34,8 @@ export function useHeroAnimation({ containerRef }: UseHeroAnimationProps) {
       try {
         setPhase("loading");
         
-        // Preload frames 1 to 37
-        const loadedImages = await preloadFrames(1, 37);
+        // Preload frames 1 to totalFrames
+        const loadedImages = await preloadFrames(1, totalFrames);
         
         if (!active) return;
         setImages(loadedImages);
@@ -61,7 +62,7 @@ export function useHeroAnimation({ containerRef }: UseHeroAnimationProps) {
 
               // Phase transitions based on scroll progress:
               // 0.0 -> 0.5: playing frames
-              // 0.5 -> 0.65: hold frame 37
+              // 0.5 -> 0.65: hold last frame
               // 0.65 -> 0.90: crossfade (fade canvas opacity)
               // 0.90 -> 1.00: complete
               if (progress >= 0.9) {
@@ -86,7 +87,7 @@ export function useHeroAnimation({ containerRef }: UseHeroAnimationProps) {
         tl.to(
           frameObj,
           {
-            frame: 37,
+            frame: totalFrames,
             ease: "none",
             duration: 1.0, // relative duration share
             onUpdate: () => {
@@ -98,11 +99,11 @@ export function useHeroAnimation({ containerRef }: UseHeroAnimationProps) {
           0 // Start at timeline timestamp 0
         );
 
-        // 2. Hold frame 37 (50% to 65% scroll progress)
+        // 2. Hold last frame (50% to 65% scroll progress)
         tl.to(
           {},
           {
-            duration: 0.3, // holds on frame 37
+            duration: 0.3, // holds on last frame
           },
           1.0 // relative timeline position
         );
@@ -155,7 +156,7 @@ export function useHeroAnimation({ containerRef }: UseHeroAnimationProps) {
       ScrollTrigger.refresh();
       isStartedRef.current = false; // Reset start indicator for remounting!
     };
-  }, [containerRef]);
+  }, [containerRef, totalFrames]);
 
   return {
     phase,
