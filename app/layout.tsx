@@ -10,6 +10,7 @@ import { QuoteCartProvider } from "@/components/QuoteCartContext";
 import { FloatingActions } from "@/components/homepage/FloatingActions";
 import { SettingsProvider } from "@/components/SettingsContext";
 import { getSettings } from "@/lib/catalog";
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,7 +67,9 @@ export default async function RootLayout({
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <SettingsProvider initialSettings={settings}>
           <QuoteCartProvider>
-            {children}
+            <SmoothScrollProvider>
+              {children}
+            </SmoothScrollProvider>
           </QuoteCartProvider>
         </SettingsProvider>
       </body>

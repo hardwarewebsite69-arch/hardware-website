@@ -1,16 +1,23 @@
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { preloadFrames } from "./preloadFrames";
 
 export type AnimationPhase = "loading" | "playing" | "hold" | "crossfade" | "complete";
 
-export function useHeroAnimation() {
+// Register ScrollTrigger on client-side
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+interface UseHeroAnimationProps {
+  containerRef: React.RefObject<HTMLElement | null>;
+}
+
+export function useHeroAnimation({ containerRef }: UseHeroAnimationProps) {
   const [phase, setPhase] = useState<AnimationPhase>("loading");
   const [currentFrame, setCurrentFrame] = useState<number>(1);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
-  const [loadProgress, setLoadProgress] = useState<number>(0);
-  
-  // Opacity of the canvas during crossfade
   const [canvasOpacity, setCanvasOpacity] = useState<number>(1);
 
   const isStartedRef = useRef(false);
@@ -22,80 +29,133 @@ export function useHeroAnimation() {
 
     let active = true;
 
-    async function loadSequence() {
+    async function initScrollSequence() {
       try {
         setPhase("loading");
         
         // Preload frames 1 to 37
-        const loadedImages = await preloadFrames(1, 200);
+        const loadedImages = await preloadFrames(1, 37);
         
         if (!active) return;
         setImages(loadedImages);
         setPhase("playing");
 
-        // Object for GSAP to tween the frame property
+        const targetContainer = containerRef.current;
+        if (!targetContainer) return;
+
         const frameObj = { frame: 1 };
-        
-        // Create GSAP Timeline for orchestrating the transition
+        const opacityObj = { value: 1 };
+
+        // Create the ScrollTrigger timeline
         const tl = gsap.timeline({
-          onComplete: () => {
-            if (active) setPhase("complete");
-          }
+          scrollTrigger: {
+            trigger: targetContainer,
+            start: "top top",
+            end: "+=2000", // Pinned scroll distance (scrubbing space)
+            scrub: 0.5,    // Smooth scrub to avoid mouse jitter
+            pin: true,     // Pin the hero section
+            anticipatePin: 1,
+            onUpdate: (self) => {
+              if (!active) return;
+              const progress = self.progress;
+
+              // Phase transitions based on scroll progress:
+              // 0.0 -> 0.5: playing frames
+              // 0.5 -> 0.65: hold frame 37
+              // 0.65 -> 0.90: crossfade (fade canvas opacity)
+              // 0.90 -> 1.00: complete
+              if (progress >= 0.9) {
+                setPhase("complete");
+              } else if (progress >= 0.65) {
+                setPhase("crossfade");
+              } else if (progress >= 0.5) {
+                setPhase("hold");
+              } else {
+                setPhase("playing");
+              }
+            },
+          },
         });
 
         timelineRef.current = tl;
 
-        // Stage 1: Play image sequence (1.2 seconds for 37 frames)
-        tl.to(frameObj, {
-          frame: 200,
-          snap: "frame",
-          ease: "none",
-          duration: 8.0,
-          onUpdate: () => {
-            if (active) {
-              setCurrentFrame(Math.floor(frameObj.frame));
-            }
-          }
-        });
+        // Force ScrollTrigger to calculate initial bounds immediately
+        ScrollTrigger.refresh();
 
-        // Stage 2: Hold on frame 37 (400ms hold)
-        tl.to({}, { duration: 0.4 }, "+=0.0");
+        // 1. Scrub frames (0% to 50% scroll progress)
+        tl.to(
+          frameObj,
+          {
+            frame: 37,
+            ease: "none",
+            duration: 1.0, // relative duration share
+            onUpdate: () => {
+              if (active) {
+                setCurrentFrame(Math.floor(frameObj.frame));
+              }
+            },
+          },
+          0 // Start at timeline timestamp 0
+        );
 
-        // Stage 3: Crossfade (Canvas opacity fades out to reveal clean background)
-        // Transition starts crossfade phase
-        tl.add(() => {
-          if (active) setPhase("crossfade");
-        });
+        // 2. Hold frame 37 (50% to 65% scroll progress)
+        tl.to(
+          {},
+          {
+            duration: 0.3, // holds on frame 37
+          },
+          1.0 // relative timeline position
+        );
 
-        // Fade canvas out over 700ms
-        const opacityObj = { value: 1 };
-        tl.to(opacityObj, {
-          value: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          onUpdate: () => {
-            if (active) {
-              setCanvasOpacity(opacityObj.value);
-            }
-          }
-        });
+        // 3. Crossfade (65% to 90% scroll progress)
+        tl.to(
+          opacityObj,
+          {
+            value: 0,
+            ease: "power1.inOut",
+            duration: 0.5, // fades canvas opacity to 0
+            onUpdate: () => {
+              if (active) {
+                setCanvasOpacity(opacityObj.value);
+              }
+            },
+          },
+          1.3 // relative timeline position
+        );
+
+        // 4. End margin padding (90% to 100% scroll progress)
+        tl.to(
+          {},
+          {
+            duration: 0.2, // padding space at end
+          },
+          1.8 // relative timeline position
+        );
 
       } catch (error) {
-        console.error("Failed to preload hero sequence frames", error);
-        // Fallback directly to complete if error occurs
+        console.error("Failed to initialize scroll sequence", error);
         if (active) setPhase("complete");
       }
     }
 
-    loadSequence();
+    // Delay initialization slightly to ensure Next.js has mounted and layouts are stable
+    const timeoutId = setTimeout(() => {
+      initScrollSequence();
+    }, 100);
 
     return () => {
       active = false;
+      clearTimeout(timeoutId);
       if (timelineRef.current) {
+        if (timelineRef.current.scrollTrigger) {
+          timelineRef.current.scrollTrigger.kill(true); // Revert layout pinning and spacers!
+        }
         timelineRef.current.kill();
       }
+      ScrollTrigger.refresh();
+      isStartedRef.current = false; // Reset start indicator for remounting!
     };
-  }, []);
+  }, [containerRef]);
 
   return {
     phase,
