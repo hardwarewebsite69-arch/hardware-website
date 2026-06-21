@@ -6,6 +6,10 @@ import { Header } from "@/components/Header";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { QuoteCartProvider } from "@/components/QuoteCartContext";
+import { FloatingQuoteBadge } from "@/components/FloatingQuoteBadge";
+import { SettingsProvider } from "@/components/SettingsContext";
+import { getSettings } from "@/lib/catalog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,11 +37,13 @@ export const metadata: Metadata = {
     "Kenya's trusted supplier of construction hardware, electrical supplies, power tools, PPE and building materials. Get instant BOQ quotes, bulk pricing, and nationwide delivery.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSettings();
+
   return (
     <html
       lang="en"
@@ -52,8 +58,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        {children}
+        <SettingsProvider initialSettings={settings}>
+          <QuoteCartProvider>
+            {children}
+            <FloatingQuoteBadge />
+          </QuoteCartProvider>
+        </SettingsProvider>
       </body>
     </html>
   );
 }
+

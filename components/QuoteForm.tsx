@@ -6,6 +6,7 @@ import { searchProducts } from "@/lib/catalog";
 
 import { useUploadThing } from "@/lib/uploadthing";
 import type { Product } from "@/lib/types";
+import { useQuoteCart } from "./QuoteCartContext";
 
 type QuoteFormProps = {
   defaultMode?: "upload" | "manual";
@@ -34,6 +35,7 @@ const getFileIcon = (filename: string) => {
 };
 
 export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
+  const { items: cartItems, clearCart } = useQuoteCart();
   const [mode, setMode] = useState<"upload" | "manual">(defaultMode);
 
   // Manual mode states
@@ -42,6 +44,22 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+
+  // Pre-populate manual list from local quote cart context on client mount
+  useEffect(() => {
+    if (cartItems.length > 0 && items.length === 0) {
+      setItems(
+        cartItems.map((c) => ({
+          product_id: c.id,
+          item_name: c.name,
+          quantity: String(c.quantity),
+          unit: c.unit,
+          notes: c.notes,
+        }))
+      );
+      setMode("manual");
+    }
+  }, [cartItems]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -258,6 +276,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
         setUploadedFileKey(null);
         setUploadedFileName(null);
         setItems([]);
+        clearCart();
         setMessage("Quote request received. Our team will respond shortly.");
       } catch (error) {
         setMessage(

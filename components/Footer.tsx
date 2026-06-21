@@ -1,14 +1,18 @@
+"use client";
+
 import Link from "next/link";
-import { siteConfig } from "@/lib/site-config";
+import { useSettings } from "./SettingsContext";
 
 export function Footer() {
+  const { settings } = useSettings();
+
   return (
     <footer className="mt-20 border-t border-[#8e7166] bg-[#111827]">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-20 md:grid-cols-4">
         {/* Brand */}
         <div className="flex flex-col gap-6">
           <Link className="text-[28px] font-bold leading-9 text-[#ffdbce]" href="/">
-            Amroz Traders
+            {settings.business_name}
           </Link>
           <p className="max-w-xs text-base leading-6 text-[#e0e3e5]">
             Kenya&apos;s trusted supplier of construction hardware, electrical supplies, power tools, PPE and building materials.
@@ -46,7 +50,7 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-1 text-base leading-6 text-[#e0e3e5]">
               <span className="material-symbols-outlined text-sm">phone</span>
-              <span>{siteConfig.phone}</span>
+              <span>{settings.phone}</span>
             </li>
             <li className="flex items-center gap-1 text-base leading-6 text-[#e0e3e5]">
               <span className="material-symbols-outlined text-sm">chat</span>

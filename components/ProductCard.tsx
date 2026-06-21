@@ -1,21 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import type { Product } from "@/lib/types";
-import { siteConfig } from "@/lib/site-config";
-
-export function formatPrice(price: number | null, requestPrice: boolean) {
-  if (requestPrice || price === null) {
-    return "Price on Inquiry";
-  }
-
-  return new Intl.NumberFormat("en-KE", {
-    currency: "KES",
-    maximumFractionDigits: 0,
-    style: "currency",
-  }).format(price);
-}
+import { useQuoteCart } from "./QuoteCartContext";
+import { productImageFor } from "@/lib/fallback-data";
+import { useSettings } from "./SettingsContext";
+import { formatPrice } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: Product }) {
-  const imageUrl = `https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=400&q=80&sig=${product.id}`;
+  const { addToCart } = useQuoteCart();
+  const { whatsappHref } = useSettings();
+  
+  // Use database product image if available, else use fallback
+  const imageUrl = product.product_images?.[0]?.url ?? productImageFor(product.slug);
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white transition-all hover:border-neutral-300 hover:shadow-xl">
@@ -56,8 +53,17 @@ export function ProductCard({ product }: { product: Product }) {
               {formatPrice(product.price, product.request_price)}
             </span>
             <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => addToCart(product)}
+                className="flex h-10 px-3 items-center justify-center gap-1.5 rounded-full bg-orange-600/10 text-orange-600 font-bold text-xs hover:bg-orange-600 hover:text-white transition-all shadow-sm"
+                title="Add to Quote list"
+              >
+                <span className="material-symbols-outlined text-[18px]">add_circle</span>
+                Add to Quote
+              </button>
               <a 
-                href={siteConfig.whatsappHref}
+                href={whatsappHref}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-[#25d366]/10 text-[#25d366] transition-all hover:bg-[#25d366] hover:text-white"
                 title="Inquire on WhatsApp"
                 target="_blank"
@@ -65,12 +71,6 @@ export function ProductCard({ product }: { product: Product }) {
               >
                 <span className="material-symbols-outlined text-xl font-bold">chat</span>
               </a>
-              <Link 
-                href={`/product/${product.slug}`}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-400 transition-all hover:bg-[#111827] hover:text-white"
-              >
-                <span className="material-symbols-outlined text-xl">arrow_forward</span>
-              </Link>
             </div>
           </div>
         </div>
@@ -78,4 +78,5 @@ export function ProductCard({ product }: { product: Product }) {
     </article>
   );
 }
+
 

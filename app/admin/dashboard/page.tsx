@@ -2,12 +2,19 @@ import Link from "next/link";
 import { AdminShell } from "@/components/AdminShell";
 import { fallbackCategories, fallbackProducts } from "@/lib/fallback-data";
 import { getAllQuotes } from "@/lib/admin";
+import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase/server";
 import { getCategories, getProducts } from "@/lib/catalog";
 
 export default async function Page() {
-  const [dbCategories, dbProducts, quotes] = await Promise.all([getCategories(), getProducts(), getAllQuotes()]);
-  const categories = dbCategories.length ? dbCategories : fallbackCategories;
-  const products = dbProducts.length ? dbProducts : fallbackProducts;
+  const supabase = createClient(await cookies());
+  const [dbCategories, dbProducts, quotes] = await Promise.all([
+    getCategories(supabase),
+    getProducts({ isActive: undefined }, supabase),
+    getAllQuotes()
+  ]);
+  const categories = dbCategories;
+  const products = dbProducts;
   const pendingQuotes = quotes.filter((quote) => quote.status === "pending").length;
 
   return (

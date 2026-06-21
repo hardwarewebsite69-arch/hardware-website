@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache"; 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 import { adminSettingsDefaults } from "@/lib/site-config";
 import type { Category, Product, ProductImage, Settings } from "@/lib/types";
 import { uploadToCloudinary, deleteFromCloudinary, type CloudinaryUploadResult } from "@/lib/cloudinary";
@@ -10,8 +10,8 @@ import { uploadToCloudinary, deleteFromCloudinary, type CloudinaryUploadResult }
 // READ OPERATIONS
 // ==========================================
 
-export async function getSettings(): Promise<Settings> {
-  const supabase = createClient(await cookies());
+export async function getSettings(supabaseClient?: any): Promise<Settings> {
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("settings")
     .select("business_name, phone, whatsapp_number")
@@ -20,8 +20,8 @@ export async function getSettings(): Promise<Settings> {
   return data ?? adminSettingsDefaults;
 }
 
-export async function getCategories(): Promise<Category[]> {
-  const supabase = createClient(await cookies());
+export async function getCategories(supabaseClient?: any): Promise<Category[]> {
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("categories")
     .select("id, name, slug, description, sort_order, is_active, image_url, image_public_id")
@@ -31,8 +31,8 @@ export async function getCategories(): Promise<Category[]> {
   return data ?? [];
 }
 
-export async function getAllCategories(): Promise<Category[]> {
-  const supabase = createClient(await cookies());
+export async function getAllCategories(supabaseClient?: any): Promise<Category[]> {
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("categories")
     .select("id, name, slug, description, sort_order, is_active, image_url, image_public_id")
@@ -41,29 +41,57 @@ export async function getAllCategories(): Promise<Category[]> {
   return data ?? [];
 }
 
-export async function getProducts(): Promise<Product[]> {
-  const supabase = createClient(await cookies());
-  const { data } = await supabase
+export async function getProducts(options?: {
+  page?: number;
+  limit?: number;
+  isFeatured?: boolean;
+  categoryId?: string;
+  isActive?: boolean;
+}, supabaseClient?: any): Promise<Product[]> {
+  const supabase = supabaseClient || createPublicClient();
+  let query = supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
-    .eq("is_active", true)
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, is_featured, featured_image_id, product_images!product_images_product_id_fkey(url, sort_order)")
     .order("name");
 
+  const hasActiveFilter = options && 'isActive' in options;
+  if (hasActiveFilter) {
+    if (options.isActive !== undefined && options.isActive !== null) {
+      query = query.eq("is_active", options.isActive);
+    }
+  } else {
+    query = query.eq("is_active", true);
+  }
+
+  if (options?.isFeatured !== undefined) {
+    query = query.eq("is_featured", options.isFeatured);
+  }
+  if (options?.categoryId !== undefined) {
+    query = query.eq("category_id", options.categoryId);
+  }
+
+  if (options?.page && options?.limit) {
+    const from = (options.page - 1) * options.limit;
+    const to = from + options.limit - 1;
+    query = query.range(from, to);
+  }
+
+  const { data } = await query;
   return data ?? [];
 }
 
-export async function getProductsByCategorySlug(slug: string): Promise<Product[]> {
-  const categories = await getCategories();
+export async function getProductsByCategorySlug(slug: string, supabaseClient?: any): Promise<Product[]> {
+  const categories = await getCategories(supabaseClient);
   const category = categories.find((item) => item.slug === slug);
 
   if (!category) {
     return [];
   }
 
-  const supabase = createClient(await cookies());
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, is_featured, featured_image_id, product_images!product_images_product_id_fkey(url, sort_order)")
     .eq("category_id", category.id)
     .eq("is_active", true)
     .order("name");
@@ -71,11 +99,11 @@ export async function getProductsByCategorySlug(slug: string): Promise<Product[]
   return data ?? [];
 }
 
-export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const supabase = createClient(await cookies());
+export async function getProductBySlug(slug: string, supabaseClient?: any): Promise<Product | null> {
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, is_featured, featured_image_id, product_images!product_images_product_id_fkey(url, sort_order)")
     .eq("slug", slug)
     .eq("is_active", true)
     .maybeSingle();
@@ -83,8 +111,8 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   return data ?? null;
 }
 
-export async function getProductImages(productId: string): Promise<ProductImage[]> {
-  const supabase = createClient(await cookies());
+export async function getProductImages(productId: string, supabaseClient?: any): Promise<ProductImage[]> {
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("product_images")
     .select("id, product_id, url, public_id, metadata, sort_order")
@@ -94,15 +122,15 @@ export async function getProductImages(productId: string): Promise<ProductImage[
   return data ?? [];
 }
 
-export async function searchProducts(query: string): Promise<Product[]> {
+export async function searchProducts(query: string, supabaseClient?: any): Promise<Product[]> {
   if (!query.trim()) {
     return [];
   }
 
-  const supabase = createClient(await cookies());
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("products")
-    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, featured_image_id")
+    .select("id, category_id, name, slug, sku, description, price, request_price, is_active, is_featured, featured_image_id, product_images!product_images_product_id_fkey(url, sort_order)")
     .eq("is_active", true)
     .or(`name.ilike.%${query}%,sku.ilike.%${query}%,description.ilike.%${query}%`)
     .order("name")
@@ -111,8 +139,8 @@ export async function searchProducts(query: string): Promise<Product[]> {
   return data ?? [];
 }
 
-export async function getAllProductImages(): Promise<ProductImage[]> {
-  const supabase = createClient(await cookies());
+export async function getAllProductImages(supabaseClient?: any): Promise<ProductImage[]> {
+  const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("product_images")
     .select("id, product_id, url, public_id, metadata, sort_order")
@@ -130,10 +158,14 @@ export async function upsertCategory(
 ): Promise<Category | null> {
   const supabase = createClient(await cookies());
   
+  const cleanId = (category.id === "undefined" || category.id === "$undefined" || !category.id) 
+    ? undefined 
+    : category.id;
+
   const { data, error } = await supabase
     .from("categories")
     .upsert({
-      id: category.id,
+      id: cleanId,
       name: category.name,
       slug: category.slug,
       description: category.description ?? null,
@@ -177,10 +209,14 @@ export async function upsertProduct(
 ): Promise<Product | null> {
   const supabase = createClient(await cookies());
 
+  const cleanId = (product.id === "undefined" || product.id === "$undefined" || !product.id) 
+    ? undefined 
+    : product.id;
+
   const { data, error } = await supabase
     .from("products")
     .upsert({
-      id: product.id,
+      id: cleanId,
       category_id: product.category_id,
       name: product.name,
       slug: product.slug,
@@ -189,6 +225,7 @@ export async function upsertProduct(
       price: product.price ?? 0,
       request_price: product.request_price ?? false,
       is_active: product.is_active ?? true,
+      is_featured: product.is_featured ?? false,
       featured_image_id: product.featured_image_id ?? null,
     })
     .select()
@@ -200,7 +237,7 @@ export async function upsertProduct(
   }
 
   revalidatePath("/");
-  revalidatePath(`/products/${product.slug}`);
+  revalidatePath(`/product/${product.slug}`);
   return data;
 }
 
@@ -281,22 +318,28 @@ export async function saveProductAction(
 ): Promise<Product | null> {
   const supabase = createClient(await cookies());
 
+  const cleanId = (productData.id === "undefined" || productData.id === "$undefined" || !productData.id) 
+    ? undefined 
+    : productData.id;
+
+  const dataToSave = { ...productData, id: cleanId };
+
   // 1. If editing an existing product, delete its existing images first to avoid duplicates.
   // We set featured_image_id to null first to avoid foreign key constraint violations during deletion.
-  if (productData.id) {
+  if (cleanId) {
     await supabase
       .from("products")
       .update({ featured_image_id: null })
-      .eq("id", productData.id);
+      .eq("id", cleanId);
 
     await supabase
       .from("product_images")
       .delete()
-      .eq("product_id", productData.id);
+      .eq("product_id", cleanId);
   }
 
   // 2. Save/upsert the product details
-  const savedProduct = await upsertProduct(productData);
+  const savedProduct = await upsertProduct(dataToSave);
 
   if (!savedProduct) {
     throw new Error("Failed to save product.");
@@ -419,3 +462,27 @@ export async function upsertProductWithImages(
 
   return savedProduct;
 }
+
+export async function updateSettings(settings: Settings): Promise<Settings> {
+  const supabase = createClient(await cookies());
+  const { data, error } = await supabase
+    .from("settings")
+    .upsert({
+      id: true,
+      business_name: settings.business_name,
+      phone: settings.phone,
+      whatsapp_number: settings.whatsapp_number,
+      updated_at: new Date().toISOString(),
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating settings:", error.message);
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/");
+  return data;
+}
+

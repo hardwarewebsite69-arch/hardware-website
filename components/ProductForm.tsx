@@ -31,6 +31,10 @@ export function ProductForm({ categories, initialData, initialImages = [] }: Pro
     const priceStr = formData.get("price") as string;
     const price = parseFloat(priceStr) || 0;
 
+    const request_price = formData.get("request_price") === "on";
+    const is_featured = formData.get("is_featured") === "on";
+    const is_active = formData.get("is_active") === "on";
+
     const slug = name
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, "")
@@ -46,8 +50,9 @@ export function ProductForm({ categories, initialData, initialImages = [] }: Pro
           sku,
           description,
           price,
-          request_price: false,
-          is_active: true,
+          request_price,
+          is_featured,
+          is_active,
         },
         uploadedImages
       );
@@ -116,7 +121,7 @@ export function ProductForm({ categories, initialData, initialImages = [] }: Pro
         <div className="mb-6">
           <label htmlFor="price" className="block text-sm font-medium text-slate-700 mb-2">Base Price</label>
           <div className="flex items-center">
-            <span className="text-slate-500 mr-2">$</span>
+            <span className="text-slate-500 mr-2">Ksh</span>
             <input
               type="number"
               name="price"
@@ -131,7 +136,7 @@ export function ProductForm({ categories, initialData, initialImages = [] }: Pro
         </div>
 
         {/* Description */}
-        <div>
+        <div className="mb-6">
           <label htmlFor="description" className="block text-sm font-medium text-slate-700 mb-2">Description</label>
           <textarea
             name="description"
@@ -142,6 +147,39 @@ export function ProductForm({ categories, initialData, initialImages = [] }: Pro
             maxLength={500}
             className="w-full px-4 py-2 border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 resize-none"
           />
+        </div>
+
+        {/* Catalog Options */}
+        <div className="border-t border-slate-100 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <label className="flex items-center gap-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              name="request_price"
+              defaultChecked={initialData ? initialData.request_price : false}
+              className="h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-500"
+            />
+            <span className="text-sm font-semibold text-slate-700">Request Price</span>
+          </label>
+
+          <label className="flex items-center gap-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              name="is_featured"
+              defaultChecked={initialData ? initialData.is_featured : false}
+              className="h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-500"
+            />
+            <span className="text-sm font-semibold text-slate-700">Featured Product</span>
+          </label>
+
+          <label className="flex items-center gap-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              name="is_active"
+              defaultChecked={initialData ? initialData.is_active : true}
+              className="h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-500"
+            />
+            <span className="text-sm font-semibold text-slate-700">Active Catalog Item</span>
+          </label>
         </div>
       </div>
 

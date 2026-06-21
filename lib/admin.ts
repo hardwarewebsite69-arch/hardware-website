@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import type { Quote } from "@/lib/types";
@@ -45,3 +47,47 @@ export async function getQuoteItems(quoteId: string): Promise<QuoteItem[]> {
 
   return data ?? [];
 }
+
+export async function getCurrentUserProfile() {
+  const supabase = createClient(await cookies());
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("id, full_name, role")
+    .eq("id", user.id)
+    .single();
+
+  return {
+    id: user.id,
+    email: user.email,
+    full_name: profile?.full_name ?? "",
+    role: profile?.role ?? "staff",
+  };
+}
+
+export async function updateCurrentUserProfile(fullName: string) {
+  const supabase = createClient(await cookies());
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const { error } = await supabase
+    .from("profiles")
+    .upsert({
+      id: user.id,
+      full_name: fullName,
+      updated_at: new Date().toISOString(),
+    });
+
+  if (error) throw new Error(error.message);
+}
+
+import { revalidatePath } from "next/cache";
+
+export async function signOutAction() {
+  const supabase = createClient(await cookies());
+  await supabase.auth.signOut();
+  revalidatePath("/");
+}
+

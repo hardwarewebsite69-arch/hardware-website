@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { siteConfig } from "@/lib/site-config";
+import { useSettings } from "./SettingsContext";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -18,17 +18,18 @@ const NAV_ITEMS = [
 // ---------------------------------------------------------------------------
 
 function Logo() {
+  const { settings } = useSettings();
   return (
 <Link className="flex items-center gap-0 md:mr-6 group" href="/">
           <Image
             src="/hardware-logo.png"
-            alt={`${siteConfig.businessName} Logo`}
+            alt={`${settings.business_name} Logo`}
             width={50}
             height={46}
             className="rounded transition-transform group-hover:scale-105"
           />
           {/* <span className="text-xl font-bold tracking-tight text-neutral-900 whitespace-nowrap">
-            {siteConfig.businessName}
+            {settings.business_name}
           </span> */}
         </Link>
   );
@@ -70,13 +71,14 @@ function SearchForm() {
 }
 
 function DesktopActions() {
+  const { whatsappHref } = useSettings();
   return (
     <div className="hidden items-center gap-4 lg:flex min-w-fit justify-end">
   
 
       <Link
         className="rounded bg-[#eb5a0c] px-4 py-2 text-sm font-bold tracking-wide text-white uppercase transition hover:bg-[#d44f0a]"
-        href={siteConfig.whatsappHref}      
+        href={whatsappHref}      
         >
         WhatsApp
       </Link>

@@ -1,14 +1,59 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { ProductCard, formatPrice } from "@/components/ProductCard";
+import { ProductCard } from "@/components/ProductCard";
+import { formatPrice } from "@/lib/utils";
 import { fallbackProducts, productImageFor } from "@/lib/fallback-data";
 import { getProductBySlug, getProductImages, getProducts } from "@/lib/catalog";
+import { ProductDetailActions } from "@/components/ProductDetailActions";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const dbProduct = await getProductBySlug(slug);
+  const product = dbProduct ?? fallbackProducts.find((item) => item.slug === slug);
+
+  if (!product) {
+    return {
+      title: "Product Not Found | Amroz Traders",
+    };
+  }
+
+  // Resolve product image for OpenGraph tags
+  let imageUrl = productImageFor(product.slug);
+  try {
+    const images = await getProductImages(product.id);
+    if (images.length > 0) {
+      imageUrl = images[0].url;
+    }
+  } catch (error) {
+    console.error("Error fetching product images for metadata:", error);
+  }
+
+  const title = `${product.name} | Amroz Traders`;
+  const description = product.description || `Buy ${product.name} at Amroz Traders. High-quality hardware products with instant quote requests and fast delivery.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [
+        {
+          url: imageUrl,
+          alt: product.name,
+        },
+      ],
+    },
+  };
+}
+
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
@@ -41,14 +86,7 @@ export default async function Page({ params }: PageProps) {
             <h1 className="mt-2 text-4xl font-extrabold tracking-normal text-slate-950">{product.name}</h1>
             <p className="mt-4 text-lg leading-8 text-slate-600">{product.description}</p>
             <p className="mt-6 text-3xl font-extrabold text-slate-950">{formatPrice(product.price, product.request_price)}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link className="rounded bg-orange-600 px-5 py-3 text-sm font-extrabold text-white" href="/quote/manual">
-                Add to Quote
-              </Link>
-              <Link className="rounded border border-slate-300 px-5 py-3 text-sm font-extrabold text-slate-950" href="/quote">
-                Request Bulk Pricing
-              </Link>
-            </div>
+            <ProductDetailActions product={product} />
             <dl className="mt-10 grid gap-3 rounded border border-slate-200 bg-white p-5 text-sm">
               <div className="flex justify-between gap-4"><dt className="font-semibold text-slate-500">SKU</dt><dd className="font-bold">{product.sku ?? "On request"}</dd></div>
               <div className="flex justify-between gap-4"><dt className="font-semibold text-slate-500">Status</dt><dd className="font-bold">Active catalog item</dd></div>

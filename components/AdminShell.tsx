@@ -1,7 +1,7 @@
-import { AdminHeader } from "@/components/AdminHeader";
-import { AdminSidebar } from "@/components/AdminSidebar";
+import { getCurrentUserProfile } from "@/lib/admin";
+import { AdminShellClient } from "@/components/AdminShellClient";
 
-export function AdminShell({
+export async function AdminShell({
   active,
   children,
   title,
@@ -12,13 +12,19 @@ export function AdminShell({
   title: string;
   subtitle?: string;
 }) {
+  const userProfile = await getCurrentUserProfile();
+  const fallbackUser = { id: "", email: "admin@amroz.com", full_name: "Amroz Admin", role: "admin" };
+  const user = userProfile ?? fallbackUser;
+
   return (
-    <div className="min-h-screen bg-[#f7faf9] text-slate-950 md:flex">
-      <AdminSidebar active={active} />
-      <div className="min-w-0 flex-1">
-        <AdminHeader title={title} subtitle={subtitle} />
-        <main className="px-4 py-6 sm:px-6 lg:px-8">{children}</main>
-      </div>
-    </div>
+    <AdminShellClient
+      active={active}
+      title={title}
+      subtitle={subtitle}
+      user={user}
+    >
+      {children}
+    </AdminShellClient>
   );
 }
+
