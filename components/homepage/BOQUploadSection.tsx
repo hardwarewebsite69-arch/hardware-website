@@ -2,36 +2,45 @@ import Link from "next/link";
 
 export function BOQUploadSection() {
   return (
-    <section className="w-full bg-[#111827]">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 py-10 sm:flex-row sm:justify-between sm:gap-8 md:py-12">
-        {/* Left: Copy */}
-        <div className="flex items-center gap-4 text-center sm:text-left">
-          <span className="material-symbols-outlined hidden text-3xl text-[#ea580c] sm:block">description</span>
-          <div>
-            <h2 className="text-lg font-bold text-white sm:text-xl">
-              Upload Your BOQ — <span className="text-[#ea580c]">Get a Quote in 24 Hours</span>
-            </h2>
-            <p className="mt-1 text-sm text-[#94a3b8]">
-              Supports PDF, Excel, CSV • Competitive bulk pricing guaranteed
-            </p>
+    <section className="w-full bg-neutral-950 border-y border-neutral-850 py-16 font-sans">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
+          
+          {/* Left: Copy with trust assurance */}
+          <div className="flex flex-col items-center gap-4 text-center md:flex-row md:text-left">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-600/10 text-orange-500">
+              <span className="material-symbols-outlined text-2xl">description</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-black text-white md:text-2xl font-display">
+                Submit Your BOQ — <span className="bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">Get a Bid in 24 Hours</span>
+              </h2>
+              <p className="mt-1.5 text-xs font-semibold text-neutral-400">
+                Supports PDF, Excel, CSV lists • Volume-based pricing discounts applied automatically
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Right: Actions */}
-        <div className="flex shrink-0 items-center gap-3">
-          <Link
-            href="/quote/upload"
-            className="flex h-11 items-center gap-2 rounded-lg bg-[#ea580c] px-6 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-[#c2410c] hover:shadow-lg"
-          >
-            <span className="material-symbols-outlined text-lg">cloud_upload</span>
-            Upload File
-          </Link>
-          <Link
-            href="/quote/manual"
-            className="flex h-11 items-center gap-2 rounded-lg border border-[#374151] px-6 text-sm font-semibold text-[#d1d5db] transition-all hover:border-[#6b7280] hover:text-white"
-          >
-            Enter Manually
-          </Link>
+          {/* Right: Dual Actions */}
+          <div className="flex shrink-0 flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+            <Link
+              href="/quote/upload"
+              className="group flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-orange-600 px-6 text-sm font-bold text-white shadow-lg shadow-orange-600/10 transition-all duration-300 hover:bg-orange-700 active:scale-98"
+            >
+              <span className="material-symbols-outlined text-lg">cloud_upload</span>
+              Upload File
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 group-hover:translate-x-0.5">
+                <span className="material-symbols-outlined text-[10px]">arrow_forward</span>
+              </div>
+            </Link>
+            <Link
+              href="/quote/manual"
+              className="flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-6 text-sm font-bold text-neutral-300 transition-all duration-300 hover:border-neutral-700 hover:text-white active:scale-98"
+            >
+              Enter Items Manually
+            </Link>
+          </div>
+
         </div>
       </div>
     </section>

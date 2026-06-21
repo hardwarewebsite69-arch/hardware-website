@@ -119,71 +119,126 @@ export async function FeaturedProductsSection() {
     : fallbackFeaturedEquipment;
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 py-16 md:py-20">
-      <div className="mb-8 flex items-end justify-between md:mb-12">
-        <h2 className="text-2xl font-bold tracking-tight text-[#191c1e] md:text-[28px]">Featured Equipment</h2>
-        <Link className="text-sm font-bold text-[#ea580c] hover:underline flex items-center gap-1" href="/shop">
-          View catalog <span className="material-symbols-outlined text-xs">arrow_forward</span>
+    <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32 font-sans">
+      
+      {/* Section Header */}
+      <div className="mb-12 flex items-end justify-between border-b border-neutral-200 pb-4">
+        <div>
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600 block mb-2">Trade Inventory</span>
+          <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl font-display">Featured Products</h2>
+        </div>
+        <Link className="group flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors" href="/shop">
+          Browse Full Catalog
+          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-600/5 transition-transform duration-300 group-hover:translate-x-0.5">
+            <span className="material-symbols-outlined text-xs">arrow_forward</span>
+          </div>
         </Link>
       </div>
+
+      {/* Product Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" suppressHydrationWarning={true}>
-        {displayItems.map((product) => (
-          <div className="hover-lift group flex flex-col overflow-hidden rounded-lg border border-[#e5e7eb] bg-white transition-shadow hover:shadow-xl" key={product.title} suppressHydrationWarning={true}>
-            {/* Image */}
-            <Link className="relative flex aspect-square items-center justify-center bg-[#f2f4f6] p-3 overflow-hidden" href={`/product/${product.slug}`}>
-              {product.badge && (
-                <span className={`absolute left-3 top-3 rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white z-10 ${product.badge === "New" ? "bg-[#ea580c]" : "bg-[#111827]"}`}>
-                  {product.badge}
-                </span>
-              )}
-              {product.urgent && (
-                <span className="absolute right-3 top-3 rounded bg-[#dc2626]/10 px-2 py-1 text-[10px] font-bold text-[#dc2626] z-10">
-                  Only 8 left
-                </span>
-              )}
-              <div className="relative h-3/4 w-3/4 transition-transform duration-500 group-hover:scale-105" suppressHydrationWarning={true}>
-                <Image fill className="object-contain mix-blend-multiply" src={product.image} alt={product.title} sizes="250px" />
-              </div>
-            </Link>
+        {displayItems.map((product) => {
+          // Parse numeric value to mock a bulk deal tier
+          const numericPrice = parseFloat(product.price.replace(/[^\d.]/g, ""));
+          const hasBulkRate = !isNaN(numericPrice) && numericPrice > 0;
+          const bulkPriceFormatted = hasBulkRate 
+            ? `Ksh ${(numericPrice * 0.88).toLocaleString()}` 
+            : null;
 
-            {/* Content */}
-            <div className="flex flex-1 flex-col p-5" suppressHydrationWarning={true}>
-              <span className="mb-1 text-[10px] uppercase tracking-widest text-[#6b7280]">{product.category}</span>
-              <Link href={`/product/${product.slug}`}>
-                <h4 className="mb-2 text-sm font-bold leading-snug text-[#111827] hover:text-[#ea580c] transition-colors">{product.title}</h4>
-              </Link>
-              <p className="mb-2 text-xs text-[#6b7280] line-clamp-2">{product.description}</p>
+          return (
+            <div className="double-bezel-card flex flex-col group h-full" key={product.title} suppressHydrationWarning={true}>
+              <div className="double-bezel-card-inner flex-1 flex flex-col">
+                
+                {/* Image Container with Badges */}
+                <Link className="relative flex aspect-square items-center justify-center bg-neutral-50/50 rounded-xl overflow-hidden p-4 group" href={`/product/${product.slug}`}>
+                  {product.badge && (
+                    <span className="absolute left-3 top-3 rounded-full bg-neutral-900 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-white z-10">
+                      {product.badge}
+                    </span>
+                  )}
+                  {product.urgent && (
+                    <span className="absolute right-3 top-3 rounded-full bg-red-500/10 px-2.5 py-1 text-[9px] font-bold text-red-650 z-10">
+                      Limited Stock
+                    </span>
+                  )}
+                  <div className="relative h-4/5 w-4/5 transition-transform duration-700 ease-out-expo group-hover:scale-105" suppressHydrationWarning={true}>
+                    <Image 
+                      fill 
+                      className="object-contain mix-blend-multiply" 
+                      src={product.image} 
+                      alt={product.title} 
+                      sizes="250px" 
+                    />
+                  </div>
+                </Link>
 
-              {/* Rating */}
-              <div className="mb-3 flex items-center gap-1" suppressHydrationWarning={true}>
-                <Stars rating={product.rating} />
-                <span className="text-[10px] text-[#9ca3af]">({product.reviews})</span>
-              </div>
-
-              {/* Stock + Delivery */}
-              <div className="mb-4 flex flex-wrap gap-2" suppressHydrationWarning={true}>
-                {product.stock && (
-                  <span className="flex items-center gap-1 text-[10px] font-semibold text-[#16a34a]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
-                    In Stock
+                {/* Content */}
+                <div className="flex flex-1 flex-col pt-4" suppressHydrationWarning={true}>
+                  <span className="mb-1 text-[9px] font-bold uppercase tracking-wider text-neutral-400">
+                    {product.category}
                   </span>
-                )}
-                <span className="text-[10px] font-medium text-[#6b7280]">• Ships Today</span>
-              </div>
+                  <Link href={`/product/${product.slug}`}>
+                    <h4 className="mb-2 text-sm font-bold leading-snug text-neutral-900 hover:text-orange-600 transition-colors duration-300">
+                      {product.title}
+                    </h4>
+                  </Link>
+                  <p className="mb-3 text-[11px] font-semibold text-neutral-400 line-clamp-2">
+                    {product.description}
+                  </p>
 
-              {/* Price */}
-              <div className="mt-auto flex items-center justify-between border-t border-[#f3f4f6] pt-4" suppressHydrationWarning={true}>
-                <div suppressHydrationWarning={true}>
-                  <span className="text-lg font-extrabold text-[#111827]">{product.price}</span>
+                  {/* Rating */}
+                  <div className="mb-3 flex items-center gap-1.5" suppressHydrationWarning={true}>
+                    <Stars rating={product.rating} />
+                    <span className="text-[10px] font-bold text-neutral-400">({product.reviews})</span>
+                  </div>
+
+                  {/* Stock status indicator */}
+                  <div className="mb-4 flex items-center gap-2 border-b border-neutral-100 pb-3" suppressHydrationWarning={true}>
+                    <span className="flex items-center gap-1 text-[10px] font-extrabold text-green-600">
+                      <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                      Trade Stock
+                    </span>
+                    <span className="text-[10px] font-bold text-neutral-400">• Free Mombasa Delivery</span>
+                  </div>
+
+                  {/* Pricing and WhatsApp Trigger */}
+                  <div className="mt-auto flex items-end justify-between" suppressHydrationWarning={true}>
+                    <div className="flex flex-col gap-0.5" suppressHydrationWarning={true}>
+                      {bulkPriceFormatted ? (
+                        <>
+                          <span className="text-xs font-semibold text-neutral-400 line-through leading-none">
+                            {product.price}
+                          </span>
+                          <span className="text-base font-black text-neutral-900 leading-none">
+                            {bulkPriceFormatted}
+                            <span className="text-[9px] font-bold text-orange-600 uppercase ml-1">Bulk</span>
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-base font-black text-neutral-900 leading-none">
+                          {product.price}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <a 
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-600/5 text-orange-600 transition-all duration-300 hover:bg-[#25d366]/10 hover:text-[#25d366] active:scale-90" 
+                      href={`${siteConfig.whatsappHref}?text=Hi%20Amroz%20Traders,%20I%20want%2520to%20inquire%20about%20${encodeURIComponent(product.title)}%20(SKU:%20${encodeURIComponent(product.slug)})`} 
+                      title="Inquire" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <span className="material-symbols-outlined text-lg">chat</span>
+                    </a>
+                  </div>
+
                 </div>
-                <a className="rounded-full bg-[#ea580c]/10 p-2 text-[#ea580c] transition-all hover:bg-[#ea580c] hover:text-white" href={siteConfig.whatsappHref} title="Inquire" target="_blank" rel="noopener noreferrer">
-                  <span className="material-symbols-outlined text-lg">chat</span>
-                </a>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
     </section>
   );
 }

@@ -9,20 +9,22 @@ import { FeaturedProductsSection } from "@/components/homepage/FeaturedProductsS
 import { SpecialOffersSection } from "@/components/homepage/SpecialOffersSection";
 import { TestimonialsSection } from "@/components/homepage/TestimonialsSection";
 import { FAQSection } from "@/components/homepage/FAQSection";
+import { RecentProjectsSection } from "@/components/homepage/RecentProjectsSection";
 
 export default function Page() {
   return (
-    <div className="min-h-screen font-(--font-inter) text-[#191c1e]">
+    <div className="min-h-screen font-sans text-neutral-900 bg-[#f8fafc]">
       <Header />
 
       <main className="w-full flex-1 pb-16 md:pb-0">
         <HeroSection />
-        <BOQUploadSection />
         <TrustedBySection />
         <CategoriesSection />
-        <WhyChooseUsSection />
+        <BOQUploadSection />
         <FeaturedProductsSection />
         <SpecialOffersSection />
+        <WhyChooseUsSection />
+        <RecentProjectsSection />
         <TestimonialsSection />
         <FAQSection />
       </main>

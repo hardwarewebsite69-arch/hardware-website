@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Hanken_Grotesk, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 import { Header } from "@/components/Header";
@@ -26,8 +26,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const hankenGrotesk = Hanken_Grotesk({
-  variable: "--font-hanken-grotesk",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
 });
 
@@ -47,7 +47,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${hankenGrotesk.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -61,7 +61,6 @@ export default async function RootLayout({
         <SettingsProvider initialSettings={settings}>
           <QuoteCartProvider>
             {children}
-            <FloatingActions />
           </QuoteCartProvider>
         </SettingsProvider>
       </body>

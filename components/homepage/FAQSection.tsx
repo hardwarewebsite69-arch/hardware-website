@@ -27,33 +27,40 @@ const faqItems = [
 
 export function FAQSection() {
   return (
-    <section className="w-full bg-[#f9fafb] py-1 md:py-20">
-      <div className="mx-auto max-w-3xl px-6">
-        <h2 className="mb-3 text-center text-2xl font-bold tracking-tight text-[#111827] md:text-[28px]">
-          Frequently Asked Questions
-        </h2>
-        <p className="mx-auto mb-10 max-w-md text-center text-sm text-[#6b7280]">
-          Quick answers for contractors and procurement teams
-        </p>
+    <section className="w-full bg-neutral-50/50 py-24 md:py-32 font-sans border-t border-neutral-200/60">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600 block mb-2">Common Queries</span>
+          <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl font-display">
+            Frequently Asked Questions
+          </h2>
+          <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-neutral-450 leading-relaxed">
+            Quick answers for contractors and procurement teams regarding supply logistics
+          </p>
+        </div>
 
-        <div className="space-y-3">
+        {/* Accordions */}
+        <div className="space-y-4">
           {faqItems.map((item) => (
             <details
               key={item.q}
-              className="group rounded-lg border border-[#e5e7eb] bg-white transition-all hover:border-[#d1d5db] open:border-[#ea580c]/30 open:shadow-sm"
+              className="group rounded-2xl border border-neutral-200/80 bg-white transition-all duration-300 hover:border-orange-500/25 hover:shadow-sm open:border-orange-500/30 open:shadow-md"
             >
-              <summary className="flex cursor-pointer items-center justify-between px-6 py-4">
-                <span className="text-sm font-semibold text-[#111827] pr-4">{item.q}</span>
-                <span className="material-symbols-outlined faq-chevron shrink-0 text-lg text-[#9ca3af]">
+              <summary className="flex cursor-pointer items-center justify-between px-6 py-4.5 select-none">
+                <span className="text-sm font-extrabold text-neutral-900 pr-4 font-sans">{item.q}</span>
+                <span className="material-symbols-outlined faq-chevron shrink-0 text-lg text-neutral-400 select-none">
                   expand_more
                 </span>
               </summary>
-              <div className="faq-answer px-6 pb-4">
-                <p className="text-sm leading-relaxed text-[#6b7280]">{item.a}</p>
+              <div className="faq-answer px-6 pb-5 pt-1">
+                <p className="text-xs font-semibold leading-relaxed text-neutral-450">{item.a}</p>
               </div>
             </details>
           ))}
         </div>
+
       </div>
     </section>
   );
