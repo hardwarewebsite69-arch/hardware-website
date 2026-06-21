@@ -7,7 +7,7 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { QuoteCartProvider } from "@/components/QuoteCartContext";
-import { FloatingQuoteBadge } from "@/components/FloatingQuoteBadge";
+import { FloatingActions } from "@/components/homepage/FloatingActions";
 import { SettingsProvider } from "@/components/SettingsContext";
 import { getSettings } from "@/lib/catalog";
 
@@ -61,7 +61,7 @@ export default async function RootLayout({
         <SettingsProvider initialSettings={settings}>
           <QuoteCartProvider>
             {children}
-            <FloatingQuoteBadge />
+            <FloatingActions />
           </QuoteCartProvider>
         </SettingsProvider>
       </body>

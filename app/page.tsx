@@ -9,7 +9,6 @@ import { FeaturedProductsSection } from "@/components/homepage/FeaturedProductsS
 import { SpecialOffersSection } from "@/components/homepage/SpecialOffersSection";
 import { TestimonialsSection } from "@/components/homepage/TestimonialsSection";
 import { FAQSection } from "@/components/homepage/FAQSection";
-import { FloatingActions } from "@/components/homepage/FloatingActions";
 
 export default function Page() {
   return (
@@ -28,7 +27,6 @@ export default function Page() {
         <FAQSection />
       </main>
 
-      <FloatingActions />
       <Footer />
     </div>
   );

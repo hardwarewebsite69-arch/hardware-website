@@ -78,12 +78,12 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export async function FeaturedProductsSection() {
-  let dbProducts = await getProducts({ isFeatured: true, isActive: true, limit: 4 });
+  let dbProducts = await getProducts({ isFeatured: true, isActive: true, limit: 8 });
   const categories = await getCategories();
 
   // If no featured products are marked, fall back to any active products in the database
   if (dbProducts.length === 0) {
-    dbProducts = await getProducts({ isActive: true, limit: 4 });
+    dbProducts = await getProducts({ isActive: true, limit: 8 });
   }
 
   // Determine display products. If empty database, use fallback equipment.
@@ -126,9 +126,9 @@ export async function FeaturedProductsSection() {
           View catalog <span className="material-symbols-outlined text-xs">arrow_forward</span>
         </Link>
       </div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" suppressHydrationWarning={true}>
         {displayItems.map((product) => (
-          <div className="hover-lift group flex flex-col overflow-hidden rounded-lg border border-[#e5e7eb] bg-white transition-shadow hover:shadow-xl" key={product.title}>
+          <div className="hover-lift group flex flex-col overflow-hidden rounded-lg border border-[#e5e7eb] bg-white transition-shadow hover:shadow-xl" key={product.title} suppressHydrationWarning={true}>
             {/* Image */}
             <Link className="relative flex aspect-square items-center justify-center bg-[#f2f4f6] p-3 overflow-hidden" href={`/product/${product.slug}`}>
               {product.badge && (
@@ -141,13 +141,13 @@ export async function FeaturedProductsSection() {
                   Only 8 left
                 </span>
               )}
-              <div className="relative h-3/4 w-3/4 transition-transform duration-500 group-hover:scale-105">
+              <div className="relative h-3/4 w-3/4 transition-transform duration-500 group-hover:scale-105" suppressHydrationWarning={true}>
                 <Image fill className="object-contain mix-blend-multiply" src={product.image} alt={product.title} sizes="250px" />
               </div>
             </Link>
 
             {/* Content */}
-            <div className="flex flex-1 flex-col p-5">
+            <div className="flex flex-1 flex-col p-5" suppressHydrationWarning={true}>
               <span className="mb-1 text-[10px] uppercase tracking-widest text-[#6b7280]">{product.category}</span>
               <Link href={`/product/${product.slug}`}>
                 <h4 className="mb-2 text-sm font-bold leading-snug text-[#111827] hover:text-[#ea580c] transition-colors">{product.title}</h4>
@@ -155,13 +155,13 @@ export async function FeaturedProductsSection() {
               <p className="mb-2 text-xs text-[#6b7280] line-clamp-2">{product.description}</p>
 
               {/* Rating */}
-              <div className="mb-3 flex items-center gap-1">
+              <div className="mb-3 flex items-center gap-1" suppressHydrationWarning={true}>
                 <Stars rating={product.rating} />
                 <span className="text-[10px] text-[#9ca3af]">({product.reviews})</span>
               </div>
 
               {/* Stock + Delivery */}
-              <div className="mb-4 flex flex-wrap gap-2">
+              <div className="mb-4 flex flex-wrap gap-2" suppressHydrationWarning={true}>
                 {product.stock && (
                   <span className="flex items-center gap-1 text-[10px] font-semibold text-[#16a34a]">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
@@ -172,8 +172,8 @@ export async function FeaturedProductsSection() {
               </div>
 
               {/* Price */}
-              <div className="mt-auto flex items-center justify-between border-t border-[#f3f4f6] pt-4">
-                <div>
+              <div className="mt-auto flex items-center justify-between border-t border-[#f3f4f6] pt-4" suppressHydrationWarning={true}>
+                <div suppressHydrationWarning={true}>
                   <span className="text-lg font-extrabold text-[#111827]">{product.price}</span>
                 </div>
                 <a className="rounded-full bg-[#ea580c]/10 p-2 text-[#ea580c] transition-all hover:bg-[#ea580c] hover:text-white" href={siteConfig.whatsappHref} title="Inquire" target="_blank" rel="noopener noreferrer">

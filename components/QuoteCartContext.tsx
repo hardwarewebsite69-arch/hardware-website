@@ -16,6 +16,7 @@ export interface CartItem {
 
 interface QuoteCartContextType {
   items: CartItem[];
+  setItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
   addToCart: (product: Product) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
@@ -95,6 +96,7 @@ export function QuoteCartProvider({ children }: { children: React.ReactNode }) {
     <QuoteCartContext.Provider
       value={{
         items,
+        setItems,
         addToCart,
         removeFromCart,
         updateQuantity,

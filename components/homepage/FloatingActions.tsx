@@ -2,10 +2,22 @@
 
 import { FaWhatsapp } from "react-icons/fa";
 import { useSettings } from "../SettingsContext";
+import { useQuoteCart } from "../QuoteCartContext";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export function FloatingActions() {
+  const pathname = usePathname();
   const { telHref, whatsappHref } = useSettings();
+  const { items } = useQuoteCart();
+  
+  // Calculate total items in the cart
+  const totalCount = items.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Hide the floating widget on admin screens and on the quote form page itself
+  if (pathname.startsWith("/admin") || pathname === "/quote") {
+    return null;
+  }
 
   return (
     <>
@@ -14,10 +26,15 @@ export function FloatingActions() {
         {/* Get Quote */}
         <Link
           href="/quote"
-          className="flex h-12 items-center gap-2 rounded-full bg-[#ea580c] px-6 text-white shadow-2xl transition-all hover:scale-105 hover:shadow-[0_8px_30px_rgba(234,88,12,0.4)] active:scale-95"
+          className="relative flex h-12 items-center gap-2 rounded-full bg-[#ea580c] px-6 text-white shadow-2xl transition-all hover:scale-105 hover:shadow-[0_8px_30px_rgba(234,88,12,0.4)] active:scale-95 group"
         >
           <span className="material-symbols-outlined text-lg">description</span>
           <span className="text-sm font-bold">Get Quote</span>
+          {totalCount > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white border-2 border-white shadow-sm transition-transform group-hover:scale-110">
+              {totalCount}
+            </span>
+          )}
         </Link>
 
         {/* Call */}
@@ -62,13 +79,19 @@ export function FloatingActions() {
         </a>
         <Link
           href="/quote"
-          className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[#ea580c] transition-colors"
+          className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[#ea580c] transition-colors relative"
         >
-          <span className="material-symbols-outlined text-xl">description</span>
+          <div className="relative">
+            <span className="material-symbols-outlined text-xl">description</span>
+            {totalCount > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-red-600 text-[9px] font-black text-white border border-white shadow-sm">
+                {totalCount}
+              </span>
+            )}
+          </div>
           <span className="text-[10px] font-bold">Quote</span>
         </Link>
       </div>
     </>
   );
 }
-

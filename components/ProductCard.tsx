@@ -15,22 +15,25 @@ export function ProductCard({ product }: { product: Product }) {
   const imageUrl = product.product_images?.[0]?.url ?? productImageFor(product.slug);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white transition-all hover:border-neutral-300 hover:shadow-xl">
-      <Link className="relative aspect-square overflow-hidden bg-neutral-50" href={`/product/${product.slug}`}>
+    <article className="group flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white transition-all hover:border-neutral-300 hover:shadow-xl" suppressHydrationWarning={true}>
+      <Link 
+        href={`/product/${product.slug}`}
+        className="relative block aspect-square overflow-hidden bg-neutral-100 border-b border-neutral-100"
+      >
         <img
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           src={imageUrl}
         />
         {product.request_price && (
-          <div className="absolute left-4 top-4 rounded-sm bg-[#111827] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-sm">
+          <div className="absolute left-4 top-4 rounded-sm bg-[#111827] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-sm" suppressHydrationWarning={true}>
             Bulk Quote
           </div>
         )}
       </Link>
       
-      <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-1 flex-col p-5" suppressHydrationWarning={true}>
+        <div className="flex items-start justify-between gap-4" suppressHydrationWarning={true}>
           <Link className="flex-1" href={`/product/${product.slug}`}>
             <h3 className="text-lg font-black leading-tight text-[#111827] group-hover:text-[#ea580c] transition-colors">
               {product.name}
@@ -47,8 +50,8 @@ export function ProductCard({ product }: { product: Product }) {
           {product.description}
         </p>
         
-        <div className="mt-auto pt-5">
-          <div className="flex items-center justify-between border-t border-neutral-100 pt-4">
+        <div className="mt-auto pt-5" suppressHydrationWarning={true}>
+          <div className="flex items-center justify-between border-t border-neutral-100 pt-4" suppressHydrationWarning={true}>
             <span className="text-xl font-black text-[#111827]">
               {formatPrice(product.price, product.request_price)}
             </span>

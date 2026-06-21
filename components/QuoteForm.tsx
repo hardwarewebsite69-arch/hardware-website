@@ -6,7 +6,7 @@ import { searchProducts } from "@/lib/catalog";
 
 import { useUploadThing } from "@/lib/uploadthing";
 import type { Product } from "@/lib/types";
-import { useQuoteCart } from "./QuoteCartContext";
+import { useQuoteCart, type CartItem } from "./QuoteCartContext";
 
 type QuoteFormProps = {
   defaultMode?: "upload" | "manual";
@@ -35,7 +35,7 @@ const getFileIcon = (filename: string) => {
 };
 
 export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
-  const { items: cartItems, clearCart } = useQuoteCart();
+  const { items: cartItems, setItems: setCartItems, clearCart } = useQuoteCart();
   const [mode, setMode] = useState<"upload" | "manual">(defaultMode);
 
   // Manual mode states
@@ -60,6 +60,28 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
       setMode("manual");
     }
   }, [cartItems]);
+
+  // Keep QuoteCartContext in sync with local items state so removing or modifying items reflects globally
+  useEffect(() => {
+    const updatedCartItems: CartItem[] = items.map((item) => {
+      const existing = cartItems.find((c) => c.id === item.product_id || c.name === item.item_name);
+      return {
+        id: item.product_id || existing?.id || item.item_name,
+        name: item.item_name,
+        sku: existing?.sku || null,
+        price: existing?.price || null,
+        request_price: existing?.request_price !== undefined ? existing.request_price : true,
+        quantity: parseInt(item.quantity, 10) || 1,
+        unit: item.unit || "pcs",
+        notes: item.notes,
+      };
+    });
+
+    const isDifferent = JSON.stringify(updatedCartItems) !== JSON.stringify(cartItems);
+    if (isDifferent) {
+      setCartItems(updatedCartItems);
+    }
+  }, [items, cartItems, setCartItems]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
