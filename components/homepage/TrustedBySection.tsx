@@ -14,7 +14,7 @@ export function TrustedBySection() {
             <div className="flex h-7 items-center justify-center rounded bg-neutral-900 px-2 text-[10px] font-black tracking-wider text-white uppercase font-mono">
               KEBS Approved
             </div>
-            <p className="text-xs font-bold uppercase tracking-wider text-neutral-450">
+            <p className="text-xs font-bold uppercase tracking-wider text-neutral-500">
               Contractor Validation Strip
             </p>
           </div>

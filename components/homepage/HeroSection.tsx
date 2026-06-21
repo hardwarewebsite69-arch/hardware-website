@@ -12,7 +12,7 @@ const popularSearches = ["PVC Pipes", "Cement", "Power Tools", "Safety Boots", "
 
 export function HeroSection() {
   return (
-    <section className="relative z-0 overflow-hidden pt-16 pb-24 lg:pt-20 lg:pb-32 font-sans">
+    <section className="relative z-0 overflow-hidden pt-16 pb-24 lg:pt-20 lg:pb-42 font-sans hero-section-timeline">
       {/* Background with mask */}
       <div className="absolute inset-0 -z-20">
         <Image 
@@ -30,7 +30,7 @@ export function HeroSection() {
           className="block object-cover object-center lg:hidden" 
         />
         {/* Radical dark ink linear mask for high readability on desktop */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-50/90 to-slate-10/10 hidden lg:block" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-50/90 to-slate-50/0 hidden lg:block" />
         <div className="absolute inset-0 bg-slate-50/90 block lg:hidden" />
       </div>
 
@@ -39,11 +39,6 @@ export function HeroSection() {
           
           {/* Left Column: Branding and Actions */}
           <div className="flex flex-col gap-6 lg:col-span-7 lg:gap-8">
-            {/* Live Trust Pill */}
-            <div className="inline-flex items-center gap-2 self-start rounded-full border border-orange-500/10 bg-orange-500/5 px-4 py-1.5 text-xs font-bold text-orange-700 shadow-sm backdrop-blur-sm">
-              <span className="flex h-2 w-2 rounded-full bg-orange-600 animate-pulse" />
-              <span>Trusted B2B Supplier Across Kenya</span>
-            </div>
 
             {/* Premium Headline & Subheadline */}
             <div className="space-y-4">
@@ -74,7 +69,7 @@ export function HeroSection() {
                 />
               </div>
               <button 
-                className="rounded-full bg-orange-600 px-6 py-2.5 text-xs font-bold text-white transition-all duration-300 hover:bg-orange-700 active:scale-35 shadow-md" 
+                className="rounded-full bg-orange-600 px-6 py-2.5 text-xs font-bold text-white transition-all duration-300 hover:bg-orange-700 active:scale-95 shadow-md cursor-pointer" 
                 type="submit"
               >
                 Search
@@ -98,7 +93,7 @@ export function HeroSection() {
             {/* Trade CTAs */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link 
-                className="group flex h-12 items-center justify-center gap-2 rounded-full bg-orange-600 px-8 text-sm font-bold text-white shadow-lg shadow-orange-600/15 transition-all duration-300 hover:scale-102 hover:bg-orange-700 active:scale-98" 
+                className="group flex h-12 items-center justify-center gap-2 rounded-full bg-orange-600 px-8 text-sm font-bold text-white shadow-lg shadow-orange-600/15 transition-all duration-300 hover:scale-[1.02] hover:bg-orange-700 active:scale-95" 
                 href="/quote"
               >
                 Get Custom Quote
@@ -107,7 +102,7 @@ export function HeroSection() {
                 </div>
               </Link>
               <Link 
-                className="flex h-12 items-center justify-center rounded-full border border-neutral-300 bg-white px-8 text-sm font-bold text-neutral-800 transition-all duration-300 hover:bg-neutral-50 hover:border-neutral-300 active:scale-98" 
+                className="flex h-12 items-center justify-center rounded-full border border-neutral-300 bg-white px-8 text-sm font-bold text-neutral-800 transition-all duration-300 hover:bg-neutral-50 hover:border-neutral-300 active:scale-95" 
                 href="/shop"
               >
                 Browse Materials
@@ -116,8 +111,8 @@ export function HeroSection() {
           </div>
 
           {/* Right Column: Interactive BOQ Upload Widget (Desktop Only) */}
-          <div className="hidden lg:block lg:col-span-5">
-            <div className="double-bezel-card w-full">
+          <div className="hidden lg:block lg:col-span-5 scroll-trigger-widget">
+            <div className="double-bezel-card w-full widget-entrance-animation">
               <div className="double-bezel-card-inner flex flex-col gap-6">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-600/5 text-orange-600">
@@ -129,34 +124,37 @@ export function HeroSection() {
                   </div>
                 </div>
 
-                <div className="border border-dashed border-neutral-250 rounded-2xl p-8 flex flex-col items-center justify-center gap-4 bg-neutral-50/50 hover:bg-neutral-50 hover:border-orange-500/30 transition-colors cursor-pointer group">
-                  <span className="material-symbols-outlined text-4xl text-neutral-300 group-hover:text-orange-500 transition-colors">description</span>
-                  <div className="text-center">
+                <div className="border border-dashed border-neutral-200 rounded-2xl p-8 flex flex-col items-center justify-center gap-4 bg-neutral-50/50 hover:bg-neutral-50 hover:border-orange-500/30 transition-all cursor-pointer group">
+                  <span className="material-symbols-outlined text-4xl text-neutral-300 group-hover:text-orange-500 group-hover:scale-105 transition-all duration-300">description</span>
+                  <div className="text-center font-sans">
                     <p className="text-xs font-bold text-neutral-800">Drag & drop your materials list</p>
                     <p className="text-[10px] text-neutral-400 mt-1">Accepts PDF, Excel, Word documents</p>
                   </div>
                   <Link 
                     href="/quote/upload" 
-                    className="rounded-full bg-neutral-900 px-4 py-1.5 text-[10px] font-bold text-white hover:bg-neutral-850"
+                    className="rounded-full bg-neutral-900 px-4 py-1.5 text-[10px] font-bold text-white hover:bg-neutral-800 active:scale-95 transition-all"
                   >
                     Select File
                   </Link>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] font-semibold text-neutral-450 border-t border-neutral-100 pt-4">
+                <div className="flex items-center justify-between text-[11px] font-semibold text-neutral-500 border-t border-neutral-100 pt-4">
                   <span className="flex items-center gap-1.5">
-                    <span className="flex h-1.5 w-1.5 rounded-full bg-green-500" />
-                    24h Bid SLA
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    24h Response
                   </span>
-                  <span>Free Estimations</span>
                 </div>
               </div>
             </div>
           </div>
 
+
         </div>
 
-        {/* Floating Trust Metrics Bar */}
+        {/* Floating Trust Metrics Bar
         <div className="mt-16 grid grid-cols-2 gap-6 border-t border-neutral-200/80 pt-8 sm:grid-cols-4">
           {trustMetrics.map((m) => (
             <div key={m.label} className="flex items-center gap-3">
@@ -169,7 +167,7 @@ export function HeroSection() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
       </div>
     </section>

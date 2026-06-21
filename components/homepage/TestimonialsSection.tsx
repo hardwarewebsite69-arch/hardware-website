@@ -32,7 +32,7 @@ export function TestimonialsSection() {
         <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl font-display">
           What Our Clients Say
         </h2>
-        <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-neutral-450 leading-relaxed">
+        <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-neutral-500 leading-relaxed">
           Trusted by developers, contractors, and procurement teams across East Africa
         </p>
       </div>

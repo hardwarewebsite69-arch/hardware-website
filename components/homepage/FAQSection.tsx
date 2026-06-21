@@ -36,7 +36,7 @@ export function FAQSection() {
           <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl font-display">
             Frequently Asked Questions
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-neutral-450 leading-relaxed">
+          <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-neutral-500 leading-relaxed">
             Quick answers for contractors and procurement teams regarding supply logistics
           </p>
         </div>
@@ -55,7 +55,7 @@ export function FAQSection() {
                 </span>
               </summary>
               <div className="faq-answer px-6 pb-5 pt-1">
-                <p className="text-xs font-semibold leading-relaxed text-neutral-450">{item.a}</p>
+                <p className="text-xs font-semibold leading-relaxed text-neutral-500">{item.a}</p>
               </div>
             </details>
           ))}

@@ -99,7 +99,7 @@ function DesktopActions() {
 
       <Link
         href="/login"
-        className="rounded-full border border-neutral-200/80 px-3.5 h-10 text-xs font-bold text-neutral-700 hover:text-neutral-900 hover:border-neutral-350 hover:bg-neutral-50 transition-all duration-300 flex items-center justify-center gap-1.5"
+        className="rounded-full border border-neutral-200/80 px-3.5 h-10 text-xs font-bold text-neutral-700 hover:text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 transition-all duration-300 flex items-center justify-center gap-1.5"
       >
         <span className="material-symbols-outlined text-[16px]">person</span>
         Sign in
@@ -133,7 +133,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
     <div className="absolute left-4 right-4 top-20 z-50 rounded-3xl border border-neutral-200/80 bg-white/95 p-5 shadow-2xl backdrop-blur-xl space-y-4 lg:hidden animate-in fade-in slide-in-from-top-4 duration-350 ease-out">
       <form
         action="/search"
-        className="flex items-center rounded-full border border-neutral-350 bg-neutral-50/50 px-4 py-2"
+        className="flex items-center rounded-full border border-neutral-300 bg-neutral-50/50 px-4 py-2"
         onSubmit={onClose}
       >
         <span className="material-symbols-outlined text-neutral-400">search</span>
@@ -170,7 +170,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
 
         <div className="grid grid-cols-2 gap-2 pt-2">
           <Link
-            className="flex items-center justify-center gap-1.5 rounded-full bg-neutral-900 py-3 text-xs font-bold text-white shadow-sm transition hover:bg-neutral-850"
+            className="flex items-center justify-center gap-1.5 rounded-full bg-neutral-900 py-3 text-xs font-bold text-white shadow-sm transition hover:bg-neutral-800"
             href="/quote"
             onClick={onClose}
           >

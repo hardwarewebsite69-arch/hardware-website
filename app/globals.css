@@ -148,3 +148,55 @@ details[open] .faq-answer {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
   border-color: rgba(234, 88, 12, 0.2);
 }
+
+/* ── Hero Section Timeline & Scroll Animations ── */
+.hero-section-timeline {
+  view-timeline-name: --hero-timeline;
+  view-timeline-axis: block;
+}
+
+@keyframes widget-scroll-anim {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-90px) scale(0.92);
+    opacity: 0.15;
+  }
+}
+
+@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+  .scroll-trigger-widget {
+    animation: widget-scroll-anim linear both;
+    animation-timeline: --hero-timeline;
+    animation-range: exit 0% exit 100%;
+  }
+}
+
+/* ── BOQ Widget Entrance Animation (On Load) ── */
+@keyframes widget-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.widget-entrance-animation {
+  animation: widget-entrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .widget-entrance-animation,
+  .scroll-trigger-widget {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+

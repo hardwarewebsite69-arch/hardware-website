@@ -65,7 +65,7 @@ export function RecentProjectsSection() {
               {/* Materials List */}
               <div className="flex-1 flex flex-col justify-between pt-2">
                 <div>
-                  <h4 className="text-xs font-bold text-neutral-450 uppercase tracking-wider mb-2">Materials Supplied</h4>
+                  <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">Materials Supplied</h4>
                   <ul className="space-y-1.5">
                     {p.supplied.map((item) => (
                       <li key={item} className="flex items-center gap-2 text-xs font-semibold text-neutral-700">
@@ -76,7 +76,7 @@ export function RecentProjectsSection() {
                   </ul>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-[11px] font-bold text-neutral-450">
+                <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-[11px] font-bold text-neutral-500">
                   <span>{p.duration}</span>
                   <span className="text-neutral-900 font-extrabold">{p.value} Contract</span>
                 </div>
