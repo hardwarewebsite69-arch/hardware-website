@@ -52,7 +52,7 @@ export async function preloadFrames(
   const promises: Promise<HTMLImageElement>[] = [];
 
   for (let i = startFrame; i <= endFrame; i++) {
-    const frameName = `output_frame_${padZero(i)}.jpg`;
+    const frameName = `output_frame_${padZero(i)}.webp`;
     const path = `/hero-frames/${frameName}`;
     promises.push(preloadAndDecodeImage(path));
   }

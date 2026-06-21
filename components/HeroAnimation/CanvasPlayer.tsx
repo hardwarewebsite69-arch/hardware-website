@@ -14,7 +14,7 @@ export function CanvasPlayer({ images, currentFrame, opacity }: CanvasPlayerProp
   // Load first frame immediately on mount to show it instantly
   useEffect(() => {
     const img = new Image();
-    img.src = "/hero-frames/output_frame_0001.jpg";
+    img.src = "/hero-frames/output_frame_0001.webp";
     
     const handleLoad = () => {
       if ("decode" in img && typeof img.decode === "function") {
