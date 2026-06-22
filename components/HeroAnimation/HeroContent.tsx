@@ -4,9 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import gsap from "gsap";
-import { AnimationPhase } from "./useHeroAnimation";
 
-const popularSearches = ["PVC Pipes", "Cement", "Power Tools", "Safety Boots", "Paint", "Bolts"];
+const popularSearches = [ "Cement", "Power Tools",  "Paint"];
 
 const trustMetrics = [
   { value: "1,200+", label: "Contractors", icon: "groups" },
@@ -16,7 +15,7 @@ const trustMetrics = [
 ];
 
 interface HeroContentProps {
-  phase: AnimationPhase;
+  showContent: boolean;
 }
 
 /**
@@ -65,9 +64,9 @@ function StatsCounter({ value, trigger, delay }: { value: string; trigger: boole
   return <span>{displayValue}</span>;
 }
 
-export function HeroContent({ phase }: HeroContentProps) {
-  // Trigger entrance animations when crossfading starts or completes
-  const triggerEntrance = phase === "crossfade" || phase === "complete";
+export function HeroContent({ showContent }: HeroContentProps) {
+  // Trigger entrance animations when showContent is true
+  const triggerEntrance = showContent;
 
   // Base Framer Motion variants
   const fadeUpVariant = {
