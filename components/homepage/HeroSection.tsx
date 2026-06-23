@@ -4,11 +4,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HeroOverlay } from "../HeroAnimation/HeroOverlay";
 import { HeroContent } from "../HeroAnimation/HeroContent";
+import { heroOpenerVideos } from "@/lib/site-config";
+
+const MOBILE_MEDIA_QUERY = "(max-width: 767px)";
 
 export function HeroSection() {
   const [isIntroActive, setIsIntroActive] = useState(true);
   const [checkingSession, setCheckingSession] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [posterUrl, setPosterUrl] = useState<string>(
+    heroOpenerVideos.desktop.poster,
+  );
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Initialize and check session storage
@@ -20,6 +26,20 @@ export function HeroSection() {
       }
       setCheckingSession(false);
     }
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const updatePoster = () => {
+      setPosterUrl(
+        mediaQuery.matches
+          ? heroOpenerVideos.mobile.poster
+          : heroOpenerVideos.desktop.poster,
+      );
+    };
+    updatePoster();
+    mediaQuery.addEventListener("change", updatePoster);
+    return () => mediaQuery.removeEventListener("change", updatePoster);
   }, []);
 
   // Handle body scroll locking
@@ -83,12 +103,32 @@ export function HeroSection() {
               autoPlay
               muted={isMuted}
               playsInline
+              preload="auto"
+              poster={posterUrl}
               onEnded={handleIntroComplete}
               className="absolute inset-0 w-full h-full object-cover"
             >
-              <source src="/hero-video2.mp4" type="video/mp4" />
-              <source src="/hero-video.mp4" type="video/mp4" />
-              <source src="/scroll-video.mp4" type="video/mp4" />
+              <source
+                src={heroOpenerVideos.mobile.webm}
+                type="video/webm"
+                media="(max-width: 767px)"
+              />
+              <source
+                src={heroOpenerVideos.mobile.mp4}
+                type="video/mp4"
+                media="(max-width: 767px)"
+              />
+              <source
+                src={heroOpenerVideos.desktop.webm}
+                type="video/webm"
+                media="(min-width: 768px)"
+              />
+              <source
+                src={heroOpenerVideos.desktop.mp4}
+                type="video/mp4"
+                media="(min-width: 768px)"
+              />
+              <source src={heroOpenerVideos.desktop.mp4} type="video/mp4" />
             </video>
 
             {/* Subtle Overlay to enhance cinematic branding text readability */}
