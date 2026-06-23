@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HeroOverlay } from "../HeroAnimation/HeroOverlay";
 import { HeroContent } from "../HeroAnimation/HeroContent";
@@ -15,7 +15,17 @@ export function HeroSection() {
   const [posterUrl, setPosterUrl] = useState<string>(
     heroOpenerVideos.desktop.poster,
   );
+  const [videoSrc, setVideoSrc] = useState<string>(
+    heroOpenerVideos.desktop.mp4,
+  );
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleIntroComplete = useCallback(() => {
+    setIsIntroActive(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("hasPlayedIntro", "true");
+    }
+  }, []);
 
   // Initialize and check session storage
   useEffect(() => {
@@ -30,16 +40,23 @@ export function HeroSection() {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
-    const updatePoster = () => {
+    const updateMedia = () => {
+      const isMobile = mediaQuery.matches;
       setPosterUrl(
-        mediaQuery.matches
+        isMobile
           ? heroOpenerVideos.mobile.poster
           : heroOpenerVideos.desktop.poster,
       );
+      // MP4 only — Safari/iOS does not play WebM and <source media=""> is unreliable on mobile.
+      setVideoSrc(
+        isMobile
+          ? heroOpenerVideos.mobile.mp4
+          : heroOpenerVideos.desktop.mp4,
+      );
     };
-    updatePoster();
-    mediaQuery.addEventListener("change", updatePoster);
-    return () => mediaQuery.removeEventListener("change", updatePoster);
+    updateMedia();
+    mediaQuery.addEventListener("change", updateMedia);
+    return () => mediaQuery.removeEventListener("change", updateMedia);
   }, []);
 
   // Handle body scroll locking
@@ -54,27 +71,25 @@ export function HeroSection() {
     };
   }, [isIntroActive, checkingSession]);
 
-  // Fail-safe timer in case video stalls or fails to play/load
+  // Fail-safe when video stalls, errors, or never starts (common on real mobile devices).
   useEffect(() => {
     if (!isIntroActive) return;
 
-    const safetyTimeout = setTimeout(() => {
-      // If video has not started playing after 4 seconds, bypass intro
-      if (videoRef.current && videoRef.current.currentTime === 0) {
-        console.warn("Opener video failed to start playing in 4s. Bypassing.");
+    const safetyTimeout = window.setTimeout(() => {
+      const video = videoRef.current;
+      const stalled =
+        !video ||
+        video.error != null ||
+        (video.currentTime < 0.1 && video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA);
+
+      if (stalled) {
+        console.warn("Opener video failed to start in 4s. Bypassing intro.");
         handleIntroComplete();
       }
     }, 4000);
 
-    return () => clearTimeout(safetyTimeout);
-  }, [isIntroActive]);
-
-  const handleIntroComplete = () => {
-    setIsIntroActive(false);
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("hasPlayedIntro", "true");
-    }
-  };
+    return () => window.clearTimeout(safetyTimeout);
+  }, [isIntroActive, handleIntroComplete]);
 
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
@@ -95,41 +110,22 @@ export function HeroSection() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-[9999] bg-black select-none touch-none flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[9990] bg-black select-none flex items-center justify-center overflow-hidden"
           >
             {/* The Video Player */}
             <video
               ref={videoRef}
+              key={videoSrc}
+              src={videoSrc}
               autoPlay
               muted={isMuted}
               playsInline
               preload="auto"
               poster={posterUrl}
               onEnded={handleIntroComplete}
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source
-                src={heroOpenerVideos.mobile.webm}
-                type="video/webm"
-                media="(max-width: 767px)"
-              />
-              <source
-                src={heroOpenerVideos.mobile.mp4}
-                type="video/mp4"
-                media="(max-width: 767px)"
-              />
-              <source
-                src={heroOpenerVideos.desktop.webm}
-                type="video/webm"
-                media="(min-width: 768px)"
-              />
-              <source
-                src={heroOpenerVideos.desktop.mp4}
-                type="video/mp4"
-                media="(min-width: 768px)"
-              />
-              <source src={heroOpenerVideos.desktop.mp4} type="video/mp4" />
-            </video>
+              onError={handleIntroComplete}
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
 
             {/* Subtle Overlay to enhance cinematic branding text readability */}
             <div className="absolute inset-0 bg-black/35 z-10" />

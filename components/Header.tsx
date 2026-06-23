@@ -180,7 +180,7 @@ export function Header() {
   const handleToggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
 
   return (
-    <header className="sticky top-4 z-50 w-full px-4 antialiased font-sans">
+    <header className="sticky top-4 z-[10001] w-full px-4 antialiased font-sans">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 lg:gap-6 rounded-full border border-neutral-200/60 bg-white/80 px-4 lg:px-6 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.015)] backdrop-blur-md">
         {/* Left: Brand + Desktop Nav */}
         <div className="flex items-center gap-4 lg:gap-6 min-w-fit">
