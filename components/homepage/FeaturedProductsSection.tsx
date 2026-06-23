@@ -119,7 +119,7 @@ export async function FeaturedProductsSection() {
     : fallbackFeaturedEquipment;
 
   return (
-    <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32 font-sans">
+    <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 md:py-32 font-sans">
       
       {/* Section Header */}
       <div className="mb-12 flex items-end justify-between border-b border-neutral-200 pb-4">
@@ -152,12 +152,12 @@ export async function FeaturedProductsSection() {
                 {/* Image Container with Badges */}
                 <Link className="relative flex aspect-square items-center justify-center bg-neutral-50/50 rounded-xl overflow-hidden p-4 group" href={`/product/${product.slug}`}>
                   {product.badge && (
-                    <span className="absolute left-3 top-3 rounded-full bg-neutral-900 px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-white z-10">
+                    <span className="absolute left-3 top-3 rounded-full bg-neutral-900 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white z-10">
                       {product.badge}
                     </span>
                   )}
                   {product.urgent && (
-                    <span className="absolute right-3 top-3 rounded-full bg-red-500/10 px-2.5 py-1 text-[9px] font-bold text-red-650 z-10">
+                    <span className="absolute right-3 top-3 rounded-full bg-red-500/10 px-2.5 py-1 text-[10px] font-bold text-red-650 z-10">
                       Limited Stock
                     </span>
                   )}
@@ -174,48 +174,41 @@ export async function FeaturedProductsSection() {
 
                 {/* Content */}
                 <div className="flex flex-1 flex-col pt-4" suppressHydrationWarning={true}>
-                  <span className="mb-1 text-[9px] font-bold uppercase tracking-wider text-neutral-400">
+                  <span className="mb-1 text-[10px] font-bold uppercase tracking-wider text-neutral-550">
                     {product.category}
                   </span>
                   <Link href={`/product/${product.slug}`}>
-                    <h4 className="mb-2 text-sm font-bold leading-snug text-neutral-900 hover:text-orange-600 transition-colors duration-300">
+                    <h4 className="mb-2 text-sm sm:text-base font-bold leading-snug text-neutral-900 hover:text-orange-600 transition-colors duration-300">
                       {product.title}
                     </h4>
                   </Link>
-                  <p className="mb-3 text-[11px] font-semibold text-neutral-400 line-clamp-2">
+                  <p className="mb-3 text-xs font-semibold text-neutral-600 line-clamp-2">
                     {product.description}
                   </p>
 
                   {/* Rating */}
                   <div className="mb-3 flex items-center gap-1.5" suppressHydrationWarning={true}>
                     <Stars rating={product.rating} />
-                    <span className="text-[10px] font-bold text-neutral-400">({product.reviews})</span>
+                    <span className="text-xs font-bold text-neutral-500">({product.reviews})</span>
                   </div>
 
-                  {/* Stock status indicator */}
-                  <div className="mb-4 flex items-center gap-2 border-b border-neutral-100 pb-3" suppressHydrationWarning={true}>
-                    <span className="flex items-center gap-1 text-[10px] font-extrabold text-green-600">
-                      <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                      Trade Stock
-                    </span>
-                    <span className="text-[10px] font-bold text-neutral-400">• Free Mombasa Delivery</span>
-                  </div>
+                
 
                   {/* Pricing and WhatsApp Trigger */}
                   <div className="mt-auto flex items-end justify-between" suppressHydrationWarning={true}>
                     <div className="flex flex-col gap-0.5" suppressHydrationWarning={true}>
                       {bulkPriceFormatted ? (
                         <>
-                          <span className="text-xs font-semibold text-neutral-400 line-through leading-none">
+                          <span className="text-xs font-semibold text-neutral-500 line-through leading-none">
                             {product.price}
                           </span>
-                          <span className="text-base font-black text-neutral-900 leading-none">
+                          <span className="text-base sm:text-lg font-black text-neutral-900 leading-none">
                             {bulkPriceFormatted}
-                            <span className="text-[9px] font-bold text-orange-600 uppercase ml-1">Bulk</span>
+                            <span className="text-[10px] font-bold text-orange-600 uppercase ml-1">Bulk</span>
                           </span>
                         </>
                       ) : (
-                        <span className="text-base font-black text-neutral-900 leading-none">
+                        <span className="text-base sm:text-lg font-black text-neutral-900 leading-none">
                           {product.price}
                         </span>
                       )}

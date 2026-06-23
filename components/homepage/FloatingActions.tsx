@@ -22,7 +22,7 @@ export function FloatingActions() {
   return (
     <>
       {/* Desktop Floating Buttons — hidden on mobile */}
-      <div className="fixed bottom-8 right-8 z-50 hidden flex-col gap-3 items-end md:flex">
+      <div className="fixed bottom-8 right-8 z-50 hidden flex-col gap-3 items-end md:flex md:hidden">
         {/* Get Quote */}
         <Link
           href="/quote"
@@ -60,36 +60,28 @@ export function FloatingActions() {
       </div>
 
       {/* Mobile Sticky Bottom Bar — visible on mobile only */}
-      <div className="mobile-sticky-bar fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-[#e5e7eb] bg-white/95 backdrop-blur-md md:hidden">
-        <a
-          href={telHref}
-          className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[#374151] transition-colors active:text-[#ea580c]"
-        >
-          <span className="material-symbols-outlined text-xl">call</span>
-          <span className="text-[10px] font-semibold">Call</span>
-        </a>
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-neutral-200/80 px-4 py-3 md:hidden flex items-center gap-3">
         <a
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[#25d366] transition-colors"
+          className="flex-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-[#25d366] text-white text-xs font-black shadow-md hover:bg-[#20ba5a] active:scale-95 transition-all duration-300"
         >
-          <FaWhatsapp className="text-xl" />
-          <span className="text-[10px] font-semibold">WhatsApp</span>
+          <FaWhatsapp className="text-base" />
+          <span>WhatsApp</span>
         </a>
+        
         <Link
           href="/quote"
-          className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[#ea580c] transition-colors relative"
+          className="flex-[1.2] relative flex h-11 items-center justify-center gap-2 rounded-xl bg-[#ea580c] text-white text-xs font-black shadow-md hover:bg-[#c2410c] active:scale-95 transition-all duration-300"
         >
-          <div className="relative">
-            <span className="material-symbols-outlined text-xl">description</span>
-            {totalCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-red-600 text-[9px] font-black text-white border border-white shadow-sm">
-                {totalCount}
-              </span>
-            )}
-          </div>
-          <span className="text-[10px] font-bold">Quote</span>
+          <span className="material-symbols-outlined text-base">description</span>
+          <span>Get Quote</span>
+          {totalCount > 0 && (
+            <span className="absolute -top-1.5 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-[9px] font-black text-white border-2 border-white shadow-sm">
+              {totalCount}
+            </span>
+          )}
         </Link>
       </div>
     </>

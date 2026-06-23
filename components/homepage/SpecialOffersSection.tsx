@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function SpecialOffersSection() {
   return (
-    <section className="w-full bg-gradient-to-r from-[#111827] via-[#1e293b] to-[#111827] py-10 md:py-12">
+    <section className="w-full bg-gradient-to-r from-[#111827] via-[#1e293b] to-[#111827] py-5 md:py-12">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-6 md:grid-cols-2">
         {/* Offer 1 */}
         <div className="promo-pulse flex items-center justify-between rounded-xl border border-[#ea580c]/20 bg-[#ea580c]/5 p-6 backdrop-blur-sm">

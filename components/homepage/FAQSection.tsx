@@ -27,7 +27,7 @@ const faqItems = [
 
 export function FAQSection() {
   return (
-    <section className="w-full bg-neutral-50/50 py-24 md:py-32 font-sans border-t border-neutral-200/60">
+    <section className="w-full bg-neutral-50/50 py-12 md:py-32 font-sans border-t border-neutral-200/60">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -36,7 +36,7 @@ export function FAQSection() {
           <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl font-display">
             Frequently Asked Questions
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-neutral-500 leading-relaxed">
+          <p className="mx-auto mt-2 max-w-md text-xs sm:text-sm font-semibold text-neutral-600 leading-relaxed">
             Quick answers for contractors and procurement teams regarding supply logistics
           </p>
         </div>
@@ -55,7 +55,7 @@ export function FAQSection() {
                 </span>
               </summary>
               <div className="faq-answer px-6 pb-5 pt-1">
-                <p className="text-xs font-semibold leading-relaxed text-neutral-500">{item.a}</p>
+                <p className="text-xs sm:text-sm font-medium leading-relaxed text-neutral-600">{item.a}</p>
               </div>
             </details>
           ))}

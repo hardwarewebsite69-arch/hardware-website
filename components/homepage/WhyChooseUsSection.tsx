@@ -11,7 +11,7 @@ const whyItems = [
 
 export function WhyChooseUsSection() {
   return (
-    <section className="w-full bg-neutral-50/50 py-24 md:py-32 font-sans border-y border-neutral-200/60">
+    <section className="w-full bg-neutral-50/50 py-12 md:py-32 font-sans border-y border-neutral-200/60">
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -35,7 +35,7 @@ export function WhyChooseUsSection() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-extrabold text-neutral-900 leading-tight">{item.title}</p>
-                  <p className="mt-1.5 text-xs font-semibold text-neutral-400 leading-relaxed">{item.desc}</p>
+                  <p className="mt-1.5 text-xs font-semibold text-neutral-600 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             </div>

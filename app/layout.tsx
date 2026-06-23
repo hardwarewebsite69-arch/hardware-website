@@ -69,6 +69,7 @@ export default async function RootLayout({
           <QuoteCartProvider>
             <SmoothScrollProvider>
               {children}
+              <FloatingActions />
             </SmoothScrollProvider>
           </QuoteCartProvider>
         </SettingsProvider>

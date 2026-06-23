@@ -168,31 +168,6 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           Login
         </Link>
 
-        <div className="grid grid-cols-2 gap-2 pt-2">
-          <Link
-            className="flex items-center justify-center gap-1.5 rounded-full bg-neutral-900 py-3 text-xs font-bold text-white shadow-sm transition hover:bg-neutral-800"
-            href="/quote"
-            onClick={onClose}
-          >
-            <span className="material-symbols-outlined text-[16px]">description</span>
-            Quote
-            {totalCount > 0 && (
-              <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-orange-600 px-1 text-[9px] font-black text-white">
-                {totalCount}
-              </span>
-            )}
-          </Link>
-
-          <a
-            className="flex items-center justify-center gap-1.5 rounded-full bg-[#25d366] py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#20ba5a]"
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onClose}
-          >
-            WhatsApp
-          </a>
-        </div>
       </nav>
     </div>
   );

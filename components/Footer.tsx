@@ -17,7 +17,7 @@ export function Footer() {
   const { settings, whatsappHref } = useSettings();
 
   return (
-    <footer className="mt-24 border-t border-neutral-900 bg-[#0A0A0A] text-white font-sans selection:bg-orange-500 selection:text-white">
+    <footer className="mt-12 md:mt-24 border-t border-neutral-900 bg-[#0A0A0A] text-white font-sans selection:bg-orange-500 selection:text-white">
       {/* MAIN NAVIGATION GRID */}
       <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-12 px-4 sm:px-6 lg:px-8 pt-16 pb-12 md:grid-cols-12">
         

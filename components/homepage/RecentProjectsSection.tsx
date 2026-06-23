@@ -29,7 +29,7 @@ const projects = [
 
 export function RecentProjectsSection() {
   return (
-    <section id="projects" className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32 font-sans scroll-mt-20">
+    <section id="projects" className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 md:py-32 font-sans scroll-mt-20">
       
       {/* Section Header */}
       <div className="mb-12 flex items-end justify-between border-b border-neutral-200 pb-4">
@@ -65,10 +65,10 @@ export function RecentProjectsSection() {
               {/* Materials List */}
               <div className="flex-1 flex flex-col justify-between pt-2">
                 <div>
-                  <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">Materials Supplied</h4>
+                  <h4 className="text-xs font-bold text-neutral-600 uppercase tracking-wider mb-2">Materials Supplied</h4>
                   <ul className="space-y-1.5">
                     {p.supplied.map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-xs font-semibold text-neutral-700">
+                      <li key={item} className="flex items-center gap-2 text-xs font-semibold text-neutral-800">
                         <span className="h-1.5 w-1.5 rounded-full bg-orange-600 shrink-0" />
                         {item}
                       </li>
@@ -76,7 +76,7 @@ export function RecentProjectsSection() {
                   </ul>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-[11px] font-bold text-neutral-500">
+                <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-[11px] sm:text-xs font-bold text-neutral-600">
                   <span>{p.duration}</span>
                   <span className="text-neutral-900 font-extrabold">{p.value} Contract</span>
                 </div>

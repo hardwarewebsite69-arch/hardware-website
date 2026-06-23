@@ -37,7 +37,7 @@ const additionalCategories = [
 
 export function CategoriesSection() {
   return (
-    <section id="categories" className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32 font-sans scroll-mt-20">
+    <section id="categories" className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 md:py-32 font-sans scroll-mt-20">
       
       {/* Section Header */}
       <div className="mb-12 flex items-end justify-between border-b border-neutral-200 pb-4">

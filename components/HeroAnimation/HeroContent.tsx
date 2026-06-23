@@ -109,7 +109,7 @@ export function HeroContent({ showContent }: HeroContentProps) {
   };
 
   return (
-    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 relative z-10 pt-16 pb-24 lg:pt-20 lg:pb-32 font-sans select-none">
+    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 relative z-10 pt-12 pb-12 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-32 font-sans select-none">
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
         {/* Left Column: Branding and Actions */}
         <div className="flex flex-col gap-6 lg:col-span-7 lg:gap-8">
@@ -278,7 +278,7 @@ export function HeroContent({ showContent }: HeroContentProps) {
   variants={fadeUpVariant}
   initial="hidden"
   animate={triggerEntrance ? "visible" : "hidden"}
-  className="mt-12 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-neutral-300/60 pt-8 sm:grid-cols-4 sm:gap-y-0 sm:divide-x sm:divide-neutral-300/40"
+  className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-neutral-300/60 pt-6 sm:mt-12 sm:pt-8 sm:grid-cols-4 sm:gap-y-0 sm:divide-x sm:divide-neutral-300/40"
 >
   {trustMetrics.map((m, i) => (
     <div 

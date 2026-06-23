@@ -5,7 +5,7 @@ const trustedCompanies = [
 
 export function TrustedBySection() {
   return (
-    <section className="w-full overflow-hidden border-y border-neutral-200/60 bg-neutral-50/40 py-8 font-sans">
+    <section className="w-full overflow-hidden border-y border-neutral-200/60 bg-neutral-50/40 py-4 md:py-8 font-sans">
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
           

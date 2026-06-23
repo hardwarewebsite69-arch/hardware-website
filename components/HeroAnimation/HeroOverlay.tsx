@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function HeroOverlay() {
   return (
-    <div className="absolute inset-0 -z-20 w-full h-full select-none pointer-events-none">
+    <div className="absolute inset-0 -z-20 w-full h-[93vh] min-h-[650px] max-h-[900px] select-none pointer-events-none">
       {/* Static Background Images */}
       <Image
         src="/hero-bg2-clean.png"
