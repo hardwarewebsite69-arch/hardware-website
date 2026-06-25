@@ -9,7 +9,7 @@ import {
 
 const testimonials = [
   {
-    name: "Mohammed Salim",
+    name: "Evans Muriuki",
     role: "General Contractor",
     location: "Mombasa",
     text: "Amroz Traders delivered our entire BOQ within 18 hours. No other supplier in the coast region comes close to their speed and reliability.",
@@ -23,7 +23,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    name: "Amar Salim",
+    name: "Salim Ahmed",
     role: "Civil Engineer",
     location: "Malindi",
     text: "Most reliable hardware supplier we've worked with. Genuine products, fair prices, and they actually pick up the phone when you call.",
