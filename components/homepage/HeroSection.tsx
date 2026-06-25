@@ -24,6 +24,8 @@ export function HeroSection() {
     setIsIntroActive(false);
     if (typeof window !== "undefined") {
       sessionStorage.setItem("hasPlayedIntro", "true");
+      // Notify Lenis the DOM height changed so it recalculates scroll dimensions
+      requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
     }
   }, []);
 

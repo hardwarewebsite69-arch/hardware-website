@@ -102,7 +102,7 @@ function DesktopActions() {
         className="rounded-full border border-neutral-200/80 px-3.5 h-10 text-xs font-bold text-neutral-700 hover:text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 transition-all duration-300 flex items-center justify-center gap-1.5"
       >
         <span className="material-symbols-outlined text-[16px]">person</span>
-        Sign in
+        Staff Login
       </Link>
     </div>
   );
