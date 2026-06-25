@@ -68,8 +68,18 @@ export default async function RootLayout({
           <QuoteCartProvider>
             <SmoothScrollProvider>
               {children}
-              <FloatingActions />
             </SmoothScrollProvider>
+            {/*
+              FloatingActions MUST live OUTSIDE SmoothScrollProvider.
+              Lenis applies transform: translateY() to its scroll wrapper,
+              which creates a new CSS stacking context. Any position:fixed
+              element nested inside a transformed ancestor loses its
+              viewport-relative positioning and scrolls with the page.
+              Placing FloatingActions here (as a sibling, not a child of
+              SmoothScrollProvider) keeps it in the root stacking context
+              so fixed positioning works correctly on all browsers.
+            */}
+            <FloatingActions />
           </QuoteCartProvider>
         </SettingsProvider>
       </body>

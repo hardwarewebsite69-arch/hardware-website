@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { siteConfig } from "@/lib/site-config";
 import { getProducts, getCategories } from "@/lib/catalog";
 import { formatPrice } from "@/lib/utils";
 import { productImageFor } from "@/lib/fallback-data";
-import { useQuoteCart } from "../QuoteCartContext";
+import { FeaturedAddToQuoteButton } from "./FeaturedAddToQuoteButton";
 
 const fallbackFeaturedEquipment = [
   {
@@ -120,24 +119,25 @@ export async function FeaturedProductsSection() {
     : fallbackFeaturedEquipment;
 
   return (
-    <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12 md:py-32 font-sans">
+    <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8 md:py-24 font-sans">
       
       {/* Section Header */}
-      <div className="mb-12 flex items-end justify-between border-b border-neutral-200 pb-4">
+      <div className="mb-6 md:mb-12 flex items-end justify-between border-b border-neutral-200 pb-4">
         <div>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600 block mb-2">Trade Inventory</span>
-          <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl font-display">Featured Products</h2>
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600 block mb-1.5">Trade Inventory</span>
+          <h2 className="text-2xl md:text-4xl font-black tracking-tight text-neutral-900 font-display">Featured Products</h2>
         </div>
         <Link className="group flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors" href="/shop">
-          Browse Full Catalog
+          <span className="hidden sm:inline">Browse Full Catalog</span>
+          <span className="sm:hidden">All Products</span>
           <div className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-600/5 transition-transform duration-300 group-hover:translate-x-0.5">
             <span className="material-symbols-outlined text-xs">arrow_forward</span>
           </div>
         </Link>
       </div>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-4" suppressHydrationWarning={true}>
+      {/* Product Grid — 2 cols on mobile, 4 on desktop */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6" suppressHydrationWarning={true}>
         {displayItems.map((product) => {
           // Parse numeric value to mock a bulk deal tier
           const numericPrice = parseFloat(product.price.replace(/[^\d.]/g, ""));
@@ -151,81 +151,84 @@ export async function FeaturedProductsSection() {
               <div className="double-bezel-card-inner flex-1 flex flex-col">
                 
                 {/* Image Container with Badges */}
-                <Link className="relative flex aspect-square items-center justify-center bg-neutral-50/50 rounded-xl overflow-hidden p-4 group" href={`/product/${product.slug}`}>
+                <Link
+                  className="relative flex aspect-square items-center justify-center bg-neutral-50/50 rounded-xl overflow-hidden p-2 md:p-4 group"
+                  href={`/product/${product.slug}`}
+                >
                   {product.badge && (
-                    <span className="absolute left-3 top-3 rounded-full bg-neutral-900 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white z-10">
+                    <span className="absolute left-2 top-2 rounded-full bg-neutral-900 px-2 py-0.5 text-[9px] md:text-[10px] font-black uppercase tracking-wider text-white z-10">
                       {product.badge}
                     </span>
                   )}
                   {product.urgent && (
-                    <span className="absolute right-3 top-3 rounded-full bg-red-500/10 px-2.5 py-1 text-[10px] font-bold text-red-650 z-10">
-                      Limited Stock
+                    <span className="absolute right-2 top-2 rounded-full bg-red-500/10 px-1.5 py-0.5 text-[9px] font-bold text-red-600 z-10 hidden sm:inline">
+                      Low Stock
                     </span>
                   )}
                   <div className="relative h-4/5 w-4/5 transition-transform duration-700 ease-out-expo group-hover:scale-105" suppressHydrationWarning={true}>
-                    <Image 
-                      fill 
-                      className="object-contain mix-blend-multiply" 
-                      src={product.image} 
-                      alt={product.title} 
-                      sizes="250px" 
+                    <Image
+                      fill
+                      className="object-contain mix-blend-multiply"
+                      src={product.image}
+                      alt={product.title}
+                      sizes="(max-width: 768px) 45vw, 250px"
                     />
                   </div>
                 </Link>
 
                 {/* Content */}
-                <div className="flex flex-1 flex-col pt-4" suppressHydrationWarning={true}>
-                  <span className="mb-1 text-[10px] font-bold uppercase tracking-wider text-neutral-550">
+                <div className="flex flex-1 flex-col pt-2 md:pt-4" suppressHydrationWarning={true}>
+                  <span className="mb-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-neutral-500">
                     {product.category}
                   </span>
                   <Link href={`/product/${product.slug}`}>
-                    <h4 className="mb-2 text-sm sm:text-base font-bold leading-snug text-neutral-900 hover:text-orange-600 transition-colors duration-300">
+                    <h4 className="mb-1 text-xs md:text-sm font-bold leading-snug text-neutral-900 hover:text-orange-600 transition-colors duration-300 line-clamp-2">
                       {product.title}
                     </h4>
                   </Link>
-                  <p className="mb-3 text-xs font-semibold text-neutral-600 line-clamp-2">
-                    {product.description}
-                  </p>
 
-                  {/* Rating */}
-                  <div className="mb-3 flex items-center gap-1.5" suppressHydrationWarning={true}>
+                  {/* Rating — hidden on mobile to reduce density */}
+                  <div className="mb-2 hidden sm:flex items-center gap-1.5" suppressHydrationWarning={true}>
                     <Stars rating={product.rating} />
                     <span className="text-xs font-bold text-neutral-500">({product.reviews})</span>
                   </div>
 
-                
-
-                  {/* Pricing and WhatsApp Trigger */}
-                  <div className="mt-auto flex items-end justify-between" suppressHydrationWarning={true}>
+                  {/* Pricing */}
+                  <div className="mt-auto flex flex-col gap-1.5" suppressHydrationWarning={true}>
                     <div className="flex flex-col gap-0.5" suppressHydrationWarning={true}>
                       {bulkPriceFormatted ? (
                         <>
-                          <span className="text-xs font-semibold text-neutral-500 line-through leading-none">
+                          <span className="text-[10px] font-semibold text-neutral-400 line-through leading-none">
                             {product.price}
                           </span>
-                          <span className="text-base sm:text-lg font-black text-neutral-900 leading-none">
+                          <span className="text-sm md:text-base font-black text-neutral-900 leading-none">
                             {bulkPriceFormatted}
-                            <span className="text-[10px] font-bold text-orange-600 uppercase ml-1">Bulk</span>
+                            <span className="text-[9px] font-bold text-orange-600 uppercase ml-1">Bulk</span>
                           </span>
                         </>
                       ) : (
-                        <span className="text-base sm:text-lg font-black text-neutral-900 leading-none">
+                        <span className="text-sm md:text-base font-black text-neutral-900 leading-none">
                           {product.price}
                         </span>
                       )}
                     </div>
-                    
-                    <a 
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-600/5 text-orange-600 transition-all duration-300 hover:bg-[#25d366]/10 hover:text-[#25d366] active:scale-90" 
-                      href={`${siteConfig.whatsappHref}?text=Hi%20Amroz%20Traders,%20I%20want%2520to%20inquire%20about%20${encodeURIComponent(product.title)}%20(SKU:%20${encodeURIComponent(product.slug)})`} 
-                      title="Inquire" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      <span className="material-symbols-outlined text-lg">chat</span>
-                    </a>
-                  </div>
 
+                    {/* Primary CTA — Add to Quote */}
+                    <FeaturedAddToQuoteButton
+                      product={{
+                        id: (product as { id?: string }).id ?? product.slug,
+                        name: product.title,
+                        slug: product.slug,
+                        sku: null,
+                        description: product.description,
+                        price: numericPrice || null,
+                        request_price: !hasBulkRate,
+                        is_active: true,
+                        category_id: null,
+                        featured_image_id: null,
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
