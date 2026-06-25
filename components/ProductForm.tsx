@@ -12,9 +12,10 @@ interface ProductFormProps {
   categories: Category[];
   initialData?: Product;
   initialImages?: CloudinaryUploadResult[];
+  redirectTo?: string;
 }
 
-export function ProductForm({ categories, initialData, initialImages = [] }: ProductFormProps) {
+export function ProductForm({ categories, initialData, initialImages = [], redirectTo }: ProductFormProps) {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [uploadedImages, setUploadedImages] = useState<CloudinaryUploadResult[]>(initialImages);
@@ -56,7 +57,7 @@ export function ProductForm({ categories, initialData, initialImages = [] }: Pro
         },
         uploadedImages
       );
-      router.push("/admin/products");
+      router.push(redirectTo || "/admin/products");
       router.refresh();
     } catch (error) {
       console.error("Failed to save product:", error);
@@ -196,7 +197,7 @@ export function ProductForm({ categories, initialData, initialImages = [] }: Pro
       {/* Action Buttons */}
       <div className="flex justify-end gap-3 pb-6">
         <Link
-          href="/admin/products"
+          href={redirectTo || "/admin/products"}
           className="px-6 py-2 border border-slate-300 rounded-md text-slate-700 font-medium bg-white hover:bg-slate-50 transition-colors shadow-sm"
         >
           Discard

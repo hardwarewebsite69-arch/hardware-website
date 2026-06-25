@@ -143,7 +143,7 @@ export async function FeaturedProductsSection() {
           const numericPrice = parseFloat(product.price.replace(/[^\d.]/g, ""));
           const hasBulkRate = !isNaN(numericPrice) && numericPrice > 0;
           const bulkPriceFormatted = hasBulkRate 
-            ? `Ksh ${(numericPrice * 0.88).toLocaleString()}` 
+            ? `Ksh ${(numericPrice * 0.98 ).toLocaleString()}` 
             : null;
 
           return (

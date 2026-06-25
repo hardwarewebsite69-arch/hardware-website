@@ -8,12 +8,14 @@ import type { CloudinaryUploadResult } from "@/lib/cloudinary";
 
 interface EditPageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ redirect?: string }>;
 }
 
-export default async function EditProductPage({ params }: EditPageProps) {
+export default async function EditProductPage({ params, searchParams }: EditPageProps) {
   const categories = await getCategories();
 
   const { id } = await params;
+  const { redirect } = await searchParams;
   const supabase = createClient(await cookies());
 
   const [productResponse, dbImages] = await Promise.all([
@@ -36,7 +38,7 @@ export default async function EditProductPage({ params }: EditPageProps) {
   return (
     <AdminShell active="/admin/products" title="Edit Product" subtitle="Update the product details below.">
       <div className="max-w-4xl">
-        <ProductForm categories={categories} initialData={product} initialImages={initialImages} />
+        <ProductForm categories={categories} initialData={product} initialImages={initialImages} redirectTo={redirect} />
       </div>
     </AdminShell>
   );
