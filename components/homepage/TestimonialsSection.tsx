@@ -1,3 +1,12 @@
+"use client";
+
+import { useState } from "react";
+import {
+  motion,
+  useReducedMotion,
+  AnimatePresence,
+} from "framer-motion";
+
 const testimonials = [
   {
     name: "Mohammed Salim",
@@ -22,58 +31,220 @@ const testimonials = [
   },
 ];
 
+function TestimonialCard({
+  testimonial,
+  active = false,
+}: {
+  testimonial: (typeof testimonials)[number];
+  active?: boolean;
+}) {
+  return (
+    <div
+      className={`double-bezel-card h-full transition-all duration-500 ${
+        active
+          ? "ring-1 ring-orange-500/20 shadow-[0_30px_80px_-20px_rgba(234,88,12,.25)]"
+          : ""
+      }`}
+    >
+      <div className="double-bezel-card-inner flex h-full flex-col justify-between">
+        <div>
+          {/* Rating */}
+          <div className="mb-5 flex items-center gap-1">
+            {Array.from({ length: testimonial.rating }).map((_, i) => (
+              <span
+                key={i}
+                className="text-orange-500 text-base"
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
+          {/* Quote */}
+          <blockquote className="text-[15px] leading-relaxed font-semibold text-neutral-600 italic">
+            &ldquo;{testimonial.text}&rdquo;
+          </blockquote>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-8 border-t border-neutral-100 pt-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-orange-600/10 text-xs font-black uppercase text-orange-600">
+              {testimonial.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
+            </div>
+
+            <div className="min-w-0">
+              <p className="truncate text-sm font-black text-neutral-900">
+                {testimonial.name}
+              </p>
+
+              <p className="truncate text-xs font-semibold text-neutral-500">
+                {testimonial.role}
+              </p>
+
+              <p className="mt-0.5 text-[11px] font-bold uppercase tracking-wider text-orange-600">
+                {testimonial.location}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function TestimonialsSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const reduceMotion = useReducedMotion();
+
+  const handleDragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: any
+  ) => {
+    const swipe = info.offset.x;
+    const velocity = info.velocity.x;
+
+    if (
+      swipe < -60 ||
+      velocity < -500
+    ) {
+      setActiveIndex((prev) =>
+        Math.min(
+          prev + 1,
+          testimonials.length - 1
+        )
+      );
+    }
+
+    if (
+      swipe > 60 ||
+      velocity > 500
+    ) {
+      setActiveIndex((prev) =>
+        Math.max(prev - 1, 0)
+      );
+    }
+  };
+
   return (
     <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32 font-sans">
-      
       {/* Header */}
       <div className="mb-12 text-center">
-        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600 block mb-2">Social Proof</span>
-        <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-4xl font-display">
+        <span className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">
+          Social Proof
+        </span>
+
+        <h2 className="font-display text-3xl font-black tracking-tight text-neutral-900 md:text-4xl">
           What Our Clients Say
         </h2>
-        <p className="mx-auto mt-2 max-w-md text-xs font-semibold text-neutral-500 leading-relaxed">
-          Trusted by developers, contractors, and procurement teams across East Africa
+
+        <p className="mx-auto mt-3 max-w-md text-sm font-medium leading-relaxed text-neutral-500">
+          Trusted by developers, contractors,
+          and procurement teams across East Africa
         </p>
       </div>
 
-      {/* Grid of Double-Bezel Cards */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {testimonials.map((t) => (
-          <div
-            key={t.name}
-            className="double-bezel-card flex flex-col group h-full"
+      {/* MOBILE CAROUSEL */}
+      <div
+        className="md:hidden"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowRight") {
+            setActiveIndex((i) =>
+              Math.min(
+                i + 1,
+                testimonials.length - 1
+              )
+            );
+          }
+
+          if (e.key === "ArrowLeft") {
+            setActiveIndex((i) =>
+              Math.max(i - 1, 0)
+            );
+          }
+        }}
+        role="region"
+        aria-label="Testimonials carousel"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0, x: reduceMotion ? 0 : 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: reduceMotion ? 0 : -100 }}
+            transition={{ duration: reduceMotion ? 0 : 0.3 }}
+            drag="x"
+            dragElastic={0.3}
+            onDragEnd={handleDragEnd}
+            dragConstraints={{ left: 0, right: 0 }}
           >
-            <div className="double-bezel-card-inner flex-1 flex flex-col justify-between">
-              
-              <div>
-                {/* Rating Stars */}
-                <div className="mb-4 text-orange-500 flex items-center gap-0.5">
-                  {"★".repeat(t.rating)}
-                </div>
+            <TestimonialCard
+              testimonial={testimonials[activeIndex]}
+              active={true}
+            />
+          </motion.div>
+        </AnimatePresence>
 
-                {/* Testimonial Quote */}
-                <p className="text-sm font-semibold leading-relaxed text-neutral-600 italic">
-                  &ldquo;{t.text}&rdquo;
-                </p>
-              </div>
-
-              {/* Author Details */}
-              <div className="flex items-center gap-3 border-t border-neutral-100 pt-4 mt-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-600/10 text-xs font-black text-orange-600 uppercase font-mono">
-                  {t.name.split(" ").map(n => n[0]).join("")}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs font-extrabold text-neutral-900 leading-tight truncate">{t.name}</p>
-                  <p className="mt-0.5 text-[10px] font-semibold text-neutral-400 truncate">{t.role} · {t.location}</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        ))}
+        {/* Pagination */}
+        <div className="mt-8 flex justify-center gap-2">
+          {testimonials.map(
+            (_, index) => (
+              <button
+                key={index}
+                aria-label={`Go to testimonial ${
+                  index + 1
+                }`}
+                onClick={() =>
+                  setActiveIndex(index)
+                }
+                className="relative h-2"
+              >
+                <motion.div
+                  layout
+                  animate={{
+                    width:
+                      activeIndex === index
+                        ? 30
+                        : 8,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 30,
+                  }}
+                  className={`h-2 rounded-full ${
+                    activeIndex === index
+                      ? "bg-orange-600"
+                      : "bg-neutral-300"
+                  }`}
+                />
+              </button>
+            )
+          )}
+        </div>
       </div>
 
+      {/* DESKTOP GRID */}
+      <div className="hidden md:grid md:grid-cols-3 gap-6">
+        {testimonials.map(
+          (testimonial) => (
+            <div
+              key={testimonial.name}
+              className="group h-full transition-transform duration-500 hover:-translate-y-1"
+            >
+              <TestimonialCard
+                testimonial={testimonial}
+                active
+              />
+            </div>
+          )
+        )}
+      </div>
     </section>
   );
 }

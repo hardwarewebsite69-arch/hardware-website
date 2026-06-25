@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { Header } from '@/components/Header'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -36,6 +37,8 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between bg-[#f8f9fa] px-4 py-8 antialiased font-sans">
+          <Header/>
+
       {/* Spacer for vertical layout alignment */}
       <div className="hidden md:block" />
 

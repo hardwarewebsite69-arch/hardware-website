@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 import { getProducts, getCategories } from "@/lib/catalog";
 import { formatPrice } from "@/lib/utils";
 import { productImageFor } from "@/lib/fallback-data";
+import { useQuoteCart } from "../QuoteCartContext";
 
 const fallbackFeaturedEquipment = [
   {
@@ -100,14 +101,7 @@ export async function FeaturedProductsSection() {
 
         // First image from product_images table or fallback
         const imageUrl = p.product_images?.[0]?.url ?? productImageFor(p.slug);
-console.log(
-  "FeaturedProductsSection",
-  dbProducts.length,
-  dbProducts.map(p => ({
-    name: p.name,
-    featured: p.is_featured,
-  }))
-);
+
         return {
           id: p.id,
           title: p.name,
@@ -143,7 +137,7 @@ console.log(
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" suppressHydrationWarning={true}>
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-4" suppressHydrationWarning={true}>
         {displayItems.map((product) => {
           // Parse numeric value to mock a bulk deal tier
           const numericPrice = parseFloat(product.price.replace(/[^\d.]/g, ""));

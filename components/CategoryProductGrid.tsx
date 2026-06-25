@@ -110,7 +110,7 @@ export function CategoryProductGrid({ initialProducts }: { initialProducts: Prod
       </aside>
 
       {/* Product Grid Area */}
-      <section className="lg:col-span-9">
+      <section className="lg:col-span-9 ">
         {filteredProducts.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {filteredProducts.map((product) => (
