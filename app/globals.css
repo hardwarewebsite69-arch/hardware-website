@@ -106,19 +106,27 @@ details[open] .faq-answer {
 }
 
 /* ── Mobile Sticky Bar ── */
+/*
+  The bar is locked to h-[60px] in the component.
+  We DO NOT use env(safe-area-inset-bottom) here because dynamic inset
+  changes during iOS scroll (browser chrome collapse) cause height jumps.
+  60px is tall enough to clear the iPhone home bar in all layouts.
+*/
 .mobile-sticky-bar {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  height: 60px; /* matches component h-[60px] — locked, no dynamic recalc */
 }
 
 @media (max-width: 767px) {
+  /* Give the page content space so the bar doesn't obscure it */
   body:has(.mobile-sticky-bar) {
-    padding-bottom: 64px;
+    padding-bottom: 60px;
   }
-}
 
-/* ── pb-safe — safe-area-inset-bottom padding token ── */
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom, 12px);
+  /* Prevent iOS rubber-band overscroll from making the fixed bar appear to
+     bounce/move. This is the #1 cause of 'glitchy' fixed bars on Safari. */
+  html, body {
+    overscroll-behavior-y: none;
+  }
 }
 
 /* ── scrollbar-hide — cross-browser scrollbar removal ── */
