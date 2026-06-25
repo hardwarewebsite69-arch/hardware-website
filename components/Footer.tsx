@@ -35,7 +35,7 @@ export function Footer() {
           <div className="pt-6">
             <span className="inline-flex items-center gap-2 rounded-full bg-neutral-900/80 border border-neutral-800 px-3 py-1 text-[11px] font-medium text-neutral-300">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              Live B2B Dispatch Desk
+              Live Dispatch Desk
             </span>
           </div>
         </div>
@@ -47,7 +47,6 @@ export function Footer() {
             <li><Link className="transition-colors hover:text-orange-400" href="/#categories">About Us</Link></li>
             <li><Link className="transition-colors hover:text-orange-400" href="/#projects">Featured Projects</Link></li>
             <li><Link className="transition-colors hover:text-orange-400" href="/quote">Bulk / B2B Pricing</Link></li>
-            <li><Link className="transition-colors hover:text-orange-400" href="/compliance">KEBS Certificates</Link></li>
             <li className="pt-1">
               <Link className="group inline-flex items-center gap-1 text-neutral-400 hover:text-neutral-200 transition-colors" href="/login">
                 <span>Staff Portal</span>
@@ -65,7 +64,7 @@ export function Footer() {
             <li><Link className="transition-colors hover:text-orange-400" href="/shop/building-materials">Structural Steel</Link></li>
             <li><Link className="transition-colors hover:text-orange-400" href="/shop/plumbing">Pipes & Plumbing</Link></li>
             <li><Link className="transition-colors hover:text-orange-400" href="/shop/power-tools">Power Tools & Plant</Link></li>
-            <li><Link className="transition-colors hover:text-orange-400" href="/shop/paints">Industrial Finishes</Link></li>
+            <li><Link className="transition-colors hover:text-orange-400" href="/shop/paints">Paints & Coatings</Link></li>
           </ul>
         </div>
 
@@ -173,8 +172,6 @@ export function Footer() {
                 <ShieldCheck className="h-4 w-4 text-emerald-400" />
                 30-Day Corporate LPO Approved
               </span>
-              <span className="h-3 w-px bg-neutral-800 hidden sm:block"></span>
-              <span className="hidden sm:inline">KRA PIN: P051*******Z</span>
             </div>
 
           </div>
