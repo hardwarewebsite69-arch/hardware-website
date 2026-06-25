@@ -11,21 +11,28 @@ interface QuotesTableProps {
   quotes: Quote[];
 }
 
-export function QuotesTable({ quotes: initialQuotes }: QuotesTableProps) {
+export function QuotesTable({ quotes }: QuotesTableProps) {
   const router = useRouter();
-  const [quotes, setQuotes] = useState(initialQuotes);
+  const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set());
   const [deleteTarget, setDeleteTarget] = useState<Quote | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const visibleQuotes = quotes.filter((q) => !deletedIds.has(q.id));
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
     setIsDeleting(true);
+    setDeletedIds((prev) => new Set(prev).add(deleteTarget.id));
     try {
       await deleteQuote(deleteTarget.id);
-      setQuotes((prev) => prev.filter((q) => q.id !== deleteTarget.id));
       setDeleteTarget(null);
       router.refresh();
     } catch {
+      setDeletedIds((prev) => {
+        const next = new Set(prev);
+        next.delete(deleteTarget.id);
+        return next;
+      });
       alert("Failed to delete the quote. Please try again.");
     } finally {
       setIsDeleting(false);
@@ -47,14 +54,14 @@ export function QuotesTable({ quotes: initialQuotes }: QuotesTableProps) {
             </tr>
           </thead>
           <tbody>
-            {quotes.length === 0 ? (
+            {visibleQuotes.length === 0 ? (
               <tr>
                 <td className="p-6 text-slate-500 text-center" colSpan={6}>
                   No quotes are visible for this session.
                 </td>
               </tr>
             ) : (
-              quotes.map((quote) => (
+              visibleQuotes.map((quote) => (
                 <tr className="border-t border-slate-100 hover:bg-slate-50 transition-colors" key={quote.id}>
                   <td className="p-4 font-bold text-slate-900">{quote.customer_name}</td>
                   <td className="p-4 text-slate-700">{quote.phone}</td>

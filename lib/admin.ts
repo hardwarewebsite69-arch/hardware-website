@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import type { Quote } from "@/lib/types";
+import type { Quote, QuoteStatus } from "@/lib/types";
 
 export type QuoteItem = {
   id: string;
@@ -120,6 +120,22 @@ export async function updateCurrentUserProfile(fullName: string) {
     });
 
   if (error) throw new Error(error.message);
+}
+
+export async function updateQuoteStatus(quoteId: string, status: QuoteStatus): Promise<void> {
+  const supabase = createClient(await cookies());
+  const { error } = await supabase
+    .from("quotes")
+    .update({ status })
+    .eq("id", quoteId);
+
+  if (error) {
+    console.error("Error updating quote status:", error.message);
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/admin/quotes");
+  revalidatePath(`/admin/quotes/${quoteId}`);
 }
 
 export async function deleteQuote(quoteId: string): Promise<void> {
