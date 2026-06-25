@@ -100,7 +100,14 @@ export async function FeaturedProductsSection() {
 
         // First image from product_images table or fallback
         const imageUrl = p.product_images?.[0]?.url ?? productImageFor(p.slug);
-
+console.log(
+  "FeaturedProductsSection",
+  dbProducts.length,
+  dbProducts.map(p => ({
+    name: p.name,
+    featured: p.is_featured,
+  }))
+);
         return {
           id: p.id,
           title: p.name,
