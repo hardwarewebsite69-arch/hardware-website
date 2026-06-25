@@ -125,19 +125,54 @@ export function TestimonialsSection() {
         </p>
       </div>
 
-      {/* MOBILE CAROUSEL — auto-playing, no pagination dots */}
+      {/*
+        ── MOBILE CAROUSEL ──────────────────────────────────────────────────
+        Fix 1 (prev): min-h-[290px] + mode="popLayout" — stops section
+        collapsing to 0px between card transitions (CLS / layout shift).
+
+        Fix 2 (this): Two further changes to stop the FloatingActions bar
+        from visually co-animating every time cards cross-fade:
+
+        A. `[contain:layout_paint_style]` on the wrapper
+           Without CSS containment, Framer Motion's per-frame
+           `transform: translateX()` writes have no boundary — the browser
+           treats them as document-level changes and triggers a full
+           compositor flush on every animation frame. That flush rebuilds
+           the GPU layer tree, which momentarily repositions every
+           composited element including the `position:fixed` bar.
+
+           `contain: layout paint style` creates a hard paint boundary:
+           all repaints and layer promotions inside this div are scoped
+           entirely to it. Nothing leaks out to the document compositor.
+
+        B. Opacity-only animation (no `x` translation)
+           `transform: translateX()` causes the browser to:
+             – promote the element to a new compositor layer (layer tree
+               rebuild → visible as a 1-frame flash on the fixed bar)
+             – run the animation on the main thread (not compositor thread)
+             – de-promote the layer when the animation ends (another flash)
+
+           `opacity` animations run 100% on the **compositor thread**.
+           No layout, no layer-tree changes, no side-effects on any other
+           element. The fixed bar never sees a flush.
+        ─────────────────────────────────────────────────────────────────── */}
       <div
-        className="md:hidden"
+        className="md:hidden relative w-full min-h-[290px] flex flex-col [contain:layout_paint_style]"
         role="region"
         aria-label="Testimonials carousel"
+        aria-live="polite"
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={activeIndex}
-            initial={{ opacity: 0, x: reduceMotion ? 0 : 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: reduceMotion ? 0 : -100 }}
-            transition={{ duration: reduceMotion ? 0 : 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.35,
+              ease: "easeInOut",
+            }}
+            className="w-full"
           >
             <TestimonialCard
               testimonial={testimonials[activeIndex]}
@@ -147,7 +182,7 @@ export function TestimonialsSection() {
         </AnimatePresence>
       </div>
 
-      {/* DESKTOP GRID */}
+      {/* DESKTOP GRID — untouched */}
       <div className="hidden md:grid md:grid-cols-3 gap-6">
         {testimonials.map((testimonial) => (
           <div
