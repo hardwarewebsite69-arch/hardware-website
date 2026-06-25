@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 
-const popularSearches = [ "Cement", "Power Tools",  "Paint"];
+const popularSearches = [ "Cement", "Switches",  "Paint"];
 
 const trustMetrics = [
   { value: "1,200+", label: "Contractors", icon: "groups" },

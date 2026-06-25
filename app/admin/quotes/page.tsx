@@ -1,63 +1,72 @@
 import Link from "next/link";
 import { AdminShell } from "@/components/AdminShell";
-import { getAllQuotes } from "@/lib/admin";
+import { getAllQuotes, getQuotesCount } from "@/lib/admin";
+import { QuotesTable } from "@/components/QuotesTable";
 
-export default async function Page() {
-  const quotes = await getAllQuotes();
+type PageProps = {
+  searchParams: Promise<{ page?: string }>;
+};
+
+export default async function Page({ searchParams }: PageProps) {
+  const pageStr = (await searchParams).page;
+  const currentPage = pageStr ? parseInt(pageStr, 10) : 1;
+  const limit = 10;
+
+  const [totalCount, quotes] = await Promise.all([
+    getQuotesCount(),
+    getAllQuotes({ page: currentPage, limit }),
+  ]);
+
+  const displayTotalPages = Math.ceil(totalCount / limit);
+
+  const withParam = (overrides: Record<string, string>) => {
+    const sp = new URLSearchParams();
+    if (currentPage > 1) sp.set("page", String(currentPage));
+    Object.entries(overrides).forEach(([k, v]) => {
+      if (v === "1" && k === "page") sp.delete(k);
+      else sp.set(k, v);
+    });
+    const qs = sp.toString();
+    return `/admin/quotes${qs ? `?${qs}` : ""}`;
+  };
 
   return (
     <AdminShell active="/admin/quotes" title="Quotes" subtitle="Review uploaded and manually entered quote requests">
-      <div className="overflow-x-auto rounded border border-slate-200 bg-white">
-        <table className="w-full min-w-[860px] text-left text-sm">
-          <thead className="bg-slate-50 text-xs uppercase text-slate-500">
-            <tr>
-              <th className="p-4">Name</th>
-              <th className="p-4">Phone</th>
-              <th className="p-4">Email</th>
-              <th className="p-4">File</th>
-              <th className="p-4">Created</th>
-              <th className="p-4">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {quotes.map((quote) => (
-              <tr className="border-t border-slate-100 hover:bg-slate-50 transition-colors" key={quote.id}>
-                <td className="p-4 font-bold text-slate-900">{quote.customer_name}</td>
-                <td className="p-4 text-slate-700">{quote.phone}</td>
-                <td className="p-4 text-slate-600">{quote.email || <span className="text-slate-400">—</span>}</td>
-                <td className="p-4">
-                  {quote.upload_url ? (
-                    <a
-                      href={quote.upload_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-orange-600 hover:text-orange-700 underline font-semibold truncate max-w-[280px] inline-block align-middle"
-                      title={quote.upload_url}
-                    >
-                      {quote.upload_url}
-                    </a>
-                  ) : (
-                    <span className="text-slate-400 italic">Manual Entry</span>
-                  )}
-                </td>
-                <td className="p-4 text-slate-500">{new Date(quote.created_at).toLocaleString()}</td>
-                <td className="p-4">
-                  <Link className="font-bold text-orange-700 hover:text-orange-600" href={`/admin/quotes/${quote.id}`}>
-                    Review
-                  </Link>
-                </td>
-              </tr>
-            ))}
-            {quotes.length === 0 ? (
-              <tr>
-                <td className="p-6 text-slate-500 text-center" colSpan={6}>
-                  No quotes are visible for this session.
-                </td>
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-slate-900">All Quotes ({totalCount})</h2>
       </div>
+
+      <QuotesTable quotes={quotes} />
+
+      {displayTotalPages > 1 && (
+        <div className="mt-6 flex items-center justify-between border-t border-slate-200 pt-4 text-sm text-slate-600">
+          <p>
+            Showing <span className="font-bold">{(currentPage - 1) * limit + 1}</span> to{" "}
+            <span className="font-bold">
+              {Math.min(currentPage * limit, totalCount)}
+            </span>{" "}
+            of <span className="font-bold">{totalCount}</span> quotes
+          </p>
+          <div className="flex gap-2">
+            <Link
+              href={withParam({ page: String(currentPage - 1) })}
+              className={`rounded border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:bg-slate-50 ${
+                currentPage <= 1 ? "pointer-events-none opacity-40 shadow-none bg-slate-50" : "bg-white"
+              }`}
+            >
+              Previous
+            </Link>
+            <Link
+              href={withParam({ page: String(currentPage + 1) })}
+              className={`rounded border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:bg-slate-50 ${
+                currentPage >= displayTotalPages ? "pointer-events-none opacity-40 shadow-none bg-slate-50" : "bg-white"
+              }`}
+            >
+              Next
+            </Link>
+          </div>
+        </div>
+      )}
     </AdminShell>
   );
 }

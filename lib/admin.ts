@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import type { Quote } from "@/lib/types";
 
@@ -15,15 +16,33 @@ export type QuoteItem = {
   created_at: string;
 };
 
-export async function getAllQuotes(): Promise<Quote[]> {
+export async function getAllQuotes(options?: {
+  page?: number;
+  limit?: number;
+}): Promise<Quote[]> {
   const supabase = createClient(await cookies());
-  const { data } = await supabase
+  let query = supabase
     .from("quotes")
     .select("id, customer_name, phone, email, message, mode, status, upload_url, upload_public_id, upload_metadata, created_at")
-    .order("created_at", { ascending: false })
-    .limit(50);
+    .order("created_at", { ascending: false });
 
+  if (options?.page && options?.limit) {
+    const from = (options.page - 1) * options.limit;
+    const to = from + options.limit - 1;
+    query = query.range(from, to);
+  }
+
+  const { data } = await query;
   return data ?? [];
+}
+
+export async function getQuotesCount(): Promise<number> {
+  const supabase = createClient(await cookies());
+  const { count } = await supabase
+    .from("quotes")
+    .select("id", { count: "exact", head: true });
+
+  return count ?? 0;
 }
 
 export async function getQuoteById(id: string): Promise<Quote | null> {
@@ -83,7 +102,20 @@ export async function updateCurrentUserProfile(fullName: string) {
   if (error) throw new Error(error.message);
 }
 
-import { revalidatePath } from "next/cache";
+export async function deleteQuote(quoteId: string): Promise<void> {
+  const supabase = createClient(await cookies());
+  const { error } = await supabase
+    .from("quotes")
+    .delete()
+    .eq("id", quoteId);
+
+  if (error) {
+    console.error("Error deleting quote:", error.message);
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/admin/quotes");
+}
 
 export async function signOutAction() {
   const supabase = createClient(await cookies());
