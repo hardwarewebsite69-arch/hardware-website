@@ -165,7 +165,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           onClick={onClose}
         >
           <span className="material-symbols-outlined text-[18px]">login</span>
-          Login
+          Staff Login
         </Link>
 
       </nav>
