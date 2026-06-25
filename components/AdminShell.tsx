@@ -18,7 +18,6 @@ export async function AdminShell({
 
   return (
     <AdminShellClient
-      active={active}
       title={title}
       subtitle={subtitle}
       user={user}

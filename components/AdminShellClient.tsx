@@ -5,13 +5,11 @@ import { AdminSidebar } from "./AdminSidebar";
 import { AdminHeader } from "./AdminHeader";
 
 export function AdminShellClient({
-  active,
   children,
   title,
   subtitle,
   user,
 }: {
-  active: string;
   children: React.ReactNode;
   title: string;
   subtitle?: string;
@@ -23,6 +21,7 @@ export function AdminShellClient({
   };
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#f7faf9] text-slate-950 md:flex relative overflow-x-hidden">
@@ -34,8 +33,13 @@ export function AdminShellClient({
         />
       )}
 
-      {/* Sidebar - responsive sliding panel */}
-      <AdminSidebar active={active} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      {/* Sidebar */}
+      <AdminSidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        isCollapsed={isCollapsed}
+        onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
+      />
 
       {/* Main Content Area */}
       <div className="min-w-0 flex-1 flex flex-col">
