@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AdminShell } from "@/components/AdminShell";
 import { getQuoteById, getQuoteItems } from "@/lib/admin";
@@ -23,6 +24,23 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <AdminShell active="/admin/quotes" title="Quote detail" subtitle={`Request #${shortId}`}>
+      {/* Breadcrumb Navigation */}
+      <nav className="flex items-center gap-2 text-xs text-slate-500 mb-4" aria-label="Breadcrumb">
+        <Link href="/admin/dashboard" className="hover:text-slate-900 font-medium transition-colors">
+          Dashboard
+        </Link>
+        <svg className="h-3.5 w-3.5 text-slate-300" viewBox="0 0 16 16" fill="currentColor">
+          <path fillRule="evenodd" d="M6.22 4.22a.75.75 0 011.06 0l3.25 3.25a.75.75 0 010 1.06l-3.25 3.25a.75.75 0 01-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 010-1.06z" clipRule="evenodd" />
+        </svg>
+        <Link href="/admin/quotes" className="hover:text-slate-900 font-medium transition-colors">
+          Quotes
+        </Link>
+        <svg className="h-3.5 w-3.5 text-slate-300" viewBox="0 0 16 16" fill="currentColor">
+          <path fillRule="evenodd" d="M6.22 4.22a.75.75 0 011.06 0l3.25 3.25a.75.75 0 010 1.06l-3.25 3.25a.75.75 0 01-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 010-1.06z" clipRule="evenodd" />
+        </svg>
+        <span className="text-slate-400 font-mono">#{shortId}</span>
+      </nav>
+
       {/* ID badge row */}
       <div className="mb-6">
         <span className="inline-flex items-center rounded-md bg-slate-100 px-2.5 py-1 text-xs font-mono font-medium text-slate-500">
