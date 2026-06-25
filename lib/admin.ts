@@ -19,12 +19,21 @@ export type QuoteItem = {
 export async function getAllQuotes(options?: {
   page?: number;
   limit?: number;
+  status?: string;
+  mode?: string;
 }): Promise<Quote[]> {
   const supabase = createClient(await cookies());
   let query = supabase
     .from("quotes")
     .select("id, customer_name, phone, email, message, mode, status, upload_url, upload_public_id, upload_metadata, created_at")
     .order("created_at", { ascending: false });
+
+  if (options?.status && options.status !== "all") {
+    query = query.eq("status", options.status);
+  }
+  if (options?.mode && options.mode !== "all") {
+    query = query.eq("mode", options.mode);
+  }
 
   if (options?.page && options?.limit) {
     const from = (options.page - 1) * options.limit;
@@ -36,12 +45,23 @@ export async function getAllQuotes(options?: {
   return data ?? [];
 }
 
-export async function getQuotesCount(): Promise<number> {
+export async function getQuotesCount(options?: {
+  status?: string;
+  mode?: string;
+}): Promise<number> {
   const supabase = createClient(await cookies());
-  const { count } = await supabase
+  let query = supabase
     .from("quotes")
     .select("id", { count: "exact", head: true });
 
+  if (options?.status && options.status !== "all") {
+    query = query.eq("status", options.status);
+  }
+  if (options?.mode && options.mode !== "all") {
+    query = query.eq("mode", options.mode);
+  }
+
+  const { count } = await query;
   return count ?? 0;
 }
 
