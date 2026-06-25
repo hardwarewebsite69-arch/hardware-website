@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   motion,
   useReducedMotion,
@@ -51,10 +51,7 @@ function TestimonialCard({
           {/* Rating */}
           <div className="mb-5 flex items-center gap-1">
             {Array.from({ length: testimonial.rating }).map((_, i) => (
-              <span
-                key={i}
-                className="text-orange-500 text-base"
-              >
+              <span key={i} className="text-orange-500 text-base">
                 ★
               </span>
             ))}
@@ -98,37 +95,17 @@ function TestimonialCard({
 
 export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-
   const reduceMotion = useReducedMotion();
 
-  const handleDragEnd = (
-    _: MouseEvent | TouchEvent | PointerEvent,
-    info: any
-  ) => {
-    const swipe = info.offset.x;
-    const velocity = info.velocity.x;
+  // Auto-advance the mobile carousel every 4 s, looping back to 0 infinitely.
+  // The interval is cleared on unmount to prevent memory leaks.
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
 
-    if (
-      swipe < -60 ||
-      velocity < -500
-    ) {
-      setActiveIndex((prev) =>
-        Math.min(
-          prev + 1,
-          testimonials.length - 1
-        )
-      );
-    }
-
-    if (
-      swipe > 60 ||
-      velocity > 500
-    ) {
-      setActiveIndex((prev) =>
-        Math.max(prev - 1, 0)
-      );
-    }
-  };
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-24 md:py-32 font-sans">
@@ -143,31 +120,14 @@ export function TestimonialsSection() {
         </h2>
 
         <p className="mx-auto mt-3 max-w-md text-sm font-medium leading-relaxed text-neutral-500">
-          Trusted by developers, contractors,
-          and procurement teams across East Africa
+          Trusted by developers, contractors, and procurement teams across East
+          Africa
         </p>
       </div>
 
-      {/* MOBILE CAROUSEL */}
+      {/* MOBILE CAROUSEL — auto-playing, no pagination dots */}
       <div
         className="md:hidden"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowRight") {
-            setActiveIndex((i) =>
-              Math.min(
-                i + 1,
-                testimonials.length - 1
-              )
-            );
-          }
-
-          if (e.key === "ArrowLeft") {
-            setActiveIndex((i) =>
-              Math.max(i - 1, 0)
-            );
-          }
-        }}
         role="region"
         aria-label="Testimonials carousel"
       >
@@ -178,10 +138,6 @@ export function TestimonialsSection() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: reduceMotion ? 0 : -100 }}
             transition={{ duration: reduceMotion ? 0 : 0.3 }}
-            drag="x"
-            dragElastic={0.3}
-            onDragEnd={handleDragEnd}
-            dragConstraints={{ left: 0, right: 0 }}
           >
             <TestimonialCard
               testimonial={testimonials[activeIndex]}
@@ -189,61 +145,18 @@ export function TestimonialsSection() {
             />
           </motion.div>
         </AnimatePresence>
-
-        {/* Pagination */}
-        <div className="mt-8 flex justify-center gap-2">
-          {testimonials.map(
-            (_, index) => (
-              <button
-                key={index}
-                aria-label={`Go to testimonial ${
-                  index + 1
-                }`}
-                onClick={() =>
-                  setActiveIndex(index)
-                }
-                className="relative h-2"
-              >
-                <motion.div
-                  layout
-                  animate={{
-                    width:
-                      activeIndex === index
-                        ? 30
-                        : 8,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 30,
-                  }}
-                  className={`h-2 rounded-full ${
-                    activeIndex === index
-                      ? "bg-orange-600"
-                      : "bg-neutral-300"
-                  }`}
-                />
-              </button>
-            )
-          )}
-        </div>
       </div>
 
       {/* DESKTOP GRID */}
       <div className="hidden md:grid md:grid-cols-3 gap-6">
-        {testimonials.map(
-          (testimonial) => (
-            <div
-              key={testimonial.name}
-              className="group h-full transition-transform duration-500 hover:-translate-y-1"
-            >
-              <TestimonialCard
-                testimonial={testimonial}
-                active
-              />
-            </div>
-          )
-        )}
+        {testimonials.map((testimonial) => (
+          <div
+            key={testimonial.name}
+            className="group h-full transition-transform duration-500 hover:-translate-y-1"
+          >
+            <TestimonialCard testimonial={testimonial} active />
+          </div>
+        ))}
       </div>
     </section>
   );
