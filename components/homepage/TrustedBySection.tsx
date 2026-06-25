@@ -15,7 +15,7 @@ export function TrustedBySection() {
               KEBS Approved
             </div>
             <p className="text-xs font-bold uppercase tracking-wider text-neutral-500">
-              Contractor Validation Strip
+              Contractors, Builders & Suppliers Trust Us
             </p>
           </div>
 

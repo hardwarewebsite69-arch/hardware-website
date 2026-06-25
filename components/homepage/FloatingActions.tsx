@@ -21,7 +21,7 @@ export function FloatingActions() {
 
   return (
     <>
-      {/* Desktop Floating Buttons — hidden on mobile */}
+      {/* Desktop Floating Buttons — hidden on mobile and desktop ,redudant to header get quote and whatsapp on desktop */}
       <div className="fixed bottom-8 right-8 z-50 hidden flex-col gap-3 items-end md:flex md:hidden">
         {/* Get Quote */}
         <Link
