@@ -12,13 +12,30 @@ import {
   deleteQuoteItem,
 } from "@/lib/admin";
 import { siteConfig } from "@/lib/site-config";
-import { PrintableQuotation } from "@/components/PrintableQuotation";
+import { PrintableQuotation } from "./PrintableQuotation";
 import type { QuoteItem } from "@/lib/admin";
 import type { Quote } from "@/lib/types";
 
 type EditableItem = QuoteItem & {
   _dirty?: boolean;
 };
+
+const NAVY: [number, number, number] = [41, 65, 91];
+const ORANGE: [number, number, number] = [234, 88, 12];
+
+async function toBase64(url: string): Promise<string> {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === "string") resolve(reader.result);
+      else reject(new Error("Failed to convert image to base64"));
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
 
 export function QuotationEditor({
   quote,
@@ -32,11 +49,9 @@ export function QuotationEditor({
     initialItems.map((i) => ({ ...i, _dirty: false })),
   );
   const [isGenerating, setIsGenerating] = useState(false);
+  const [qNum, setQNum] = useState<string | null>(quote.quotation_number);
   const [isOpen, setIsOpen] = useState(false);
-  const [showPrintableView, setShowPrintableView] = useState(false);
-  const [quotationNumber, setQuotationNumber] = useState<string | null>(
-    quote.quotation_number,
-  );
+  const [showPrintModal, setShowPrintModal] = useState(false);
 
   const [newItem, setNewItem] = useState({
     itemName: "",
@@ -116,108 +131,74 @@ export function QuotationEditor({
     return sum + (item.unit_price ?? 0) * (item.quantity ?? 1);
   }, 0);
 
-  const toBase64 = useCallback(async (url: string): Promise<string> => {
-    const res = await fetch(url);
-    const blob = await res.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          resolve(reader.result);
-        } else {
-          reject(new Error("Failed to convert image to base64"));
-        }
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  }, []);
+  const ensureQuotationNumber = useCallback(async () => {
+    if (qNum) return qNum;
+    const num = await generateQuotationNumber();
+    setQNum(num);
+    await saveQuotation(quote.id, num);
+    router.refresh();
+    return num;
+  }, [qNum, quote.id, router]);
 
   const generatePDF = useCallback(async () => {
     setIsGenerating(true);
     try {
-      let qNum = quotationNumber;
-      if (!qNum) {
-        qNum = await generateQuotationNumber();
-        setQuotationNumber(qNum);
-        await saveQuotation(quote.id, qNum);
-        router.refresh();
-      }
-
+      const num = await ensureQuotationNumber();
       const logoDataUrl = await toBase64(`${window.location.origin}/hardware-logo.png`);
-
       const doc = new jsPDF();
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const margin = 20;
-      const contentWidth = pageWidth - margin * 2;
+      const pw = doc.internal.pageSize.getWidth();
+      const m = 20;
 
-      doc.addImage(logoDataUrl, "PNG", margin, 12, 22, 22);
-
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(18);
-      doc.text(siteConfig.businessName, margin + 28, 22);
-
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(8);
-      doc.text(`Tel: ${siteConfig.phone}`, margin + 28, 29);
-
-      doc.setDrawColor(41, 65, 91);
-      doc.setFillColor(41, 65, 91);
-      doc.rect(margin, 40, contentWidth, 0.5, "F");
-
-      doc.setFontSize(14);
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(41, 65, 91);
-      doc.text("QUOTATION", margin, 55);
-
-      doc.setTextColor(0);
-      doc.setFontSize(9);
-      doc.setFont("helvetica", "normal");
-      doc.setFont("helvetica", "bold");
-      doc.text("Quotation #:", margin, 65);
-      doc.setFont("helvetica", "normal");
-      doc.text(qNum, margin + 22, 65);
-
-      doc.setFont("helvetica", "bold");
-      doc.text("Date:", pageWidth - margin - 14, 65, { align: "right" });
-      const dateStr = new Date().toLocaleDateString("en-KE", {
+      const today = new Date().toLocaleDateString("en-KE", {
         year: "numeric",
         month: "long",
         day: "numeric",
       });
-      doc.setFont("helvetica", "normal");
-      doc.text(dateStr, pageWidth - margin, 65, { align: "right" });
 
-      doc.setDrawColor(200);
-      doc.line(margin, 70, pageWidth - margin, 70);
+      doc.addImage(logoDataUrl, "PNG", m, 12, 38, 28);
 
-      let yPos = 80;
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(10);
-      doc.setTextColor(41, 65, 91);
-      doc.text("BILL TO", margin, yPos);
+      doc.setFontSize(16);
+      doc.text(siteConfig.businessName, m + 44, 24);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.text(`Tel: ${siteConfig.phone}`, m + 44, 31);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(26);
+      doc.setTextColor(...NAVY);
+      doc.text("QUOTATION", pw - m, 28, { align: "right" });
 
       doc.setTextColor(0);
+      doc.setDrawColor(...NAVY);
+      doc.setLineWidth(0.5);
+      doc.line(m, 46, pw - m, 46);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9);
+      doc.setTextColor(...NAVY);
+      doc.text("Bill To", m, 58);
+
+      doc.setTextColor(0);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.text(quote.customer_name, m, 67);
+
       doc.setFont("helvetica", "normal");
       doc.setFontSize(9);
-      yPos += 9;
-      doc.text(`Name:  ${quote.customer_name}`, margin, yPos);
-      yPos += 7;
-      doc.text(`Phone: ${quote.phone}`, margin, yPos);
-      if (quote.email) {
-        yPos += 7;
-        doc.text(`Email: ${quote.email}`, margin, yPos);
-      }
-      if (quote.message) {
-        yPos += 8;
-        doc.setFont("helvetica", "italic");
-        doc.setFontSize(8);
-        const lines = doc.splitTextToSize(`Note: ${quote.message}`, contentWidth);
-        doc.text(lines, margin, yPos);
-        yPos += lines.length * 3.5;
-      }
+      doc.text(quote.phone, m, 74);
+      if (quote.email) doc.text(quote.email, m, 81);
 
-      const tableStartY = yPos + 8;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.text(`Quotation #:  ${num}`, pw - m, 58, { align: "right" });
+      doc.text(`Date:  ${today}`, pw - m, 67, { align: "right" });
+
+      const infoBottom = quote.email ? 89 : 82;
+      doc.setDrawColor(200);
+      doc.setLineWidth(0.3);
+      doc.line(m, infoBottom, pw - m, infoBottom);
 
       const tableData = items.map((item, index) => [
         index + 1,
@@ -231,24 +212,18 @@ export function QuotationEditor({
       ]);
 
       autoTable(doc, {
-        startY: tableStartY,
-        head: [
-          ["#", "Description", "Qty", "Unit", "Unit Price", "Total"],
-        ],
+        startY: infoBottom + 8,
+        head: [["#", "Description", "Qty", "Unit", "Unit Price", "Total"]],
         body: tableData,
         theme: "grid",
         headStyles: {
-          fillColor: [41, 65, 91],
+          fillColor: NAVY,
           textColor: 255,
           fontStyle: "bold",
           fontSize: 9,
         },
-        bodyStyles: {
-          fontSize: 8,
-        },
-        alternateRowStyles: {
-          fillColor: [248, 250, 252],
-        },
+        bodyStyles: { fontSize: 8 },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
         columnStyles: {
           0: { cellWidth: 10, halign: "center" },
           1: { cellWidth: "auto" },
@@ -269,56 +244,55 @@ export function QuotationEditor({
             },
             {
               content: `KES ${grandTotal.toLocaleString()}`,
-              styles: { fontStyle: "bold", halign: "right", fontSize: 9 },
+              styles: { fontStyle: "bold", halign: "right", fontSize: 10 },
             },
           ],
         ],
         footStyles: {
-          fillColor: [241, 245, 249],
-          textColor: [41, 65, 91],
+          fillColor: [255, 247, 237],
+          textColor: ORANGE,
           fontSize: 9,
         },
       });
 
-      const finalY = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 15;
+      const lastY = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 12;
 
-      doc.setDrawColor(200);
-      doc.line(margin, finalY, pageWidth - margin, finalY);
+      doc.setDrawColor(226, 232, 240);
+      doc.setFillColor(250, 250, 250);
+      doc.roundedRect(m, lastY, pw - m * 2, 26, 3, 3, "FD");
 
       doc.setFont("helvetica", "bold");
       doc.setFontSize(9);
-      doc.setTextColor(41, 65, 91);
-      doc.text("Terms & Conditions", margin, finalY + 8);
+      doc.setTextColor(...NAVY);
+      doc.text("Terms & Conditions", m + 8, lastY + 8);
+
       doc.setTextColor(100);
       doc.setFont("helvetica", "normal");
       doc.setFontSize(8);
-      doc.text("1. Quotation valid for 14 days from the date above.", margin, finalY + 16);
-      doc.text("2. Prices are inclusive of VAT where applicable.", margin, finalY + 22);
-      doc.text(
-        "3. Delivery charges may apply based on location and order value.",
-        margin,
-        finalY + 28,
-      );
+      doc.text("1. Quotation valid for 14 days from the date above.", m + 8, lastY + 16);
+      doc.text("2. Prices are inclusive of VAT where applicable.", m + 8, lastY + 22);
+      doc.text("3. Delivery charges may apply based on location and order value.", m + 8, lastY + 28);
 
       doc.setTextColor(0);
       doc.setFont("helvetica", "italic");
       doc.setFontSize(8);
-      doc.text(
-        "Thank you for choosing Amroz Traders.",
-        pageWidth / 2,
-        finalY + 42,
-        { align: "center" },
-      );
+      doc.text("Thank you for choosing Amroz Traders.", pw / 2, lastY + 40, { align: "center" });
 
-      const fileName = `Quotation-${qNum.replace(/\//g, "-")}.pdf`;
-      doc.save(fileName);
+      doc.save(`Quotation-${num.replace(/\//g, "-")}.pdf`);
     } catch (e) {
       console.error("Failed to generate PDF:", e);
       alert("Failed to generate quotation PDF. Please try again.");
     } finally {
       setIsGenerating(false);
     }
-  }, [items, quotationNumber, quote, grandTotal, router, toBase64]);
+  }, [items, qNum, quote, grandTotal, router, ensureQuotationNumber]);
+
+  const handlePreviewPrint = useCallback(async () => {
+    await ensureQuotationNumber();
+    setShowPrintModal(true);
+  }, [ensureQuotationNumber]);
+
+  const dirtyCount = items.filter((i) => i._dirty).length;
 
   if (!isOpen) {
     return (
@@ -332,11 +306,11 @@ export function QuotationEditor({
             <path d="M3.5 2A1.5 1.5 0 002 3.5v9A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0012.5 2h-9zM4 4.5a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v7a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5v-7z" />
             <path d="M6.5 6.5a.5.5 0 01.5-.5h2a.5.5 0 010 1H7a.5.5 0 01-.5-.5zM6.5 8a.5.5 0 01.5-.5h2a.5.5 0 010 1H7a.5.5 0 01-.5-.5z" />
           </svg>
-          {quotationNumber
-            ? `View Quotation (${quotationNumber})`
+          {qNum
+            ? `View Quotation (${qNum})`
             : "Generate Quotation"}
         </button>
-        {quotationNumber && (
+        {qNum && (
           <button
             type="button"
             onClick={generatePDF}
@@ -354,17 +328,15 @@ export function QuotationEditor({
     );
   }
 
-  const dirtyCount = items.filter((i) => i._dirty).length;
-
   return (
     <div className="border-t border-slate-100">
       <div className="px-5 py-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-extrabold text-slate-900">
             Quotation Editor
-            {quotationNumber && (
+            {qNum && (
               <span className="ml-2 text-xs font-mono font-medium text-orange-600">
-                {quotationNumber}
+                {qNum}
               </span>
             )}
           </h3>
@@ -514,7 +486,7 @@ export function QuotationEditor({
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-2">
-          {!quotationNumber ? (
+          {!qNum ? (
             <button
               type="button"
               onClick={generatePDF}
@@ -561,35 +533,26 @@ export function QuotationEditor({
               </button>
               <button
                 type="button"
-                onClick={async () => {
-                  let qNum = quotationNumber;
-                  if (!qNum) {
-                    qNum = await generateQuotationNumber();
-                    setQuotationNumber(qNum);
-                    await saveQuotation(quote.id, qNum);
-                    router.refresh();
-                  }
-                  setShowPrintableView(true);
-                }}
+                onClick={handlePreviewPrint}
                 className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
               >
                 <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
                   <path d="M5 1a2 2 0 00-2 2v1h10V3a2 2 0 00-2-2H5zm6 2H5v1h6V3z" />
                   <path fillRule="evenodd" d="M3 5A2 2 0 001 7v5a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2H3zm0 2a1 1 0 00-1 1v5a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1H3z" />
                 </svg>
-                Preview &amp; Print
+                Preview & Print
               </button>
             </>
           )}
         </div>
 
-        {showPrintableView && quotationNumber && (
+        {showPrintModal && qNum && (
           <PrintableQuotation
             quote={quote}
             items={items}
-            quotationNumber={quotationNumber}
+            quotationNumber={qNum}
             grandTotal={grandTotal}
-            onClose={() => setShowPrintableView(false)}
+            onClose={() => setShowPrintModal(false)}
           />
         )}
       </div>
