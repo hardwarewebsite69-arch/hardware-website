@@ -155,15 +155,18 @@ export function QuotationEditor({
         day: "numeric",
       });
 
-      doc.addImage(logoDataUrl, "PNG", m, 12, 38, 28);
+      const imgProps = doc.getImageProperties(logoDataUrl);
+      const logoW = 26;
+      const logoH = (imgProps.height / imgProps.width) * logoW;
+      doc.addImage(logoDataUrl, "PNG", m, 12, logoW, logoH);
 
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
-      doc.text(siteConfig.businessName, m + 44, 24);
+      doc.text(siteConfig.businessName, m + logoW + 6, 24);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(8);
-      doc.text(`Tel: ${siteConfig.phone}`, m + 44, 31);
+      doc.text(`Tel: ${siteConfig.phone}`, m + logoW + 6, 31);
 
       doc.setFont("helvetica", "bold");
       doc.setFontSize(26);
@@ -257,21 +260,17 @@ export function QuotationEditor({
 
       const lastY = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 12;
 
-      doc.setDrawColor(226, 232, 240);
-      doc.setFillColor(250, 250, 250);
-      doc.roundedRect(m, lastY, pw - m * 2, 26, 3, 3, "FD");
-
       doc.setFont("helvetica", "bold");
       doc.setFontSize(9);
       doc.setTextColor(...NAVY);
-      doc.text("Terms & Conditions", m + 8, lastY + 8);
+      doc.text("Terms & Conditions", m, lastY + 8);
 
       doc.setTextColor(100);
       doc.setFont("helvetica", "normal");
       doc.setFontSize(8);
-      doc.text("1. Quotation valid for 14 days from the date above.", m + 8, lastY + 16);
-      doc.text("2. Prices are inclusive of VAT where applicable.", m + 8, lastY + 22);
-      doc.text("3. Delivery charges may apply based on location and order value.", m + 8, lastY + 28);
+      doc.text("1. Quotation valid for 14 days from the date above.", m, lastY + 16);
+      doc.text("2. Prices are inclusive of VAT where applicable.", m, lastY + 22);
+      doc.text("3. Delivery charges may apply based on location and order value.", m, lastY + 28);
 
       doc.setTextColor(0);
       doc.setFont("helvetica", "italic");
