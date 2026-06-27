@@ -12,6 +12,7 @@ export type QuoteItem = {
   item_name: string;
   quantity: number | null;
   unit: string | null;
+  unit_price: number | null;
   notes: string | null;
   created_at: string;
 };
@@ -25,7 +26,7 @@ export async function getAllQuotes(options?: {
   const supabase = createClient(await cookies());
   let query = supabase
     .from("quotes")
-    .select("id, customer_name, phone, email, message, mode, status, upload_url, upload_public_id, upload_metadata, created_at")
+    .select("id, customer_name, phone, email, message, mode, status, quotation_number, upload_url, upload_public_id, upload_metadata, created_at")
     .order("created_at", { ascending: false });
 
   if (options?.status && options.status !== "all") {
@@ -69,7 +70,7 @@ export async function getQuoteById(id: string): Promise<Quote | null> {
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("quotes")
-    .select("id, customer_name, phone, email, message, mode, status, upload_url, upload_public_id, upload_metadata, created_at")
+    .select("id, customer_name, phone, email, message, mode, status, quotation_number, upload_url, upload_public_id, upload_metadata, created_at")
     .eq("id", id)
     .maybeSingle();
 
@@ -80,7 +81,7 @@ export async function getQuoteItems(quoteId: string): Promise<QuoteItem[]> {
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("quote_items")
-    .select("id, quote_id, product_id, item_name, quantity, unit, notes, created_at")
+    .select("id, quote_id, product_id, item_name, quantity, unit, unit_price, notes, created_at")
     .eq("quote_id", quoteId)
     .order("created_at");
 
@@ -151,6 +152,109 @@ export async function deleteQuote(quoteId: string): Promise<void> {
   }
 
   revalidatePath("/admin/quotes");
+}
+
+export async function updateQuoteItemPrice(itemId: string, unitPrice: number | null): Promise<void> {
+  const supabase = createClient(await cookies());
+  const { error } = await supabase
+    .from("quote_items")
+    .update({ unit_price: unitPrice })
+    .eq("id", itemId);
+
+  if (error) {
+    console.error("Error updating quote item price:", error.message);
+    throw new Error(error.message);
+  }
+}
+
+export async function generateQuotationNumber(): Promise<string> {
+  const supabase = createClient(await cookies());
+  const { data, error } = await supabase.rpc("nextval", {
+    seq_name: "public.quotation_number_seq",
+  });
+
+  if (error) {
+    const { data: fallback, error: fallbackError } = await supabase
+      .from("quotes")
+      .select("quotation_number")
+      .not("quotation_number", "is", null)
+      .order("quotation_number", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (fallbackError || !fallback?.quotation_number) {
+      return "QT-1001";
+    }
+
+    const num = parseInt(fallback.quotation_number.replace("QT-", ""), 10);
+    return `QT-${num + 1}`;
+  }
+
+  const seqNum = data as number;
+  return `QT-${seqNum}`;
+}
+
+export async function saveQuotation(quoteId: string, quotationNumber: string): Promise<void> {
+  const supabase = createClient(await cookies());
+  const { error } = await supabase
+    .from("quotes")
+    .update({
+      quotation_number: quotationNumber,
+      status: "responded",
+    })
+    .eq("id", quoteId);
+
+  if (error) {
+    console.error("Error saving quotation:", error.message);
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/admin/quotes");
+  revalidatePath(`/admin/quotes/${quoteId}`);
+}
+
+export async function addQuoteItem(input: {
+  quoteId: string;
+  itemName: string;
+  quantity: number;
+  unit: string;
+  unitPrice: number | null;
+  notes?: string | null;
+}): Promise<QuoteItem> {
+  const supabase = createClient(await cookies());
+  const { data, error } = await supabase
+    .from("quote_items")
+    .insert({
+      quote_id: input.quoteId,
+      item_name: input.itemName,
+      quantity: input.quantity,
+      unit: input.unit,
+      unit_price: input.unitPrice,
+      notes: input.notes ?? null,
+    })
+    .select("id, quote_id, product_id, item_name, quantity, unit, unit_price, notes, created_at")
+    .single();
+
+  if (error) {
+    console.error("Error adding quote item:", error.message);
+    throw new Error(error.message);
+  }
+
+  revalidatePath(`/admin/quotes/${input.quoteId}`);
+  return data;
+}
+
+export async function deleteQuoteItem(itemId: string): Promise<void> {
+  const supabase = createClient(await cookies());
+  const { error } = await supabase
+    .from("quote_items")
+    .delete()
+    .eq("id", itemId);
+
+  if (error) {
+    console.error("Error deleting quote item:", error.message);
+    throw new Error(error.message);
+  }
 }
 
 export async function signOutAction() {

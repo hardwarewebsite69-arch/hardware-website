@@ -45,6 +45,7 @@ export type Quote = {
   message: string | null;
   mode: QuoteMode;
   status: QuoteStatus;
+  quotation_number: string | null;
   upload_url: string | null;
   upload_public_id: string | null;
   upload_metadata: Record<string, unknown>;

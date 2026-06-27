@@ -5,6 +5,7 @@ import { getQuoteById, getQuoteItems } from "@/lib/admin";
 import { siteConfig } from "@/lib/site-config";
 import { QuoteStatusSelect } from "@/components/QuoteStatusSelect";
 import { CopyIdButton } from "@/components/CopyIdButton";
+import { QuotationEditor } from "@/components/QuotationEditor";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -100,6 +101,8 @@ export default async function Page({ params }: PageProps) {
               </a>
             </div>
           )}
+
+          <QuotationEditor quote={quote} initialItems={items} />
         </section>
 
         {/* Right — Customer Sidebar */}
