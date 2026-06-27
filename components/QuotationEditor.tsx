@@ -4,7 +4,6 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import type { UserOptions } from "jspdf-autotable";
 import {
   updateQuoteItemPrice,
   generateQuotationNumber,
@@ -126,137 +125,162 @@ export function QuotationEditor({
         router.refresh();
       }
 
-      const doc = new jsPDF();
-      const pageWidth = doc.internal.pageSize.getWidth();
+      const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
 
+      const primaryColor: [number, number, number] = [24, 43, 73];
+      const secondaryColor: [number, number, number] = [50, 50, 50];
+      const lightMuted: [number, number, number] = [100, 100, 100];
+
+      // Logo (top-left)
+      try {
+        const res = await fetch("/hardware-logo.png");
+        const blob = await res.blob();
+        const base64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(blob);
+        });
+        doc.addImage(base64, "PNG", 14, 10, 22, 22);
+      } catch {
+        // Logo unavailable — continue without it
+      }
+
+      // Left: Business branding
       doc.setFont("helvetica", "bold");
       doc.setFontSize(22);
-      doc.text(siteConfig.businessName, pageWidth / 2, 25, {
-        align: "center",
-      });
+      doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      doc.text(siteConfig.businessName, 42, 22);
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      doc.text(`Tel: ${siteConfig.phone}`, pageWidth / 2, 33, {
-        align: "center",
-      });
-
-      doc.setDrawColor(200);
-      doc.line(20, 38, pageWidth - 20, 38);
-
-      doc.setFontSize(16);
-      doc.setFont("helvetica", "bold");
-      doc.text("QUOTATION", pageWidth / 2, 50, { align: "center" });
-
-      doc.setFontSize(9);
-      doc.setFont("helvetica", "normal");
-      doc.text(`Quotation #: ${qNum}`, 20, 60);
-      doc.text(
-        `Date: ${new Date().toLocaleDateString("en-KE", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}`,
-        pageWidth - 20,
-        60,
-        { align: "right" },
-      );
-
-      doc.setDrawColor(200);
-      doc.line(20, 65, pageWidth - 20, 65);
-
-      doc.setFont("helvetica", "bold");
       doc.setFontSize(10);
-      doc.text("Bill To:", 20, 75);
+      doc.setTextColor(lightMuted[0], lightMuted[1], lightMuted[2]);
+      doc.text(`Tel: ${siteConfig.phone}`, 42, 28);
+
+      // Right: Document title (flush top-right)
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(22);
+      doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      doc.text("QUOTATION", 196, 22, { align: "right" });
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      doc.text(`Name: ${quote.customer_name}`, 20, 83);
-      doc.text(`Phone: ${quote.phone}`, 20, 89);
-      if (quote.email) doc.text(`Email: ${quote.email}`, 20, 95);
+      doc.setFontSize(10);
+      doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+      doc.text(`Quotation #: ${qNum}`, 196, 29, { align: "right" });
+      const dateStr = new Date().toLocaleDateString("en-KE", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      doc.text(`Date: ${dateStr}`, 196, 35, { align: "right" });
 
+      // Structural header rule
+      doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      doc.setLineWidth(0.4);
+      doc.line(14, 40, 196, 40);
+
+      // Two-column meta header
+      const startY = 50;
+
+      // Left column: Bill To
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      doc.text("BILL TO", 14, startY);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+      doc.text(`Name: ${quote.customer_name}`, 14, startY + 6);
+      doc.text(`Phone: ${quote.phone}`, 14, startY + 12);
+      if (quote.email) doc.text(`Email: ${quote.email}`, 14, startY + 18);
+
+      // Itemisation table
       const tableData = items.map((item, index) => [
         index + 1,
         item.item_name,
         item.quantity ?? 1,
         item.unit ?? "",
-        item.unit_price != null ? `KES ${item.unit_price.toLocaleString()}` : "-",
+        item.unit_price != null
+          ? `KES ${item.unit_price.toLocaleString()}`
+          : "-",
         item.unit_price != null
           ? `KES ${((item.unit_price) * (item.quantity ?? 1)).toLocaleString()}`
           : "-",
       ]);
 
       autoTable(doc, {
-        startY: quote.email ? 102 : 95,
-        head: [
-          ["#", "Description", "Qty", "Unit", "Unit Price", "Total"],
-        ],
+        startY: startY + 26,
+        head: [["#", "Description", "Qty", "Unit", "Unit Price", "Total"]],
         body: tableData,
-        theme: "grid",
+        theme: "striped",
         headStyles: {
-          fillColor: [30, 41, 59],
-          textColor: 255,
+          fillColor: primaryColor,
+          textColor: [255, 255, 255],
           fontStyle: "bold",
-          fontSize: 9,
-        },
-        bodyStyles: {
-          fontSize: 8,
         },
         columnStyles: {
-          0: { cellWidth: 10, halign: "center" },
+          0: { cellWidth: 12, halign: "center" },
           1: { cellWidth: "auto" },
           2: { cellWidth: 15, halign: "center" },
           3: { cellWidth: 15, halign: "center" },
           4: { cellWidth: 30, halign: "right" },
           5: { cellWidth: 30, halign: "right" },
         },
-        foot: [
-          [
-            "",
-            "",
-            "",
-            "",
-            {
-              content: "Grand Total:",
-              styles: { fontStyle: "bold", halign: "right" },
-            },
-            {
-              content: `KES ${grandTotal.toLocaleString()}`,
-              styles: { fontStyle: "bold", halign: "right" },
-            },
-          ],
-        ],
-        footStyles: {
-          fillColor: [241, 245, 249],
-          textColor: [30, 41, 59],
-          fontSize: 9,
-        },
+        margin: { left: 14, right: 14 },
       });
 
-      const finalY = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 15;
-
-      doc.setDrawColor(200);
-      doc.line(20, finalY, pageWidth - 20, finalY);
+      // Grand total
+      const tableEnd = (
+        doc as jsPDF & { lastAutoTable: { finalY: number } }
+      ).lastAutoTable.finalY;
+      const finalY = tableEnd + 8;
 
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(9);
-      doc.text("Terms & Conditions:", 20, finalY + 8);
+      doc.setFontSize(12);
+      doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      doc.text("Grand Total:", 150, finalY, { align: "right" });
+      doc.text(`KES ${grandTotal.toLocaleString()}`, 196, finalY, {
+        align: "right",
+      });
+
+      // Terms section
+      const termsY = finalY + 12;
+      doc.setDrawColor(220, 220, 220);
+      doc.setLineWidth(0.2);
+      doc.line(14, termsY, 196, termsY);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      doc.text("Terms & Conditions", 14, termsY + 8);
+
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8);
-      doc.text("1. Quotation valid for 14 days from the date above.", 20, finalY + 16);
-      doc.text("2. Prices are inclusive of VAT where applicable.", 20, finalY + 22);
+      doc.setFontSize(9);
+      doc.setTextColor(lightMuted[0], lightMuted[1], lightMuted[2]);
+      doc.text(
+        "1. Quotation valid for 14 days from the date above.",
+        14,
+        termsY + 14,
+      );
+      doc.text(
+        "2. Prices are inclusive of VAT where applicable.",
+        14,
+        termsY + 20,
+      );
       doc.text(
         "3. Delivery charges may apply based on location and order value.",
-        20,
-        finalY + 28,
+        14,
+        termsY + 26,
       );
 
+      // Thank-you footer
       doc.setFont("helvetica", "italic");
-      doc.setFontSize(8);
+      doc.setFontSize(10);
+      doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
       doc.text(
         "Thank you for choosing Amroz Traders.",
-        pageWidth / 2,
-        finalY + 40,
+        105,
+        termsY + 38,
         { align: "center" },
       );
 
