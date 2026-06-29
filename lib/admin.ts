@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
+import { rateLimit } from "@/lib/rate-limit";
 import type { Quote, QuoteStatus } from "@/lib/types";
 
 export type QuoteItem = {
@@ -97,7 +98,7 @@ export async function getCurrentUserProfile() {
     .from("profiles")
     .select("id, full_name, role")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   return {
     id: user.id,
@@ -266,6 +267,9 @@ export type UserProfile = {
 };
 
 export async function inviteUserByEmail(email: string, fullName: string, role: string = "staff") {
+  const { allowed } = rateLimit(`invite:${email}`, 10, 3_600_000);
+  if (!allowed) throw new Error("Too many invitations. Try again later.");
+
   const supabase = createServiceClient();
 
   const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
@@ -296,8 +300,8 @@ export async function getUsers(): Promise<UserProfile[]> {
 
   const { data: profiles, error } = await supabase
     .from("profiles")
-    .select("id, full_name, role, updated_at")
-    .order("updated_at", { ascending: false });
+    .select("id, full_name, role, created_at, updated_at")
+    .order("created_at", { ascending: false });
 
   if (error) return [];
 
@@ -312,7 +316,7 @@ export async function getUsers(): Promise<UserProfile[]> {
     email: userMap.get(p.id) ?? undefined,
     full_name: p.full_name,
     role: p.role,
-    created_at: p.updated_at,
+    created_at: p.created_at,
   }));
 }
 

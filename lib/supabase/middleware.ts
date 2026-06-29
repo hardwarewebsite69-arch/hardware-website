@@ -2,6 +2,17 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
+  try {
+    return await authMiddleware(request)
+  } catch (err) {
+    console.error('Auth middleware error:', err)
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+}
+
+async function authMiddleware(request: NextRequest) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -26,17 +37,14 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Use getUser() instead of getSession() for absolute server-side security verification
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Protect the admin routes
   if (request.nextUrl.pathname.startsWith('/admin') && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // If a logged-in user accidentally wanders to the login page, take them back to the admin dashboard
   if (request.nextUrl.pathname === '/login' && user) {
     const url = request.nextUrl.clone()
     url.pathname = '/admin/dashboard'
@@ -44,9 +52,4 @@ export async function middleware(request: NextRequest) {
   }
 
   return response
-}
-
-export const config = {
-  // Pattern matches everything inside your image's admin route layout
-  matcher: ['/admin/:path*', '/login', '/update-password'],
 }

@@ -137,7 +137,7 @@ export async function FeaturedProductsSection() {
       </div>
 
       {/* Product Grid — 2 cols on mobile, 4 on desktop */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6" suppressHydrationWarning={true}>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
         {displayItems.map((product) => {
           // Parse numeric value to mock a bulk deal tier
           const numericPrice = parseFloat(product.price.replace(/[^\d.]/g, ""));
@@ -147,7 +147,7 @@ export async function FeaturedProductsSection() {
             : null;
 
           return (
-            <div className="double-bezel-card flex flex-col group h-full" key={product.title} suppressHydrationWarning={true}>
+            <div className="double-bezel-card flex flex-col group h-full" key={product.title}>
               <div className="double-bezel-card-inner flex-1 flex flex-col">
                 
                 {/* Image Container with Badges */}
@@ -165,7 +165,7 @@ export async function FeaturedProductsSection() {
                       Low Stock
                     </span>
                   )}
-                  <div className="relative h-4/5 w-4/5 transition-transform duration-700 ease-out-expo group-hover:scale-105" suppressHydrationWarning={true}>
+                  <div className="relative h-4/5 w-4/5 transition-transform duration-700 ease-out-expo group-hover:scale-105">
                     <Image
                       fill
                       className="object-contain mix-blend-multiply"
@@ -177,7 +177,7 @@ export async function FeaturedProductsSection() {
                 </Link>
 
                 {/* Content */}
-                <div className="flex flex-1 flex-col pt-2 md:pt-4" suppressHydrationWarning={true}>
+                <div className="flex flex-1 flex-col pt-2 md:pt-4">
                   <span className="mb-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-neutral-500">
                     {product.category}
                   </span>
@@ -188,14 +188,14 @@ export async function FeaturedProductsSection() {
                   </Link>
 
                   {/* Rating — hidden on mobile to reduce density */}
-                  <div className="mb-2 hidden sm:flex items-center gap-1.5" suppressHydrationWarning={true}>
+                  <div className="mb-2 hidden sm:flex items-center gap-1.5">
                     <Stars rating={product.rating} />
                     <span className="text-xs font-bold text-neutral-500">({product.reviews})</span>
                   </div>
 
                   {/* Pricing */}
-                  <div className="mt-auto flex flex-col gap-1.5" suppressHydrationWarning={true}>
-                    <div className="flex flex-col gap-0.5" suppressHydrationWarning={true}>
+                  <div className="mt-auto flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-0.5">
                       {bulkPriceFormatted ? (
                         <>
                           <span className="text-[10px] font-semibold text-neutral-400 line-through leading-none">

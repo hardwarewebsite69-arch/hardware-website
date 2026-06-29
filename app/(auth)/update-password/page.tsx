@@ -18,13 +18,15 @@ export default function UpdatePasswordPage() {
   const supabase = createClient()
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) {
-        router.replace('/login')
-      } else {
-        setCheckingAuth(false)
-      }
-    })
+    supabase.auth.getUser()
+      .then(({ data: { user } }) => {
+        if (!user) {
+          router.replace('/login')
+        } else {
+          setCheckingAuth(false)
+        }
+      })
+      .catch(() => router.replace('/login'))
   }, [router, supabase])
 
   if (checkingAuth) {

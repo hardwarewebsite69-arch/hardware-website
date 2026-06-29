@@ -4,3 +4,7 @@ export function formatPrice(price: number | null, requestPrice: boolean) {
   }
   return `Ksh ${price.toLocaleString()}`;
 }
+
+export function cleanId(id: string | undefined): string | undefined {
+  return (!id || id === "undefined" || id === "$undefined") ? undefined : id;
+}

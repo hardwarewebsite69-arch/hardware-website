@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit } from "@/lib/rate-limit";
 import type { QuoteItemInput } from "@/lib/types";
 
 type BaseQuoteInput = {
@@ -22,6 +23,10 @@ type ManualQuoteInput = BaseQuoteInput & {
 };
 
 export async function createUploadQuote(input: UploadQuoteInput) {
+  const key = input.email ?? input.phone ?? "anonymous";
+  const { allowed } = rateLimit(`quote:${key}`, 5, 3_600_000);
+  if (!allowed) throw new Error("Too many quote requests. Try again later.");
+
   const supabase = createClient(await cookies());
 
   const { data, error } = await supabase

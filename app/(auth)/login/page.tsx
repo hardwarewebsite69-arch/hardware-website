@@ -20,14 +20,16 @@ export default function LoginPage() {
     const hash = window.location.hash
     if (hash && (hash.includes('access_token') || hash.includes('type=invite') || hash.includes('type=recovery'))) {
       setProcessingImplicit(true)
-      supabase.auth.getUser().then(({ data: { user } }) => {
-        if (user) {
-          window.location.hash = ''
-          router.replace('/admin/dashboard')
-        } else {
-          setProcessingImplicit(false)
-        }
-      })
+      supabase.auth.getUser()
+        .then(({ data: { user } }) => {
+          if (user) {
+            window.location.hash = ''
+            router.replace('/admin/dashboard')
+          } else {
+            setProcessingImplicit(false)
+          }
+        })
+        .catch(() => setProcessingImplicit(false))
     }
   }, [router, supabase])
 
@@ -42,8 +44,7 @@ export default function LoginPage() {
     })
 
     if (error) {
-      // Replicates the design style error messaging
-      setErrorMsg("The password entered is incorrect. Please try again.")
+      setErrorMsg(error.message)
       setLoading(false)
     } else {
       router.refresh()

@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getCurrentUserProfile } from "@/lib/admin";
 import { AdminShellClient } from "@/components/AdminShellClient";
 
@@ -13,14 +14,16 @@ export async function AdminShell({
   subtitle?: string;
 }) {
   const userProfile = await getCurrentUserProfile();
-  const fallbackUser = { id: "", email: "admin@amroz.com", full_name: "Amroz Admin", role: "admin" };
-  const user = userProfile ?? fallbackUser;
+
+  if (!userProfile) {
+    redirect("/login");
+  }
 
   return (
     <AdminShellClient
       title={title}
       subtitle={subtitle}
-      user={user}
+      user={userProfile}
     >
       {children}
     </AdminShellClient>

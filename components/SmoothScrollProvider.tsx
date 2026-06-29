@@ -18,14 +18,16 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobile = window.innerWidth < 768;
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: isMobile ? 0.6 : 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      touchMultiplier: isMobile ? 0.8 : 1,
     });
 
     lenisRef.current = lenis;
@@ -41,7 +43,6 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     };
     
     gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.destroy();

@@ -9,9 +9,7 @@ export const ourFileRouter = {
     text: { maxFileSize: "4MB" },
     blob: { maxFileSize: "16MB" },
   })
-    .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete for file:", file.name);
-      console.log("File URL:", file.url);
+    .onUploadComplete(async ({ file }) => {
       return { url: file.url, name: file.name };
     }),
 } satisfies FileRouter;

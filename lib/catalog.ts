@@ -3,14 +3,16 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache"; 
 import { createClient, createPublicClient } from "@/lib/supabase/server";
 import { adminSettingsDefaults } from "@/lib/site-config";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Category, Product, ProductImage, Settings } from "@/lib/types";
+import { cleanId } from "@/lib/utils";
 import { uploadToCloudinary, deleteFromCloudinary, type CloudinaryUploadResult } from "@/lib/cloudinary";
 
 // ==========================================
 // READ OPERATIONS
 // ==========================================
 
-export async function getSettings(supabaseClient?: any): Promise<Settings> {
+export async function getSettings(supabaseClient?: SupabaseClient): Promise<Settings> {
   const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("settings")
@@ -20,7 +22,7 @@ export async function getSettings(supabaseClient?: any): Promise<Settings> {
   return data ?? adminSettingsDefaults;
 }
 
-export async function getCategories(supabaseClient?: any): Promise<Category[]> {
+export async function getCategories(supabaseClient?: SupabaseClient): Promise<Category[]> {
   const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("categories")
@@ -31,7 +33,7 @@ export async function getCategories(supabaseClient?: any): Promise<Category[]> {
   return data ?? [];
 }
 
-export async function getAllCategories(supabaseClient?: any): Promise<Category[]> {
+export async function getAllCategories(supabaseClient?: SupabaseClient): Promise<Category[]> {
   const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("categories")
@@ -47,7 +49,7 @@ export async function getProducts(options?: {
   isFeatured?: boolean;
   categoryId?: string;
   isActive?: boolean;
-}, supabaseClient?: any): Promise<Product[]> {
+}, supabaseClient?: SupabaseClient): Promise<Product[]> {
   const supabase = supabaseClient || createPublicClient();
   let query = supabase
     .from("products")
@@ -80,7 +82,7 @@ export async function getProducts(options?: {
   return data ?? [];
 }
 
-export async function getProductsByCategorySlug(slug: string, supabaseClient?: any): Promise<Product[]> {
+export async function getProductsByCategorySlug(slug: string, supabaseClient?: SupabaseClient): Promise<Product[]> {
   const categories = await getCategories(supabaseClient);
   const category = categories.find((item) => item.slug === slug);
 
@@ -99,7 +101,7 @@ export async function getProductsByCategorySlug(slug: string, supabaseClient?: a
   return data ?? [];
 }
 
-export async function getProductBySlug(slug: string, supabaseClient?: any): Promise<Product | null> {
+export async function getProductBySlug(slug: string, supabaseClient?: SupabaseClient): Promise<Product | null> {
   const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("products")
@@ -111,7 +113,7 @@ export async function getProductBySlug(slug: string, supabaseClient?: any): Prom
   return data ?? null;
 }
 
-export async function getProductImages(productId: string, supabaseClient?: any): Promise<ProductImage[]> {
+export async function getProductImages(productId: string, supabaseClient?: SupabaseClient): Promise<ProductImage[]> {
   const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("product_images")
@@ -122,7 +124,7 @@ export async function getProductImages(productId: string, supabaseClient?: any):
   return data ?? [];
 }
 
-export async function searchProducts(query: string, supabaseClient?: any): Promise<Product[]> {
+export async function searchProducts(query: string, supabaseClient?: SupabaseClient): Promise<Product[]> {
   if (!query.trim()) {
     return [];
   }
@@ -139,7 +141,7 @@ export async function searchProducts(query: string, supabaseClient?: any): Promi
   return data ?? [];
 }
 
-export async function getAllProductImages(supabaseClient?: any): Promise<ProductImage[]> {
+export async function getAllProductImages(supabaseClient?: SupabaseClient): Promise<ProductImage[]> {
   const supabase = supabaseClient || createPublicClient();
   const { data } = await supabase
     .from("product_images")
@@ -158,14 +160,12 @@ export async function upsertCategory(
 ): Promise<Category | null> {
   const supabase = createClient(await cookies());
   
-  const cleanId = (category.id === "undefined" || category.id === "$undefined" || !category.id) 
-    ? undefined 
-    : category.id;
+  const id = cleanId(category.id);
 
   const { data, error } = await supabase
     .from("categories")
     .upsert({
-      id: cleanId,
+      id,
       name: category.name,
       slug: category.slug,
       description: category.description ?? null,
@@ -209,14 +209,12 @@ export async function upsertProduct(
 ): Promise<Product | null> {
   const supabase = createClient(await cookies());
 
-  const cleanId = (product.id === "undefined" || product.id === "$undefined" || !product.id) 
-    ? undefined 
-    : product.id;
+  const id = cleanId(product.id);
 
   const { data, error } = await supabase
     .from("products")
     .upsert({
-      id: cleanId,
+      id,
       category_id: product.category_id,
       name: product.name,
       slug: product.slug,
@@ -318,24 +316,20 @@ export async function saveProductAction(
 ): Promise<Product | null> {
   const supabase = createClient(await cookies());
 
-  const cleanId = (productData.id === "undefined" || productData.id === "$undefined" || !productData.id) 
-    ? undefined 
-    : productData.id;
+  const id = cleanId(productData.id);
 
-  const dataToSave = { ...productData, id: cleanId };
+  const dataToSave = { ...productData, id };
 
-  // 1. If editing an existing product, delete its existing images first to avoid duplicates.
-  // We set featured_image_id to null first to avoid foreign key constraint violations during deletion.
-  if (cleanId) {
+  if (id) {
     await supabase
       .from("products")
       .update({ featured_image_id: null })
-      .eq("id", cleanId);
+      .eq("id", id);
 
     await supabase
       .from("product_images")
       .delete()
-      .eq("product_id", cleanId);
+      .eq("product_id", id);
   }
 
   // 2. Save/upsert the product details
