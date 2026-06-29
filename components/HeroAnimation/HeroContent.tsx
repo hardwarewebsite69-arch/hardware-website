@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import gsap from "gsap";
 
 const popularSearches = [ "Cement", "Switches",  "Paint"];
 
@@ -28,10 +27,8 @@ function StatsCounter({ value, trigger, delay }: { value: string; trigger: boole
   useEffect(() => {
     if (!trigger) return;
 
-    // Matches digits and commas
     const match = value.match(/([\d,]+)/);
     if (!match) {
-      // Non-numeric metric (e.g. "Nationwide"), show it after delay
       const timeout = setTimeout(() => {
         setDisplayValue(value);
       }, delay * 1000);
@@ -43,22 +40,27 @@ function StatsCounter({ value, trigger, delay }: { value: string; trigger: boole
     const prefix = value.substring(0, value.indexOf(match[1]));
     const suffix = value.substring(value.indexOf(match[1]) + match[1].length);
 
-    const obj = { val: 0 };
+    const duration = 1500;
+    const startTime = performance.now() + delay * 1000;
+    let rafId: number;
 
-    const ctx = gsap.context(() => {
-      gsap.to(obj, {
-        val: targetNum,
-        duration: 1.5,
-        ease: "power2.out",
-        delay: delay,
-        onUpdate: () => {
-          const formatted = Math.floor(obj.val).toLocaleString();
-          setDisplayValue(`${prefix}${formatted}${suffix}`);
-        },
-      });
-    });
+    function tick(now: number) {
+      const elapsed = now - startTime;
+      if (elapsed < 0) {
+        rafId = requestAnimationFrame(tick);
+        return;
+      }
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 2);
+      const current = Math.floor(eased * targetNum);
+      setDisplayValue(`${prefix}${current.toLocaleString()}${suffix}`);
+      if (progress < 1) {
+        rafId = requestAnimationFrame(tick);
+      }
+    }
 
-    return () => ctx.revert();
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [value, trigger, delay]);
 
   return <span>{displayValue}</span>;

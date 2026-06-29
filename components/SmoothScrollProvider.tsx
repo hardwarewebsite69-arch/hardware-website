@@ -1,70 +1,71 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import Lenis from "lenis";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-
-// Register ScrollTrigger
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const lenisRef = useRef<Lenis | null>(null);
+  const lenisRef = useRef<{ scrollTo: (y: number, opts: { immediate: boolean }) => void; destroy: () => void } | null>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
 
-    const lenis = new Lenis({
-      duration: isMobile ? 0.6 : 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: isMobile ? 0.8 : 1,
-    });
+    async function init() {
+      const [LenisModule, gsapModule, ScrollTriggerModule] = await Promise.all([
+        import("lenis"),
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
 
-    lenisRef.current = lenis;
+      const Lenis = LenisModule.default;
+      const gsap = gsapModule.default;
+      const ScrollTrigger = ScrollTriggerModule.default;
 
-    // Link Lenis scroll event to ScrollTrigger
-    lenis.on("scroll", () => {
-      ScrollTrigger.update();
-    });
+      gsap.registerPlugin(ScrollTrigger);
 
-    // Sync Lenis frame updates with GSAP Ticker
-    const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-    
-    gsap.ticker.add(updateTicker);
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1,
+      });
+
+      lenisRef.current = lenis;
+
+      lenis.on("scroll", () => {
+        ScrollTrigger.update();
+      });
+
+      const updateTicker = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+
+      gsap.ticker.add(updateTicker);
+
+      cleanupRef.current = () => {
+        lenis.destroy();
+        gsap.ticker.remove(updateTicker);
+        lenisRef.current = null;
+      };
+    }
+
+    init();
 
     return () => {
-      lenis.destroy();
-      gsap.ticker.remove(updateTicker);
-      lenisRef.current = null;
+      cleanupRef.current?.();
     };
   }, []);
 
-  // Handle client-side routing redirects
   useEffect(() => {
     if (!lenisRef.current) return;
-
-    // Force scroll position reset to top
     lenisRef.current.scrollTo(0, { immediate: true });
-
-    // Allow Next.js route transition to complete and DOM to update before refreshing ScrollTrigger
-    const timeoutId = setTimeout(() => {
-      ScrollTrigger.clearScrollMemory();
-      ScrollTrigger.refresh(true);
-    }, 150);
-
-    return () => clearTimeout(timeoutId);
   }, [pathname]);
 
   return <>{children}</>;
