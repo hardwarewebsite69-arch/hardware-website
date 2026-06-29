@@ -269,7 +269,7 @@ export async function inviteUserByEmail(email: string, fullName: string, role: s
   const supabase = createServiceClient();
 
   const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/callback?next=/admin/dashboard`,
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/login`,
   });
 
   if (error) throw new Error(error.message);

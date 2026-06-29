@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
@@ -12,8 +12,24 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [processingImplicit, setProcessingImplicit] = useState(false)
   const router = useRouter()
   const supabase = createClient()
+
+  useEffect(() => {
+    const hash = window.location.hash
+    if (hash && (hash.includes('access_token') || hash.includes('type=invite') || hash.includes('type=recovery'))) {
+      setProcessingImplicit(true)
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        if (user) {
+          window.location.hash = ''
+          router.replace('/admin/dashboard')
+        } else {
+          setProcessingImplicit(false)
+        }
+      })
+    }
+  }, [router, supabase])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,6 +49,14 @@ export default function LoginPage() {
       router.refresh()
       router.push('/admin/dashboard')
     }
+  }
+
+  if (processingImplicit) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f9fa]">
+        <p className="text-sm text-neutral-500">Signing you in...</p>
+      </div>
+    )
   }
 
   return (
