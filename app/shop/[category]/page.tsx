@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Footer } from "@/components/Footer";
@@ -59,9 +60,10 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <Header />
-      <main className="mx-auto max-w-[1280px] px-4 py-10 sm:px-6 lg:px-8">
+      <div className="bg-neutral-50">
+      <main className="mx-auto max-w-[1280px] px-4 py-8 sm:py-10 sm:px-6 lg:px-8">
         {/* Category Hero Banner */}
-        <div className="relative mb-10 overflow-hidden rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+        <div className="relative mb-6 sm:mb-10 overflow-hidden rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
           {/* Background Image with Gradient Overlay */}
           <div className="absolute inset-0 z-0">
             <Image 
@@ -76,20 +78,48 @@ export default async function Page({ params }: PageProps) {
           </div>
 
           {/* Banner Content */}
-          <div className="relative z-10 px-6 py-12 md:py-16 md:px-10 max-w-2xl">
-            <span className="inline-block rounded bg-[#ea580c] px-3 py-1 text-xs font-black uppercase tracking-widest text-white mb-4">
-              Category Catalog
+          <div className="relative z-10 px-5 sm:px-10 py-8 sm:py-16 max-w-2xl">
+            <span className="inline-block rounded bg-[#ea580c] px-2.5 sm:px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest text-white mb-3 sm:mb-4">
+              {category.name}
             </span>
-            <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl">{category.name}</h1>
-            <p className="mt-4 text-base font-medium leading-relaxed text-slate-300">
-              {category.description}
-            </p>
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">{category.name}</h1>
+            {category.description && (
+              <p className="mt-2 sm:mt-4 text-sm sm:text-base font-medium leading-relaxed text-slate-300">
+                {category.description}
+              </p>
+            )}
           </div>
         </div>
+
+        {/* Category Navigation Pills */}
+        <nav className="mb-6 sm:mb-10 -mx-4 sm:mx-0 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-2 px-4 sm:px-0 pb-2 min-w-max">
+            <Link
+              href="/shop"
+              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 whitespace-nowrap"
+            >
+              All Categories
+            </Link>
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/shop/${cat.slug}`}
+                className={`rounded-full border px-4 py-2 text-sm font-bold whitespace-nowrap transition-colors ${
+                  cat.slug === categorySlug
+                    ? "border-orange-600 bg-orange-600 text-white"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                }`}
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </div>
+        </nav>
 
         {/* Client-Side Interactive Filter and Grid */}
         <CategoryProductGrid initialProducts={products} />
       </main>
+      </div>
       <Footer />
     </>
   );

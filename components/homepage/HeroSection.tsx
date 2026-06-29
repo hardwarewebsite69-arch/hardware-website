@@ -187,7 +187,7 @@ export function HeroSection() {
       </AnimatePresence>
 
       {/* 2. Normal Hero Section Content */}
-      <section className="relative z-0 overflow-hidden pt-16 pb-4 sm:pt-20 sm:pb-8 lg:pt-28 lg:pb-12 font-sans min-h-[auto] sm:min-h-screen flex items-center">
+      <section className="relative z-0 overflow-hidden pt-16 pb-4 sm:pt-20 sm:pb-6 lg:pt-28 lg:pb-2 font-sans min-h-[auto] sm:min-h-screen flex items-center">
         {/* Underlying clean static background and dark ink linear mask */}
         <HeroOverlay />
 

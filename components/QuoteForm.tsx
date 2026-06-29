@@ -315,9 +315,9 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
   };
 
   return (
-    <section className="mx-auto w-full max-w-4xl rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+    <section className="mx-auto w-full max-w-4xl rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-8">
       {/* Tab Switcher - Sleeker Pill Design */}
-      <div className="flex rounded-lg bg-slate-100 p-1 text-sm font-semibold mb-8">
+      <div className="flex rounded-lg bg-slate-100 p-1 text-sm font-semibold mb-6 sm:mb-8">
         <button
           className={`flex-1 rounded-md px-4 py-2.5 transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
             mode === "upload"
@@ -346,7 +346,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
 
       <div className="grid gap-6">
         {/* Contact Details Group */}
-        <div className="grid gap-5 sm:grid-cols-2 rounded-xl border border-slate-100 bg-slate-50/50 p-4 sm:p-5">
+        <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 rounded-xl border border-slate-100 bg-slate-50/50 p-3 sm:p-5">
           <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
             Full Name <span className="text-orange-600">*</span>
             <input
@@ -474,7 +474,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                     if (file) startUpload([file]);
                   }}
                 >
-                  <div className="flex flex-col items-center justify-center py-10 px-6 text-center">
+                  <div className="flex flex-col items-center justify-center py-8 sm:py-10 px-4 sm:px-6 text-center">
                     {/* Upload icon */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -532,30 +532,32 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
               </div>
 
               {/* Responsive Manual Items List */}
-              <div className="grid gap-3">
+              <div className="grid gap-2 sm:gap-3">
                 {items.map((item, index) => (
                   <div
-                    className="flex flex-col md:grid md:grid-cols-[2fr_90px_90px_2fr_auto] items-start md:items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300"
+                    className="rounded-xl border border-slate-200 bg-white p-3 sm:p-4 shadow-sm transition-all hover:border-slate-300"
                     key={index}
                   >
-                    <div className="w-full min-w-0">
-                      <p className="truncate text-sm font-bold text-slate-900">
-                        {item.item_name}
-                      </p>
-                      {item.product_id ? (
-                        <span className="mt-1 inline-block rounded-md bg-orange-50 px-2 py-0.5 text-[10px] font-bold text-orange-700 border border-orange-100">
-                          Catalog Product
-                        </span>
-                      ) : (
-                        <span className="mt-1 inline-block rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600 border border-slate-200">
-                          Custom Item
-                        </span>
-                      )}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-bold text-slate-900">
+                          {item.item_name}
+                        </p>
+                        {item.product_id ? (
+                          <span className="mt-0.5 inline-block rounded-md bg-orange-50 px-2 py-0.5 text-[10px] font-bold text-orange-700 border border-orange-100">
+                            Catalog
+                          </span>
+                        ) : (
+                          <span className="mt-0.5 inline-block rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600 border border-slate-200">
+                            Custom
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    
-                    <div className="flex w-full md:contents gap-2">
+
+                    <div className="mt-2 flex items-center gap-2">
                       <input
-                        className="input-field w-1/2 md:w-full text-center text-sm py-1.5 px-2"
+                        className="input-field w-[80px] sm:w-[90px] text-center text-sm py-2"
                         min="0.01"
                         step="any"
                         onChange={(event) =>
@@ -573,7 +575,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                         disabled={isPending}
                       />
                       <input
-                        className="input-field w-1/2 md:w-full text-center text-sm py-1.5 px-2"
+                        className="input-field w-[80px] sm:w-[90px] text-center text-sm py-2"
                         onChange={(event) =>
                           updateItem(index, "unit", event.target.value)
                         }
@@ -581,64 +583,63 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                         value={item.unit}
                         disabled={isPending}
                       />
-                    </div>
-                    
-                    <div className="flex w-full md:contents gap-2 items-center">
-                      <input
-                        className="input-field w-full text-sm py-1.5 px-3"
-                        onChange={(event) =>
-                          updateItem(index, "notes", event.target.value)
-                        }
-                        placeholder="Notes (e.g. size, color)"
-                        value={item.notes}
-                        disabled={isPending}
-                      />
+                      <div className="flex-1" />
                       <button
                         type="button"
                         onClick={() => removeManualItem(index)}
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
                         title="Remove item"
                         disabled={isPending}
                       >
-                        <span className="material-symbols-outlined text-[20px]">
+                        <span className="material-symbols-outlined text-[22px]">
                           delete
                         </span>
                       </button>
                     </div>
+
+                    <input
+                      className="input-field mt-2 w-full text-sm py-2"
+                      onChange={(event) =>
+                        updateItem(index, "notes", event.target.value)
+                      }
+                      placeholder="Notes (e.g. size, color)"
+                      value={item.notes}
+                      disabled={isPending}
+                    />
                   </div>
                 ))}
 
                 {items.length === 0 && (
-                  <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 py-10">
-                    <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">
+                  <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 py-8 sm:py-10 px-4">
+                    <span className="material-symbols-outlined text-3xl sm:text-4xl text-slate-300 mb-2">
                       shopping_cart_checkout
                     </span>
-                    <p className="text-sm font-medium text-slate-500 text-center max-w-xs">
-                      No items added yet. Search the catalog below or type to add custom items.
+                    <p className="text-xs sm:text-sm font-medium text-slate-500 text-center max-w-xs">
+                      No items added yet. Search the catalog or tap "Add Custom" to build your list.
                     </p>
                   </div>
                 )}
               </div>
 
               {/* Prominent Product Search */}
-              <div className="relative mt-2 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div className="relative mt-2 rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
                 <label className="grid gap-2 text-sm font-semibold text-slate-700">
                   Search & Add Items
                   <div className="relative flex items-center">
-                 
+                  
                     <input
-                      className="input-field w-full pl-11 pr-32 bg-white shadow-sm"
+                      className="input-field w-full pr-28 sm:pr-32 bg-white shadow-sm"
                       placeholder="Type name (e.g. Cement, Pipe, Paint...)"
                       value={searchQuery}
                       onChange={(e) => handleSearchChange(e.target.value)}
                       disabled={isPending}
                     />
                     {searchQuery.trim() && (
-                      <div className="absolute right-2 flex items-center gap-1.5">
+                      <div className="absolute right-1.5 sm:right-2 flex items-center gap-1 sm:gap-1.5">
                         <button
                           type="button"
                           onClick={() => handleSearchChange("")}
-                          className="flex h-7 w-7 items-center justify-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+                          className="flex h-8 w-8 sm:h-7 sm:w-7 items-center justify-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
                           title="Clear search"
                           disabled={isPending}
                         >
@@ -650,7 +651,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                         <button
                           type="button"
                           onClick={addCustomItem}
-                          className="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-md transition-colors shadow-sm disabled:opacity-50"
+                          className="px-2.5 py-2 sm:py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-md transition-colors shadow-sm disabled:opacity-50"
                           disabled={isPending}
                         >
                           Add Custom
@@ -664,7 +665,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                 {searchQuery.trim().length >= 2 && (
                   <div className="absolute left-0 right-0 z-50 mt-2 w-full bg-white border border-slate-200 rounded-xl shadow-xl max-h-72 overflow-y-auto divide-y divide-slate-100 top-full">
                     {isSearching ? (
-                      <div className="p-6 flex flex-col items-center justify-center text-slate-400 gap-2">
+                      <div className="p-4 sm:p-6 flex flex-col items-center justify-center text-slate-400 gap-2">
                         <div className="h-5 w-5 animate-spin rounded-full border-2 border-slate-200 border-t-slate-600"></div>
                         <p className="text-xs font-medium">Searching catalog...</p>
                       </div>
@@ -674,7 +675,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                           key={product.id}
                           type="button"
                           onClick={() => addProductToQuote(product)}
-                          className="w-full px-4 py-3.5 text-left hover:bg-slate-50 flex items-center justify-between transition-colors group"
+                          className="w-full px-3 sm:px-4 py-3 sm:py-3.5 text-left hover:bg-slate-50 flex items-center justify-between transition-colors group min-h-[52px]"
                         >
                           <div>
                             <p className="font-bold text-slate-800 text-sm group-hover:text-orange-600 transition-colors">
@@ -686,13 +687,13 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                               </p>
                             )}
                           </div>
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                             {product.price ? (
-                              <span className="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-1 rounded">
+                              <span className="text-[11px] sm:text-xs font-bold text-slate-600 bg-slate-100 px-1.5 sm:px-2 py-1 rounded">
                                 Ksh {product.price.toLocaleString()}
                               </span>
                             ) : (
-                              <span className="text-[11px] font-semibold text-slate-400">
+                              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400">
                                 Request Price
                               </span>
                             )}
@@ -703,7 +704,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                         </button>
                       ))
                     ) : (
-                      <div className="p-6 text-center flex flex-col items-center gap-3">
+                      <div className="p-4 sm:p-6 text-center flex flex-col items-center gap-3">
                         <div className="bg-slate-50 p-3 rounded-full">
                            <span className="material-symbols-outlined text-slate-400 text-2xl">inventory_2</span>
                         </div>
@@ -718,7 +719,7 @@ export function QuoteForm({ defaultMode = "upload" }: QuoteFormProps) {
                         <button
                           type="button"
                           onClick={addCustomItem}
-                          className="mt-2 text-xs font-bold bg-orange-50 text-orange-700 hover:bg-orange-100 px-4 py-2 rounded-lg transition-colors"
+                          className="mt-2 text-xs font-bold bg-orange-50 text-orange-700 hover:bg-orange-100 px-5 py-3 sm:px-4 sm:py-2 rounded-lg transition-colors"
                         >
                           Add "{searchQuery}"
                         </button>
