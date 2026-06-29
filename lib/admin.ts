@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import type { Quote, QuoteStatus } from "@/lib/types";
 
 export type QuoteItem = {
@@ -255,6 +255,65 @@ export async function deleteQuoteItem(itemId: string): Promise<void> {
     console.error("Error deleting quote item:", error.message);
     throw new Error(error.message);
   }
+}
+
+export type UserProfile = {
+  id: string;
+  email: string | undefined;
+  full_name: string;
+  role: string;
+  created_at: string;
+};
+
+export async function inviteUserByEmail(email: string, fullName: string, role: string = "staff") {
+  const supabase = createServiceClient();
+
+  const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/callback?next=/admin/dashboard`,
+  });
+
+  if (error) throw new Error(error.message);
+
+  if (data.user) {
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .upsert({
+        id: data.user.id,
+        full_name: fullName,
+        role,
+        updated_at: new Date().toISOString(),
+      });
+
+    if (profileError) throw new Error(profileError.message);
+  }
+
+  revalidatePath("/admin/users");
+  return data;
+}
+
+export async function getUsers(): Promise<UserProfile[]> {
+  const supabase = createServiceClient();
+
+  const { data: profiles, error } = await supabase
+    .from("profiles")
+    .select("id, full_name, role, updated_at")
+    .order("updated_at", { ascending: false });
+
+  if (error) return [];
+
+  const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
+
+  if (authError) return [];
+
+  const userMap = new Map(authUsers.users.map((u) => [u.id, u.email]));
+
+  return (profiles ?? []).map((p) => ({
+    id: p.id,
+    email: userMap.get(p.id) ?? undefined,
+    full_name: p.full_name,
+    role: p.role,
+    created_at: p.updated_at,
+  }));
 }
 
 export async function signOutAction() {

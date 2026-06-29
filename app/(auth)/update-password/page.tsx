@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
@@ -12,9 +12,28 @@ export default function UpdatePasswordPage() {
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
-  
+  const [checkingAuth, setCheckingAuth] = useState(true)
+
   const router = useRouter()
   const supabase = createClient()
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) {
+        router.replace('/login')
+      } else {
+        setCheckingAuth(false)
+      }
+    })
+  }, [router, supabase])
+
+  if (checkingAuth) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f9fa]">
+        <p className="text-sm text-neutral-500">Verifying session...</p>
+      </div>
+    )
+  }
 
   const handlePasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault()

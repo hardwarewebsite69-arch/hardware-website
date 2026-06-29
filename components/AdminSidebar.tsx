@@ -9,6 +9,7 @@ const items = [
   { href: "/admin/categories", icon: "category", label: "Categories" },
   { href: "/admin/quotes", icon: "request_quote", label: "Quotes" },
   { href: "/admin/media", icon: "perm_media", label: "Media" },
+  { href: "/admin/users", icon: "group", label: "Users" },
   { href: "/admin/settings", icon: "settings", label: "Settings" },
 ];
 
