@@ -7,7 +7,6 @@ import { useQuoteCart } from "./QuoteCartContext";
 
 const NAV_ITEMS = [
   { href: "/shop", label: "Products" },
-  { href: "/#categories", label: "Categories" },
   { href: "/quote", label: "Bulk Pricing" },
   { href: "/#projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
