@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Inter } from "next/font/google";
-import { siteConfig } from "@/lib/site-config";
+import { siteUrl, siteName, siteDescription, siteLocale, jsonLd, organizationSchema, websiteSchema } from "@/lib/seo";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
@@ -15,27 +15,68 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Amroz Traders — Industrial Hardware Supplies in Kenya",
-  description:
-    "Kenya's trusted supplier of construction hardware, electrical supplies, power tools, PPE and building materials. Get instant BOQ quotes, bulk pricing, and nationwide delivery.",
+  title: {
+    default: `${siteName} — Industrial Hardware Supplies in Kenya`,
+    template: `%s | ${siteName}`,
+  },
+  description: siteDescription,
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: `${siteName} — Industrial Hardware Supplies in Kenya`,
+    description: siteDescription,
+    url: siteUrl,
+    siteName,
+    locale: siteLocale,
+    type: "website",
+    images: [
+      {
+        url: `${siteUrl}/og-default.png`,
+        width: 1200,
+        height: 630,
+        alt: siteName,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteName} — Industrial Hardware Supplies in Kenya`,
+    description: siteDescription,
+    images: [`${siteUrl}/og-default.png`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/hardware-logo.png",
+    apple: "/hardware-logo.png",
+  },
+  manifest: "/manifest.json",
 };
 
 export default async function RootLayout({
@@ -63,6 +104,18 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLd(organizationSchema()),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLd(websiteSchema()),
+          }}
+        />
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <SettingsProvider initialSettings={settings}>
           <QuoteCartProvider>

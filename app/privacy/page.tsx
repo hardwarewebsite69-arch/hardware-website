@@ -1,10 +1,27 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { createMetadata, jsonLd, breadcrumbSchema } from "@/lib/seo";
+
+export const metadata: Metadata = createMetadata({
+  title: "Data Policy | Amroz Traders",
+  description: "Amroz Traders' data protection policy outlines how we collect, use, and safeguard your personal information in compliance with the Kenya Data Protection Act, 2019.",
+  path: "/privacy",
+});
 
 export default function Page() {
   return (
     <>
       <Header />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Data Policy", url: "/privacy" },
+          ])),
+        }}
+      />
       <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="prose-headings:font-display prose-headings:tracking-tight prose-h1:text-4xl prose-h1:font-black prose-h2:text-2xl prose-h2:font-extrabold prose-h3:text-lg prose-h3:font-bold text-slate-700 text-sm leading-relaxed space-y-6">
 

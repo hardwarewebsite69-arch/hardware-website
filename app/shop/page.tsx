@@ -1,9 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { fallbackCategories, fallbackProducts, categoryImageFallback } from "@/lib/fallback-data";
 import { getCategories, getProducts } from "@/lib/catalog";
+import { createMetadata, jsonLd, breadcrumbSchema } from "@/lib/seo";
+
+export const metadata: Metadata = createMetadata({
+  title: "Shop Hardware Products | Amroz Traders",
+  description: "Browse our catalog of construction hardware, building materials, electrical supplies, power tools, and industrial equipment. Bulk pricing for contractors.",
+  path: "/shop",
+});
 
 export default async function Page() {
   const [dbCategories, dbProducts] = await Promise.all([getCategories(), getProducts()]);
@@ -12,6 +20,15 @@ export default async function Page() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#111827]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Shop", url: "/shop" },
+          ])),
+        }}
+      />
       <Header />
       <main className="mx-auto max-w-7xl px-4 sm:px-6 py-10 sm:py-20 lg:py-24">
         <div className="mb-10 sm:mb-16 border-b border-neutral-100 pb-6 sm:pb-10">

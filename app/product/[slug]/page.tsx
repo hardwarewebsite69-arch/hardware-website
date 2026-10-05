@@ -9,6 +9,7 @@ import { formatPrice } from "@/lib/utils";
 import { fallbackProducts, productImageFor } from "@/lib/fallback-data";
 import { getProductBySlug, getProductImages, getProducts, getAllCategories } from "@/lib/catalog";
 import { ProductDetailActions } from "@/components/ProductDetailActions";
+import { createMetadata, jsonLd, breadcrumbSchema, productSchema, siteName } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -20,39 +21,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const product = dbProduct ?? fallbackProducts.find((item) => item.slug === slug);
 
   if (!product) {
-    return {
-      title: "Product Not Found | Amroz Traders",
-    };
+    return { title: "Product Not Found | Amroz Traders" };
   }
 
-  // Resolve product image for OpenGraph tags
   let imageUrl = productImageFor(product.slug);
   try {
     const images = await getProductImages(product.id);
-    if (images.length > 0) {
-      imageUrl = images[0].url;
-    }
-  } catch (error) {
-    console.error("Error fetching product images for metadata:", error);
-  }
+    if (images.length > 0) imageUrl = images[0].url;
+  } catch { /* use fallback */ }
 
-  const title = `${product.name} | Amroz Traders`;
-  const description = product.description || `Buy ${product.name} at Amroz Traders. High-quality hardware products with instant quote requests and fast delivery.`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      images: [
-        {
-          url: imageUrl,
-          alt: product.name,
-        },
-      ],
-    },
-  };
+  return createMetadata({
+    title: `${product.name} | ${siteName}`,
+    description: product.description || `Buy ${product.name} at ${siteName}. High-quality hardware products with instant quote requests and fast delivery.`,
+    path: `/product/${product.slug}`,
+    ogImage: imageUrl,
+    ogType: "article",
+  });
 }
 
 
@@ -76,6 +60,30 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(productSchema({
+            name: product.name,
+            description: product.description || product.name,
+            image: allImages[0]?.url || productImageFor(product.slug),
+            sku: product.sku || undefined,
+            price: product.price ?? undefined,
+            url: `/product/${product.slug}`,
+          })),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Shop", url: "/shop" },
+            ...(category ? [{ name: category.name, url: `/shop/${category.slug}` }] : []),
+            { name: product.name, url: `/product/${product.slug}` },
+          ])),
+        }}
+      />
       <Header />
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
         <nav className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-400 mb-6 sm:mb-8">

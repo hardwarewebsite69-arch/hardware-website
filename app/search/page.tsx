@@ -1,8 +1,23 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ProductCard } from "@/components/ProductCard";
 import { fallbackProducts } from "@/lib/fallback-data";
 import { searchProducts } from "@/lib/catalog";
+import { createMetadata, siteName } from "@/lib/seo";
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ q?: string }> }): Promise<Metadata> {
+  const { q } = await searchParams;
+  const query = q?.trim() ?? "";
+  return createMetadata({
+    title: query ? `Search results for "${query}" | ${siteName}` : `Search Products | ${siteName}`,
+    description: query
+      ? `Search results for "${query}" in our hardware catalog. Find building materials, tools, electrical supplies, and more.`
+      : `Search our catalog of 10,000+ hardware products, building materials, and industrial supplies.`,
+    path: `/search${query ? `?q=${encodeURIComponent(query)}` : ""}`,
+    noindex: true,
+  });
+}
 
 type PageProps = {
   searchParams: Promise<{ q?: string }>;

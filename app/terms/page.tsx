@@ -1,10 +1,27 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { createMetadata, jsonLd, breadcrumbSchema } from "@/lib/seo";
+
+export const metadata: Metadata = createMetadata({
+  title: "Terms of Trade | Amroz Traders",
+  description: "Review Amroz Traders' terms of trade, including ordering, pricing, payment, delivery, returns, and liability policies for hardware supplies in Kenya.",
+  path: "/terms",
+});
 
 export default function Page() {
   return (
     <>
       <Header />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Terms of Trade", url: "/terms" },
+          ])),
+        }}
+      />
       <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="prose-headings:font-display prose-headings:tracking-tight prose-h1:text-4xl prose-h1:font-black prose-h2:text-2xl prose-h2:font-extrabold prose-h3:text-lg prose-h3:font-bold text-slate-700 text-sm leading-relaxed space-y-6">
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { Header } from '@/components/Header'
+import { siteName } from '@/lib/seo'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -168,11 +169,11 @@ export default function LoginPage() {
 
       {/* Styled Application Footer Configuration */}
       <footer className="mt-12 text-center space-y-1.5 text-xs text-neutral-400">
-        <p>© 2026 Industrial Systems Corp.</p>
+        <p>© 2026 {siteName} Hardware Ltd.</p>
         <div className="flex justify-center space-x-4">
-          <a href="#" className="hover:underline">Terms</a>
-          <a href="#" className="hover:underline">Privacy</a>
-          <a href="#" className="hover:underline">Support</a>
+          <Link href="/terms" className="hover:underline">Terms</Link>
+          <Link href="/privacy" className="hover:underline">Privacy</Link>
+          <Link href="/contact" className="hover:underline">Contact</Link>
         </div>
       </footer>
     </div>

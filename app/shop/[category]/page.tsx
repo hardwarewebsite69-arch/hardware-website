@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { CategoryProductGrid } from "@/components/CategoryProductGrid";
 import { fallbackCategories, fallbackProducts, categoryImageFallback } from "@/lib/fallback-data";
 import { getCategories, getProductsByCategorySlug } from "@/lib/catalog";
+import { jsonLd, breadcrumbSchema } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ category: string }>;
@@ -59,6 +60,16 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Shop", url: "/shop" },
+            { name: category.name, url: `/shop/${category.slug}` },
+          ])),
+        }}
+      />
       <Header />
       <div className="bg-neutral-50">
       <main className="mx-auto max-w-[1280px] px-4 py-8 sm:py-10 sm:px-6 lg:px-8">

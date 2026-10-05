@@ -10,10 +10,27 @@ import { SpecialOffersSection } from "@/components/homepage/SpecialOffersSection
 import { TestimonialsSection } from "@/components/homepage/TestimonialsSection";
 import { FAQSection } from "@/components/homepage/FAQSection";
 import { RecentProjectsSection } from "@/components/homepage/RecentProjectsSection";
+import { jsonLd, organizationSchema, websiteSchema, breadcrumbSchema } from "@/lib/seo";
 
 export default function Page() {
   return (
     <div className="min-h-screen font-sans text-neutral-900 bg-[#f8fafc]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(organizationSchema()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(websiteSchema()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+          ])),
+        }}
+      />
       <Header />
 
       <main className="w-full flex-1 pb-16 md:pb-0">

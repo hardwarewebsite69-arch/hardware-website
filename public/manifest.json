@@ -1,0 +1,21 @@
+{
+  "name": "Amroz Traders — Industrial Hardware Supplies",
+  "short_name": "Amroz Traders",
+  "description": "Kenya's trusted supplier of construction hardware, electrical supplies, power tools, PPE and building materials.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ea580c",
+  "icons": [
+    {
+      "src": "/hardware-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/hardware-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

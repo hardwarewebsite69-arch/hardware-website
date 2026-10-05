@@ -1,10 +1,27 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { QuoteForm } from "@/components/QuoteForm";
+import { createMetadata, jsonLd, breadcrumbSchema } from "@/lib/seo";
+
+export const metadata: Metadata = createMetadata({
+  title: "Get a Quote | Amroz Traders",
+  description: "Request a bulk quote for construction hardware, electrical supplies, and building materials. Upload your BOQ or build a manual item list. Fast response guaranteed.",
+  path: "/quote",
+});
 
 export default function Page() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Get a Quote", url: "/quote" },
+          ])),
+        }}
+      />
       <Header />
       <main className="mx-auto grid max-w-[1180px] gap-6 sm:gap-10 px-4 py-6 sm:py-10 sm:px-6 lg:grid-cols-[.85fr_1.15fr] lg:px-8">
         <section>

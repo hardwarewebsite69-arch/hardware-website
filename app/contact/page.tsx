@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { QuoteForm } from "@/components/QuoteForm";
 import { getSettings } from "@/lib/catalog";
+import { createMetadata, jsonLd, contactPageSchema, breadcrumbSchema } from "@/lib/seo";
+
+export const metadata: Metadata = createMetadata({
+  title: "Contact Us | Amroz Traders",
+  description: "Get in touch with Amroz Traders for hardware supplies, bulk pricing, and nationwide delivery in Kenya. Call, WhatsApp, or visit our sales desk.",
+  path: "/contact",
+});
 
 export default async function Page() {
   const settings = await getSettings();
@@ -17,6 +25,19 @@ export default async function Page() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(contactPageSchema()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Contact", url: "/contact" },
+          ])),
+        }}
+      />
       <Header />
       <main className="mx-auto grid max-w-[1180px] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:px-8">
         <section>

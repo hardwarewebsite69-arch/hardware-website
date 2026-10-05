@@ -1,24 +1,30 @@
 import { MetadataRoute } from "next";
 import { getCategories, getProducts } from "@/lib/catalog";
+import { siteUrl } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://amroztraders.com";
+  const baseUrl = siteUrl;
 
-  // Static routes
   const staticRoutes = [
-    "",
-    "/about",
-    "/contact",
-    "/shop",
-    "/quote",
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
+    { url: `${baseUrl}/`, priority: 1.0, freq: "daily" as const },
+    { url: `${baseUrl}/shop`, priority: 0.9, freq: "daily" as const },
+    { url: `${baseUrl}/quote`, priority: 0.8, freq: "weekly" as const },
+    { url: `${baseUrl}/contact`, priority: 0.8, freq: "monthly" as const },
+    { url: `${baseUrl}/search`, priority: 0.5, freq: "monthly" as const },
+    { url: `${baseUrl}/terms`, priority: 0.4, freq: "monthly" as const },
+    { url: `${baseUrl}/privacy`, priority: 0.4, freq: "monthly" as const },
+    { url: `${baseUrl}/dispatch-policy`, priority: 0.4, freq: "monthly" as const },
+    { url: `${baseUrl}/login`, priority: 0.2, freq: "monthly" as const },
+    { url: `${baseUrl}/forgot-password`, priority: 0.1, freq: "monthly" as const },
+    { url: `${baseUrl}/quote/manual`, priority: 0.3, freq: "monthly" as const },
+    { url: `${baseUrl}/quote/upload`, priority: 0.3, freq: "monthly" as const },
+  ].map((r) => ({
+    url: r.url,
     lastModified: new Date(),
-    changeFrequency: "daily" as const,
-    priority: route === "" ? 1.0 : 0.8,
+    changeFrequency: r.freq,
+    priority: r.priority,
   }));
 
-  // Fetch categories dynamically
   let categoryRoutes: MetadataRoute.Sitemap = [];
   try {
     const categories = await getCategories();
@@ -28,11 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly" as const,
       priority: 0.7,
     }));
-  } catch (error) {
-    console.error("Error fetching categories for sitemap:", error);
+  } catch {
+    // categories not available — skip dynamic routes
   }
 
-  // Fetch products dynamically
   let productRoutes: MetadataRoute.Sitemap = [];
   try {
     const products = await getProducts({ isActive: true });
@@ -42,8 +47,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly" as const,
       priority: 0.6,
     }));
-  } catch (error) {
-    console.error("Error fetching products for sitemap:", error);
+  } catch {
+    // products not available — skip dynamic routes
   }
 
   return [...staticRoutes, ...categoryRoutes, ...productRoutes];

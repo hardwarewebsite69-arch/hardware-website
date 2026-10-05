@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
 import type { Product } from "@/lib/types";
 import { useQuoteCart } from "./QuoteCartContext";
@@ -29,10 +30,13 @@ export function ProductCard({ product }: { product: Product }) {
         href={`/product/${product.slug}`}
         className="relative block aspect-square overflow-hidden bg-neutral-100 border-b border-neutral-100"
       >
-        <img
+        <Image
           alt={product.name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
           src={imageUrl}
+          loading="lazy"
         />
         {product.request_price && (
           <div className="absolute left-4 top-4 rounded-sm bg-[#111827] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-sm">
